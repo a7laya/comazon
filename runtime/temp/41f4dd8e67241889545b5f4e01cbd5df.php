@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:93:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\index\sign_in.html";i:1554869929;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:93:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\index\sign_in.html";i:1554870012;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +22,8 @@
                 <li><a href="#">Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="./signin">Sign in1</a></li>
-                <li><a href="./signup">Sign up1</a></li>
+                    <li><a href="signin">Sign in</a></li>
+                    <li><a href="signup">Sign up</a></li>
             </ul>
             <form action="#" class="navbar-form navbar-right">
                 <div class="form-group">

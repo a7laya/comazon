@@ -1,4 +1,3 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:91:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\index\index.html";i:1554956424;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link rel="stylesheet" href="/static/css/bootstrap.css"> -->
+    <!-- <link rel="stylesheet" href="__CSS__/bootstrap.css"> -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="__CSS__/main.css">
     <title>COMAZON</title>
 </head>
 
@@ -22,8 +21,9 @@
                 <li><a href="#">Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                    <li><a href="signin">Sign in</a></li>
-                    <li><a href="<?php echo url('index/index/signup'); ?>">Sign up</a></li>
+                    <a href="">欢迎你，<span>{$shop_user['user']['username']}</span></a>
+                    <li><a href="{:url('index/passport/signin')}">Sign in</a></li>
+                    <li><a href="{:url('index/passport/signup')}">Sign up</a></li>
             </ul>
             <form action="#" class="navbar-form navbar-right">
                 <div class="form-group">
@@ -35,10 +35,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="col-md-1"></div>
-        <div class="col-md-5">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto vero qui quae perferendis dolorem, praesentium dignissimos nemo nobis aliquam laudantium cupiditate magnam sint quasi illum? Illo, autem. Cumque, mollitia rem?</div>
-        <div class="col-md-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt, voluptatum veritatis dolores eligendi quo quod rem veniam soluta, perferendis molestiae animi nostrum atque reiciendis rerum, aperiam necessitatibus! Inventore, suscipit aliquid.</div>
-        <div class="col-md-1"></div>
+        {__CONTENT__}
     </div>
     <div class="footer"></div>
 

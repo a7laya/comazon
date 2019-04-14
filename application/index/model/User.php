@@ -4,6 +4,7 @@ namespace app\index\model;
 
 use think\Model;
 use think\Session;
+use think\Db;
 
 /**
  * 用户模型
@@ -41,6 +42,27 @@ class User extends Model
             'is_login' => true,
         ]);
         return true;
+    }
+
+     /**
+     * 添加买家
+     * @param array $data
+     * @return bool
+     */
+    public function add(array $data)
+    {
+        // 开启事务
+        Db::startTrans();
+        try {
+            // 添加买家
+            $this->allowField(true)->save($data);
+
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+        }
+        return false;
     }
 
     /**

@@ -14,11 +14,5 @@ class Index extends Base
         return  $this->fetch();
     }
 
-    
-    public function signUpRes()
-    {
-        $post = input();
-        $this->assign('post',$post);
-        return view();
-    }
+
 }

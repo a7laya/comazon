@@ -10,20 +10,18 @@
     <link rel="stylesheet" href="__CSS__/main.css">
     <title>COMAZON</title>
 </head>
-
 <body>
     <div class="navbar navbar-default navbar-light">
         <div class="container">
             <div class="navbar-brand">COMAZON</div>
             <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Product</a></li>
+                <li><a href="{:url('index/index/index')}">Home</a></li>
+                <li><a href="{:url('index/product/index')}">Product</a></li>
                 <li><a href="#">Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                    <a href="">欢迎你，<span>{$shop_user['user']['username']}</span></a>
-                    <li><a href="{:url('index/passport/signin')}">Sign in</a></li>
-                    <li><a href="{:url('index/passport/signup')}">Sign up</a></li>
+                <li><a href="{:url('index/passport/signIn')}">Sign in</a></li>
+                <li><a href="{:url('index/passport/signUp')}">Sign up</a></li>
             </ul>
             <form action="#" class="navbar-form navbar-right">
                 <div class="form-group">
@@ -34,11 +32,3 @@
 
         </div>
     </div>
-    <div class="container">
-        {__CONTENT__}
-    </div>
-    <div class="footer"></div>
-
-</body>
-
-</html>

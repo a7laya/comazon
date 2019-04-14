@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:93:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\index\sign_up.html";i:1555202161;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555202601;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555203346;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555203361;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,8 +21,8 @@
                 <li><a href="#">Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="signin">Sign in</a></li>
-                <li><a href="signup">Sign up</a></li>
+                <li><a href="<?php echo url('index/passport/signIn'); ?>">Sign in</a></li>
+                <li><a href="<?php echo url('index/passport/signUp'); ?>">Sign up</a></li>
             </ul>
             <form action="#" class="navbar-form navbar-right">
                 <div class="form-group">

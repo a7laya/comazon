@@ -23,14 +23,29 @@ class Passport extends Base
     
     // 注册页面
     public function signUp()
-    {
+    {       
         return view();
     }
     
     // 注册结果页面
     public function signUpRes()
     {
-        return view();
+        if (!$this->request->isAjax()) {
+            $user = input();
+            $model = new User;
+            if(isset($user['password']) ) {
+                $user['password'] = shop_hash($user['password']);
+                
+                if ($model->add($user)) {
+                    // return $this->renderSuccess('添加成功');
+                    return view('sign_up_res',['post' => $user['username']]);
+                } 
+            }
+            // return $this->renderError($model->getError() ?: '添加失败');
+        }
+
+        return view('sign_up_res',['post' => '添加失败']);
+
     }
 
 

@@ -29,6 +29,15 @@ class Passport extends Base
             $model = new User;
             if(isset($user['password']) ) {
                 $user['password'] = shop_hash($user['password']);
+
+                if($model->findUsername($user)) 
+                {
+                    return view('sign_up_res',['post' => '用户名已经存在']);
+                }
+
+                if($model->findEmail($user)) {
+                    return view('sign_up_res',['post' =>'邮箱已经存在']);
+                }
                 
                 if ($model->add($user)) {
                     // return $this->renderSuccess('添加成功');

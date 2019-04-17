@@ -13,13 +13,7 @@ use think\Session;
 class Passport extends Base
 {
         
-    /**
-     * 注册
-     * @return 
-     * @throws
-     * @throws 
-     * @throws 
-     */
+
     
     // 注册页面
     public function signUp()

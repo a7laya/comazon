@@ -1,4 +1,38 @@
-{include file='inc/header'/}
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555296457;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555203361;}*/ ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" href="/static/css/bootstrap.css"> -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <title>COMAZON</title>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-light">
+        <div class="container">
+            <div class="navbar-brand">COMAZON</div>
+            <ul class="nav navbar-nav">
+                <li><a href="<?php echo url('index/index/index'); ?>">Home</a></li>
+                <li><a href="<?php echo url('index/product/index'); ?>">Product</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="<?php echo url('index/passport/signIn'); ?>">Sign in</a></li>
+                <li><a href="<?php echo url('index/passport/signUp'); ?>">Sign up</a></li>
+            </ul>
+            <form action="#" class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="product name or ASIN">
+                </div>
+                <button type="submit" class="btn btn-default">search</button>
+            </form>
+
+        </div>
+    </div>
 
 <div class="container container-body">
 
@@ -41,7 +75,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" id="submit" disabled>Sign up</button>
+                    <button type="submit" class="btn btn-primary btn-block" id="submit" disabled='false'>Sign up</button>
                 </div>
             </form>
         </div>
@@ -52,7 +86,7 @@
 <div class="footer"></div>
 
 </body>
-<script src="__JS__/jquery.js"></script>
+<script src="/static/js/jquery.js"></script>
 <script>
     $(function () {
         var username, email, password;
@@ -120,6 +154,16 @@
             var re = /^[a-zA-Z][a-zA-Z0-9]{3,15}$/;
             if (re.test(username)) {
                 console.log('username pass1');
+                var flag_check = true;
+                $.ajax({
+                    url: "<?php echo url('index/passport/checkUsername'); ?>",
+                    success: function (data) {
+                        if (!data) {
+                            console.log('data :', data);
+                            flag_check = false;
+                        }
+                    }
+                })
                 return flag_check;
             } else {
                 return false;

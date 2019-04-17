@@ -65,6 +65,28 @@ class User extends Model
         return false;
     }
 
+    public function findEmail(array $data)
+    {
+        if (!$user = self::useGlobalScope(false)->where([
+            'email' => $data['email']
+        ])->find()) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public function findUsername(array $data)
+    {
+        if (!$user = self::useGlobalScope(false)->where([
+            'username' => $data['username']
+        ])->find()) {
+            return false;
+        }
+        return true;
+
+    }
+
     /**
      * 信息
      * @param $user_id

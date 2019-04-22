@@ -26,8 +26,11 @@ class User extends Model
         // 验证用户名密码是否正确
         if (!$user = self::useGlobalScope(false)->where([
             'username' => $data['account'],
-            // 'password' => shop_hash($data['password'])
-            'password' => $data['password']
+            'password' => shop_hash($data['password'])
+        ])->find()
+        || !$user = self::useGlobalScope(false)->where([
+            'email' => $data['account'],
+            'password' => shop_hash($data['password'])
         ])->find()) {
             $this->error = '登录失败, 用户名或密码错误';
             return false;
@@ -54,6 +57,9 @@ class User extends Model
         // 开启事务
         Db::startTrans();
         try {
+            if(isset($data['password']) ) {
+                $data['password'] = shop_hash($data['password']);
+            }
             // 添加买家
             $this->allowField(true)->save($data);
 

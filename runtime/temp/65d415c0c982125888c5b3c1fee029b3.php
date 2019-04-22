@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555903671;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555902821;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555923193;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555921051;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <!-- <link rel="stylesheet" href="/static/css/bootstrap.css"> -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <title>COMAZON</title>
 </head>
@@ -35,182 +36,156 @@
         </div>
     </div>
 
-<div class="container container-body">
+<div class="login-main">
+    <header class="layui-elip" style="width: 82%">Create your account</header>
 
-    <div class="col-md-1"></div>
-    <div class="col-md-5">
-        <h2>Create your personal account</h2>
-        <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae aperiam consectetur saepe aut, ullam fuga
-            nesciunt, tenetur vitae aspernatur blanditiis labore quam tempore debitis assumenda id</h4>
-
-    </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-5">
-        <div class="panel panel-sign">
-            <form action="signUpRes" onsubmit="return sb1();">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input name="username" type="text" class="form-control" placeholder="Input your username"
-                        id="username">
-                    <div class="verify-info username chk_rule">
-                        4-16 letters and numbers, beginning with letters.
-                    </div>
-                    <div class="verify-info username chk_exist" style="display:none">
-                        正在验证用户名是否存在...
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input name="email" type="text" class="form-control" placeholder="Input your email" id="email">
-                    <div class="verify-info email chk_rule">
-                        email like: example@site.com
-                    </div>
-                    <div class="verify-info email chk_exist" style="display:none">
-                        正在验证用邮箱是否已被注册...
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input name="password" type="password" class="form-control" id="password">
-                </div>
-                <div class="form-group">
-                    <label>Check Password</label>
-                    <input type="password" class="form-control" id="repassword">
-                    <div class="verify-info repassword">
-                        The password entered twice should be the same and cannot be empty
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" lay-submit lay-filter="sub" class="btn btn-primary btn-block" id="submit" disabled>Sign up</button>
-                </div>
-            </form>
+    <!-- 表单选项 -->
+    <form class="layui-form">
+        <div class="layui-input-inline">
+            <!-- 用户名 -->
+            <div class="layui-inline" style="width: 85%">
+                <input type="text" id="user" name="account" required lay-verify="required" placeholder="请输入用户名"
+                    autocomplete="off" class="layui-input">
+            </div>
+            <!-- 对号 -->
+            <div class="layui-inline">
+                <i class="layui-icon" id="ri" style="color: green;font-weight: bolder;" hidden></i>
+            </div>
+            <!-- 错号 -->
+            <div class="layui-inline">
+                <i class="layui-icon" id="wr" style="color: red; font-weight: bolder;" hidden>ဆ</i>
+            </div>
         </div>
-    </div>
+        <!-- 密码 -->
+        <div class="layui-input-inline">
+            <div class="layui-inline" style="width: 85%">
+                <input type="password" id="pwd" name="password" required lay-verify="required" placeholder="请输入密码"
+                    autocomplete="off" class="layui-input">
+            </div>
+            <!-- 对号 -->
+            <div class="layui-inline">
+                <i class="layui-icon" id="pri" style="color: green;font-weight: bolder;" hidden></i>
+            </div>
+            <!-- 错号 -->
+            <div class="layui-inline">
+                <i class="layui-icon" id="pwr" style="color: red; font-weight: bolder;" hidden>ဆ</i>
+            </div>
+        </div>
+        <!-- 确认密码 -->
+        <div class="layui-input-inline">
+            <div class="layui-inline" style="width: 85%">
+                <input type="password" id="rpwd" name="repassword" required lay-verify="required" placeholder="请确认密码"
+                    autocomplete="off" class="layui-input">
+            </div>
+            <!-- 对号 -->
+            <div class="layui-inline">
+                <i class="layui-icon" id="rpri" style="color: green;font-weight: bolder;" hidden></i>
+            </div>
+            <!-- 错号 -->
+            <div class="layui-inline">
+                <i class="layui-icon" id="rpwr" style="color: red; font-weight: bolder;" hidden>ဆ</i>
+            </div>
+        </div>
+
+
+        <div class="layui-input-inline login-btn" style="width: 85%">
+            <button type="submit" lay-submit lay-filter="sub" class="layui-btn">注册</button>
+        </div>
+        <hr style="width: 85%" />
+        <p style="width: 85%"><a href="login.html" class="fl">已有账号？立即登录</a><a href="javascript:;" class="fr">忘记密码？</a>
+        </p>
+    </form>
 </div>
 
 
-<div class="footer"></div>
+<script src="../frame/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'jquery', 'layer'], function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        //添加表单失焦事件
+        //验证表单
+        $('#user').blur(function () {
+            var user = $(this).val();
 
-</body>
-<script src="/static/js/jquery.js"></script>
-<script>
-    $(function () {
-        var username, email, repassword;
-        // 验证变量
-        var chk_username = false,
-            chk_email = false,
-            chk_repassword = false;
-
-        // 验证用户名
-        $('#username').blur(function () {
-            checkUsername($('#username').val());
-        })
-
-        // 验证邮箱
-        $('#email').blur(function () {
-            checkEmail($('#email').val())
-        })
+            //alert(user);
+            $.ajax({
+                url: 'checkUser.php',
+                type: 'post',
+                dataType: 'text',
+                data: {
+                    user: user
+                },
+                //验证用户名是否可用
+                success: function (data) {
+                    if (data == 1) {
+                        $('#ri').removeAttr('hidden');
+                        $('#wr').attr('hidden', 'hidden');
 
 
+                    } else {
+                        $('#wr').removeAttr('hidden');
+                        $('#ri').attr('hidden', 'hidden');
+                        layer.msg('当前用户名已被占用! ')
 
-
-        function checkEmail(email) {
-            var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
-            if (re.test(email)) {
-                $('.verify-info.email').hide();
-                $('.verify-info.email.chk_exist').show().removeAttr('style').text('正在检查邮箱是否存在。。。');
-                // 异步验证邮箱是否存在
-                $.ajax({
-                    url: '<?php echo url("index/passport/checkEmail"); ?>',
-                    data: {
-                        email: email,
-                    },
-                    success: function (data) {
-                        console.log('data :', data);
-                        if (data == 0) {
-                            chk_email = true;
-                            $('.verify-info.email.chk_exist').text('该邮箱可用').css('color',
-                                'yellowgreen');
-                            $('#email').css('border-color', 'yellowgreen');
-                            // 三个都通过了 让提交按钮可用
-                            if (chk_username) $('#submit').removeAttr('disabled');
-                        } else {
-                            $('.verify-info.email.chk_exist').text('该邮箱已存在').css('color', 'red');
-                            $('#email').css('border-color', 'red');
-                        }
-                        console.log('chk_email :', chk_email);
                     }
-                })
-                return true;
-            } else {
-                $('.verify-info.email').hide();
-                $('#email').css('border-color', 'red');
-                $('.verify-info.email.chk_rule').show().css('color', 'red');
-                return false;
-            }
-        }
 
-        function checkUsername(username) {
-            var re = /^[a-zA-Z][a-zA-Z0-9]{3,15}$/;
-            if (re.test(username)) {
-                $('.verify-info.username').hide();
-                $('.verify-info.username.chk_exist').show().removeAttr('style').text('正在检查用户名是否存在。。。');
-                // 异步验证用户名是否存在
-                $.ajax({
-                    url: '<?php echo url("index/passport/checkUsername"); ?>',
-                    data: {
-                        username: username,
-                    },
-                    success: function (data) {
-                        console.log('data :', data);
-                        if (data == 0) {
-                            chk_username = true;
-                            $('.verify-info.username.chk_exist').text('该用户名可用').css('color',
-                                'yellowgreen');
-                            $('#username').css('border-color', 'yellowgreen');
-                            // 三个都通过了 让提交按钮可用
-                            if (chk_email) $('#submit').removeAttr('disabled');
-                        } else {
-                            $('.verify-info.username.chk_exist').text('该用户名已存在').css('color',
-                                'red');
-                            $('#username').css('border-color', 'red');
-                        }
-                        console.log('chk_username :', chk_username);
+                }
+            })
+
+        });
+
+        // you code ...
+        // 为密码添加正则验证
+        $('#pwd').blur(function () {
+            var reg = /^[\w]{6,12}$/;
+            if (!($('#pwd').val().match(reg))) {
+                //layer.msg('请输入合法密码');
+                $('#pwr').removeAttr('hidden');
+                $('#pri').attr('hidden', 'hidden');
+                layer.msg('请输入合法密码');
+            } else {
+                $('#pri').removeAttr('hidden');
+                $('#pwr').attr('hidden', 'hidden');
+            }
+        });
+
+        //验证两次密码是否一致
+        $('#rpwd').blur(function () {
+            if ($('#pwd').val() != $('#rpwd').val()) {
+                $('#rpwr').removeAttr('hidden');
+                $('#rpri').attr('hidden', 'hidden');
+                layer.msg('两次输入密码不一致!');
+            } else {
+                $('#rpri').removeAttr('hidden');
+                $('#rpwr').attr('hidden', 'hidden');
+            };
+        });
+
+        //
+        //添加表单监听事件,提交注册信息
+        form.on('submit(sub)', function () {
+            $.ajax({
+                url: 'reg.php',
+                type: 'post',
+                dataType: 'text',
+                data: {
+                    user: $('#user').val(),
+                    pwd: $('#pwd').val(),
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        layer.msg('注册成功');
+                        ///location.href = "login.html";
+                    } else {
+                        layer.msg('注册失败');
                     }
-                })
-                // $('.verify-info.username').removeAttr('style');
+                }
+            })
+            //防止页面跳转
+            return false;
+        });
 
-                // $('#username').css('border-color', 'yellowgreen');
-                return true;
-            } else {
-                $('.verify-info.username').hide();
-                $('#username').css('border-color', 'red');
-                $('.verify-info.username.chk_rule').show().css('color', 'red');
-                return false;
-            }
-        }
-
-        function checkRepassword(repassword) {
-            var password = $('#password').val();
-            if (repassword && password === repassword) { // 密码不为空且相等 则通过
-                console.log('password pass');
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-
-    })
-        function sb1() {
-            var password = document.getElementById("password");
-            var repassword = document.getElementById("repasssword");
-            if (password.value == null || password.value == "") {
-                alert("please enter password");
-                password.focus();
-                return false;
-            } 
-            return true;
-        }
+    });
 </script>
-</html>

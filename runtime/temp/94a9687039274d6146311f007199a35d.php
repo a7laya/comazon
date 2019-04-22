@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1555832140;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555203361;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1555922722;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555921051;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
     <!-- <link rel="stylesheet" href="/static/css/bootstrap.css"> -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <title>COMAZON</title>
 </head>
@@ -33,60 +35,56 @@
 
         </div>
     </div>
-    <div class="container container-body">
 
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-            <h2>Sign in</h2>
-            <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae aperiam consectetur saepe aut, ullam fuga
-                nesciunt, tenetur vitae aspernatur blanditiis labore quam tempore debitis assumenda id</h4>
-
+<div class="login-main">
+    <header class="layui-elip">LOGIN</header>
+    <form class="layui-form">
+        <div class="layui-input-inline">
+            <input type="text" name="account" required lay-verify="required" placeholder="Username / Email" autocomplete="off"
+                class="layui-input">
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-            <div class="panel panel-sign">
-                <form id="login-form" action="">
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="text" name="User[username]" class="form-control" placeholder="Input your email">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" name="User[password]" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <button id="btn-submit" type="submit" class="btn btn-primary btn-block">Sign in</button>
-                    </div>
-                </form>
+        <div class="layui-input-inline">
+            <input type="password" name="password" required lay-verify="required" placeholder="Password" autocomplete="off"
+                class="layui-input">
+        </div>
+        <div class="layui-input-inline login-btn">
+            <button lay-submit lay-filter="login" class="layui-btn">Sign in</button>
+        </div>
+        <hr />
+        <!--<div class="layui-input-inline">
+                <button type="button" class="layui-btn layui-btn-primary">QQ登录</button>
             </div>
-        </div>
-    </div>
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/layer.js"></script>
-    <script src="/static/js/jquery.form.min.js"></script>
-    <script>
-        $(function () {
-            // 表单提交
-            var $form = $('#login-form');
-            $form.submit(function () {
-                var $btn_submit = $('#btn-submit');
-                $btn_submit.attr("disabled", true);
-                $form.ajaxSubmit({
-                    type: "post",
-                    dataType: "json",
-                    // url: '',
-                    success: function (result) {
-                        $btn_submit.attr('disabled', false);
-                        if (result.code === 1) {
-                            layer.msg(result.msg, {time: 1500, anim: 1}, function () {
-                                window.location = result.url;
-                            });
-                            return true;
-                        }
-                        layer.msg(result.msg, {time: 1500, anim: 6});
+            <div class="layui-input-inline">
+                <button type="button" class="layui-btn layui-btn-normal">微信登录</button>
+            </div>-->
+        <p><a href="register.html" class="fl">Sign up</a><a href="javascript:;" class="fr">Forget the password?</a></p>
+    </form>
+</div>
+
+<script src="/static/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'jquery'], function () {
+
+        // 操作对象
+        var form = layui.form;
+        var $ = layui.jquery;
+        form.on('submit(login)', function (data) {
+            // console.log(data.field);
+            $.ajax({
+                url: 'login.php',
+                data: data.field,
+                dataType: 'text',
+                type: 'post',
+                success: function (data) {
+                    if (data == '1') {
+                        location.href = "../index.php";
+                    } else {
+                        layer.msg('登录名或密码错误');
                     }
-                });
-                return false;
-            });
-        });
-    </script>
+                }
+            })
+            return false;
+        })
+
+    });
+</script>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:100:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up_res.html";i:1555891914;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555902821;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:100:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up_res.html";i:1555908930;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555902821;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,10 +36,31 @@
     </div>
 
 <div class="container">
-    <span style="font-size: 22px; color:cornsilk">
-        <?php echo $post; ?>,Congratulations on your successful registration. You are turning to the home page.
+    <span id="msg" style="font-size: 22px; color:cornsilk">
+        
     </span>
 </div>
 </body>
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    function reurl() {
+        if ("<?php echo $status; ?>" == 1) {
+            window.location = "<?php echo url('index/index/index'); ?>";
+        } else {
+            window.history.go(-1);
+        }
+    }
+    setTimeout(reurl, 3000);
+    $(function () {
+        if ("<?php echo $status; ?>" == 1) {
+            $('#msg').text(
+                '<?php echo $post; ?>,Congratulations on your successful registration. You are turning to the home page.'
+                )
+        } else {
+            $('#msg').text('<?php echo $post; ?>,Please re-registe')
+        }
+
+    })
+</script>
 
 </html>

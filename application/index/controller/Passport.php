@@ -53,22 +53,22 @@ class Passport extends Base
 
                 if($model->findUsername($user)) 
                 {
-                    return view('sign_up_res',['post' => '用户名已经存在']);
+                    return view('sign_up_res',['status' => 0, 'post' => 'Username already exists']);
                 }
 
                 if($model->findEmail($user)) {
-                    return view('sign_up_res',['post' =>'邮箱已经存在']);
+                    return view('sign_up_res',['status' => 0, 'post' =>'Email already exists']);
                 }
                 
                 if ($model->add($user)) {
                     // return $this->renderSuccess('添加成功');
-                    return view('sign_up_res',['post' => $user['username']]);
+                    return view('sign_up_res',['status' => 1, 'post' => $user['username']]);
                 } 
             }
             // return $this->renderError($model->getError() ?: '添加失败');
         }
 
-        return view('sign_up_res',['post' => '添加失败']);
+        return view('sign_up_res',['post' => 'Registration has failed']);
 
     }
 
@@ -85,9 +85,9 @@ class Passport extends Base
         if ($this->request->isAjax()) {
             $model = new User;
             if ($model->login($this->postData('User'))) {
-                return $this->renderSuccess('登录成功', url('index/index'));
+                return $this->renderSuccess('Login successfully', url('index/index'));
             }
-            return $this->renderError($model->getError() ?: '登录失败');
+            return $this->renderError($model->getError() ?: 'Login failed');
         }
         // $this->view->engine->layout(false);
         return view();

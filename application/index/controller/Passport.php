@@ -45,30 +45,28 @@ class Passport extends Base
     // 注册结果页面
     public function signUpRes()
     {
-        if (!$this->request->isAjax()) {
-            $user = input();
-            $model = new User;
-            if(isset($user['password']) ) {
-                $user['password'] = shop_hash($user['password']);
+        
+        $user = input();
+        $model = new User;
+        if(isset($user['password']) ) {
+            $user['password'] = shop_hash($user['password']);
 
-                if($model->findUsername($user)) 
-                {
-                    return view('sign_up_res',['status' => 0, 'post' => 'Username already exists']);
-                }
-
-                if($model->findEmail($user)) {
-                    return view('sign_up_res',['status' => 0, 'post' =>'Email already exists']);
-                }
-                
-                if ($model->add($user)) {
-                    // return $this->renderSuccess('添加成功');
-                    return view('sign_up_res',['status' => 1, 'post' => $user['username']]);
-                } 
+            if($model->findUsername($user)) 
+            {
+                return 0;
             }
-            // return $this->renderError($model->getError() ?: '添加失败');
-        }
 
-        return view('sign_up_res',['post' => 'Registration has failed']);
+            if($model->findEmail($user)) {
+                return 0;
+            }
+            
+            if ($model->add($user)) {
+                // return $this->renderSuccess('添加成功');
+                return 1;
+            } 
+        }
+        // return $this->renderError($model->getError() ?: '添加失败');
+    
 
     }
 

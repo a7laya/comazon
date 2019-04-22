@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555923193;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555921051;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555945906;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555923784;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,67 +38,82 @@
 
 <div class="login-main">
     <header class="layui-elip" style="width: 82%">Create your account</header>
-
     <!-- 表单选项 -->
     <form class="layui-form">
         <div class="layui-input-inline">
             <!-- 用户名 -->
             <div class="layui-inline" style="width: 85%">
-                <input type="text" id="user" name="account" required lay-verify="required" placeholder="请输入用户名"
+                <input type="text" id="user" name="username" required lay-verify="required" placeholder="username"
                     autocomplete="off" class="layui-input">
             </div>
             <!-- 对号 -->
             <div class="layui-inline">
-                <i class="layui-icon" id="ri" style="color: green;font-weight: bolder;" hidden></i>
+                <i class="layui-icon ri" id="ri" hidden></i>
             </div>
             <!-- 错号 -->
             <div class="layui-inline">
-                <i class="layui-icon" id="wr" style="color: red; font-weight: bolder;" hidden>ဆ</i>
+                <i class="layui-icon wr" id="wr" hidden>ဆ</i>
+            </div>
+        </div>
+        <div class="layui-input-inline">
+            <!-- 邮箱 -->
+            <div class="layui-inline" style="width: 85%">
+                <input type="text" id="email" name="email" required lay-verify="required" placeholder="email"
+                    autocomplete="off" class="layui-input">
+            </div>
+            <!-- 对号 -->
+            <div class="layui-inline">
+                <i class="layui-icon ri" id="e-ri" hidden></i>
+            </div>
+            <!-- 错号 -->
+            <div class="layui-inline">
+                <i class="layui-icon wr" id="e-wr" hidden>ဆ</i>
             </div>
         </div>
         <!-- 密码 -->
         <div class="layui-input-inline">
             <div class="layui-inline" style="width: 85%">
-                <input type="password" id="pwd" name="password" required lay-verify="required" placeholder="请输入密码"
+                <input type="password" id="pwd" name="password" required lay-verify="required" placeholder="password"
                     autocomplete="off" class="layui-input">
             </div>
             <!-- 对号 -->
             <div class="layui-inline">
-                <i class="layui-icon" id="pri" style="color: green;font-weight: bolder;" hidden></i>
+                <i class="layui-icon ri" id="pri" hidden></i>
             </div>
             <!-- 错号 -->
             <div class="layui-inline">
-                <i class="layui-icon" id="pwr" style="color: red; font-weight: bolder;" hidden>ဆ</i>
+                <i class="layui-icon wr" id="pwr" hidden>ဆ</i>
             </div>
         </div>
         <!-- 确认密码 -->
         <div class="layui-input-inline">
             <div class="layui-inline" style="width: 85%">
-                <input type="password" id="rpwd" name="repassword" required lay-verify="required" placeholder="请确认密码"
-                    autocomplete="off" class="layui-input">
+                <input type="password" id="rpwd" name="repassword" required lay-verify="required"
+                    placeholder="Please confirm your password" autocomplete="off" class="layui-input">
             </div>
             <!-- 对号 -->
             <div class="layui-inline">
-                <i class="layui-icon" id="rpri" style="color: green;font-weight: bolder;" hidden></i>
+                <i class="layui-icon ri" id="rpri" hidden></i>
             </div>
             <!-- 错号 -->
             <div class="layui-inline">
-                <i class="layui-icon" id="rpwr" style="color: red; font-weight: bolder;" hidden>ဆ</i>
+                <i class="layui-icon wr" id="rpwr" hidden>ဆ</i>
             </div>
         </div>
 
 
         <div class="layui-input-inline login-btn" style="width: 85%">
-            <button type="submit" lay-submit lay-filter="sub" class="layui-btn">注册</button>
+            <button type="submit" lay-submit lay-filter="sub" class="layui-btn">Sign in</button>
         </div>
         <hr style="width: 85%" />
-        <p style="width: 85%"><a href="login.html" class="fl">已有账号？立即登录</a><a href="javascript:;" class="fr">忘记密码？</a>
+        <p style="width: 85%"><a href="sign_in" class="fl">Login immediately</a><a href="javascript:;" class="fr">Forget
+                password</a>
         </p>
     </form>
 </div>
 
 
-<script src="../frame/layui/layui.js"></script>
+<script src="/static/layui/layui.js"></script>
 <script type="text/javascript">
     layui.use(['form', 'jquery', 'layer'], function () {
         var form = layui.form;
@@ -108,31 +123,77 @@
         //验证表单
         $('#user').blur(function () {
             var user = $(this).val();
+            var re = /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
+            // 先进行前端正则验证用户名格式是否正确，
+            // 如果格式正确则发送到后端验证是否可用
+            if (re.test(user)) {
+                $.ajax({
+                    url: '<?php echo url("index/passport/checkUsername"); ?>',
+                    type: 'post',
+                    dataType: 'text',
+                    data: {
+                        username: user
+                    },
+                    //验证用户名是否可用
+                    success: function (data) {
+                        if (data == 0) {
+                            $('#ri').removeAttr('hidden');
+                            $('#wr').attr('hidden', 'hidden');
 
-            //alert(user);
-            $.ajax({
-                url: 'checkUser.php',
-                type: 'post',
-                dataType: 'text',
-                data: {
-                    user: user
-                },
-                //验证用户名是否可用
-                success: function (data) {
-                    if (data == 1) {
-                        $('#ri').removeAttr('hidden');
-                        $('#wr').attr('hidden', 'hidden');
 
+                        } else {
+                            $('#wr').removeAttr('hidden');
+                            $('#ri').attr('hidden', 'hidden');
+                            layer.msg('The current username has been occupied!')
 
-                    } else {
-                        $('#wr').removeAttr('hidden');
-                        $('#ri').attr('hidden', 'hidden');
-                        layer.msg('当前用户名已被占用! ')
+                        }
 
                     }
+                })
+            } else {
+                $('#wr').removeAttr('hidden');
+                $('#ri').attr('hidden', 'hidden');
+                layer.msg('Username must be 3-16 letters and numbers, beginning with letters! ')
+            }
 
-                }
-            })
+
+
+        });
+        $('#email').blur(function () {
+            var email = $(this).val();
+            var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+            // 先进行前端正则验证邮箱格式是否正确，
+            // 如果格式正确则发送到后端验证是否可用
+            if (re.test(email)) {
+                $.ajax({
+                    url: '<?php echo url("index/passport/checkEmail"); ?>',
+                    type: 'post',
+                    dataType: 'text',
+                    data: {
+                        email: email
+                    },
+                    //验证邮箱是否可用
+                    success: function (data) {
+                        console.log('email-data :', data);
+                        if (data == 0) {
+                            $('#e-ri').removeAttr('hidden');
+                            $('#e-wr').attr('hidden', 'hidden');
+                        } else {
+                            $('#e-wr').removeAttr('hidden');
+                            $('#e-ri').attr('hidden', 'hidden');
+                            layer.msg('The current emailname has been occupied!')
+
+                        }
+
+                    }
+                })
+            } else {
+                $('#e-wr').removeAttr('hidden');
+                $('#e-ri').attr('hidden', 'hidden');
+                layer.msg('The email format is incorrect! ')
+            }
+
+
 
         });
 
@@ -144,7 +205,7 @@
                 //layer.msg('请输入合法密码');
                 $('#pwr').removeAttr('hidden');
                 $('#pri').attr('hidden', 'hidden');
-                layer.msg('请输入合法密码');
+                layer.msg('Password must be 6-12 letters and numbers, not null!');
             } else {
                 $('#pri').removeAttr('hidden');
                 $('#pwr').attr('hidden', 'hidden');
@@ -156,7 +217,7 @@
             if ($('#pwd').val() != $('#rpwd').val()) {
                 $('#rpwr').removeAttr('hidden');
                 $('#rpri').attr('hidden', 'hidden');
-                layer.msg('两次输入密码不一致!');
+                layer.msg('Two inconsistent passwords!');
             } else {
                 $('#rpri').removeAttr('hidden');
                 $('#rpwr').attr('hidden', 'hidden');
@@ -167,19 +228,29 @@
         //添加表单监听事件,提交注册信息
         form.on('submit(sub)', function () {
             $.ajax({
-                url: 'reg.php',
+                url: 'signUpRes',
                 type: 'post',
                 dataType: 'text',
                 data: {
-                    user: $('#user').val(),
-                    pwd: $('#pwd').val(),
+                    username: $('#user').val(),
+                    email: $('#email').val(),
+                    password: $('#pwd').val(),
                 },
                 success: function (data) {
+                    console.log('submit-data.status :', data);
                     if (data == 1) {
-                        layer.msg('注册成功');
-                        ///location.href = "login.html";
+                        layer.open({
+                            content: 'Registration succeed',
+                            yes: function (index, layero) {
+                                //do something
+                                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                location.href = "signIn";
+                            }
+                        });
+                        // layer.msg('Registration succeed');
+                        
                     } else {
-                        layer.msg('注册失败');
+                        layer.msg('Registration failed');
                     }
                 }
             })

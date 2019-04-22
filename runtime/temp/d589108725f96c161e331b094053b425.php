@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:90:"C:\Users\Administrator\Desktop\amazon_web\public/../application/admin\view\index\main.html";i:1555662336;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +10,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
   <meta name="apple-mobile-web-app-capable" content="yes">  
   <meta name="format-detection" content="telephone=no"> 
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/layui/css/layui.css" media="all">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/bootstrap/css/bootstrap.css" media="all">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/global.css">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/main.css" media="all">
+	<link rel="stylesheet" type="text/css" href="/static/admin/common/layui/css/layui.css" media="all">
+	<link rel="stylesheet" type="text/css" href="/static/admin/common/bootstrap/css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="/static/admin/common/global.css">
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/main.css" media="all">
 </head>
 <body>
 <section class="larry-wrapper">
@@ -148,7 +149,7 @@
 
 	});
 </script>
-<script type="text/javascript" src="__STATIC__/admin/jsplug/echarts.min.js"></script>
-<script type="text/javascript" src="__STATIC__/admin/js/main.js"></script>
+<script type="text/javascript" src="/static/admin/jsplug/echarts.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/main.js"></script>
 </body>
 </html>

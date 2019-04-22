@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:100:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up_res.html";i:1555289498;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555203361;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:100:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up_res.html";i:1555891914;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555902821;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
     <!-- <link rel="stylesheet" href="/static/css/bootstrap.css"> -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/main.css">
@@ -35,7 +36,7 @@
     </div>
 
 <div class="container">
-    <span style="font-size: 22px">
+    <span style="font-size: 22px; color:cornsilk">
         <?php echo $post; ?>,Congratulations on your successful registration. You are turning to the home page.
     </span>
 </div>

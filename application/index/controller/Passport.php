@@ -21,6 +21,27 @@ class Passport extends Base
         return view();
     }
     
+    // 用于在注册界面即时检查用户名是否存在
+    public function checkUsername()
+    {   $user = input();
+        $model = new User;
+        if($model->findUsername($user)){
+            return 1; // 存在返回 1
+        } else {
+            return 0; // 不存在返回 0
+        }
+    }
+    // 用于在注册界面即时检查用户名是否存在
+    public function checkEmail()
+    {   $user = input();
+        $model = new User;
+        if($model->findEmail($user)){
+            return 1; // 存在返回 1
+        } else {
+            return 0; // 不存在返回 0
+        }
+    }
+
     // 注册结果页面
     public function signUpRes()
     {

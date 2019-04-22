@@ -12,4 +12,8 @@ class Index extends \think\Controller
         // 模板输出
         return view();
     }
+    public function main(){
+        // 模板输出
+        return view();
+    }
 }

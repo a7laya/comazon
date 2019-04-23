@@ -10,7 +10,7 @@ use think\Session;
  * Class Passport
  * @package app\store\controller
  */
-class Passport extends Controller
+class Passport extends Base
 {
         
     // 注册页面
@@ -102,7 +102,7 @@ class Passport extends Controller
     public function logout()
     {
         session(null);//退出清空session
-        $this->redirect('index/passport/signIn');
+        $this->redirect('index/index');
     }
 
 }

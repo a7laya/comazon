@@ -23,7 +23,8 @@ class Passport extends Base
     
     // 用于在注册界面即时检查用户名是否存在
     public function checkUsername()
-    {   $user = input();
+    {   
+        $user = input();
         $model = new User;
         if($model->findUsername($user)){
             return 1; // 存在返回 1
@@ -33,7 +34,8 @@ class Passport extends Base
     }
     // 用于在注册界面即时检查用户名是否存在
     public function checkEmail()
-    {   $user = input();
+    {   
+        $user = input();
         $model = new User;
         if($model->findEmail($user)){
             return 1; // 存在返回 1
@@ -81,8 +83,11 @@ class Passport extends Base
     public function signIn()
     {
         if ($this->request->isAjax()) {
+            $user = input();
+            var_dump($user);
             $model = new User;
-            if ($model->login($this->postData('User'))) {
+            if ($model->login($user)) {
+                return view("sign_up");
                 return $this->renderSuccess('Login successfully', url('index/index'));
             }
             return $this->renderError($model->getError() ?: 'Login failed');

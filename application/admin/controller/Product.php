@@ -1,7 +1,7 @@
 <?php
 namespace app\Admin\controller;
 
-class Product extends \think\Controller
+class Product extends Base
 {
     public function _initialize()
     {

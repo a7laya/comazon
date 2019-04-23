@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556005784;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556007691;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556005784;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556021234;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,9 +22,9 @@
                 <li><a href="#">Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="<?php echo url('index/passport/signIn'); ?>">Sign in</a></li>
+                <li><a href="<?php echo url('index/passport/signIn'); ?>"><?php echo $shop_user['username']; ?></a></li>
                 <li><a href="<?php echo url('index/passport/signUp'); ?>">Sign up</a></li>
-                <li><a href="<?php echo url('index/passport/logout'); ?>"><?php echo $user; ?>Logout</a></li>
+                <li><a href="<?php echo url('index/passport/logout'); ?>">Logout</a></li>
             </ul>
             <form action="#" class="navbar-form navbar-right">
                 <div class="form-group">

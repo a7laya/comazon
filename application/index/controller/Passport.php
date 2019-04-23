@@ -84,7 +84,7 @@ class Passport extends Base
     {
         if ($this->request->isAjax()) {
             $user = input();
-            var_dump($user);
+            // var_dump($user);
             $model = new User;
             if ($model->login($user)) {
                 // return $this->renderSuccess('Login successfully', url('index/index'));

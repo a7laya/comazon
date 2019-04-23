@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555945906;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555923784;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555977950;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555977691;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <!-- <link rel="stylesheet" href="/static/css/bootstrap.css"> -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <title>COMAZON</title>
 </head>
@@ -35,6 +34,7 @@
 
         </div>
     </div>
+<link rel="stylesheet" href="/static/css/login.css">
 
 <div class="login-main">
     <header class="layui-elip" style="width: 82%">Create your account</header>
@@ -106,7 +106,7 @@
             <button type="submit" lay-submit lay-filter="sub" class="layui-btn">Sign in</button>
         </div>
         <hr style="width: 85%" />
-        <p style="width: 85%"><a href="sign_in" class="fl">Login immediately</a><a href="javascript:;" class="fr">Forget
+        <p style="width: 85%"><a href="signIn" class="fl">Login immediately</a><a href="javascript:;" class="fr">Forget
                 password</a>
         </p>
     </form>

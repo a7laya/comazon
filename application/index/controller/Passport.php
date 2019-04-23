@@ -45,29 +45,29 @@ class Passport extends Base
     // 注册结果页面
     public function signUpRes()
     {
-        
-        $user = input();
-        $model = new User;
-        if(isset($user['password']) ) {
-            $user['password'] = shop_hash($user['password']);
+        if ($this->request->isAjax()) {
+            $user = input();
+            $model = new User;
+            if(isset($user['password']) ) {
+                $user['password'] = shop_hash($user['password']);
 
-            if($model->findUsername($user)) 
-            {
-                return 0;
-            }
+                if($model->findUsername($user)) 
+                {
+                    return 0;
+                }
 
-            if($model->findEmail($user)) {
-                return 0;
+                if($model->findEmail($user)) {
+                    return 0;
+                }
+                
+                if ($model->add($user)) {
+                    // return $this->renderSuccess('添加成功');
+                    return 1;
+                } 
             }
-            
-            if ($model->add($user)) {
-                // return $this->renderSuccess('添加成功');
-                return 1;
-            } 
+            // return $this->renderError($model->getError() ?: '添加失败');
         }
-        // return $this->renderError($model->getError() ?: '添加失败');
-    
-
+        return view();
     }
 
 

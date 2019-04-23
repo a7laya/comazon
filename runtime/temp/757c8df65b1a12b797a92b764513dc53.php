@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:91:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\index\index.html";i:1555202805;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555902821;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:91:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\index\index.html";i:1555202805;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555923784;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <!-- <link rel="stylesheet" href="/static/css/bootstrap.css"> -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <title>COMAZON</title>
 </head>

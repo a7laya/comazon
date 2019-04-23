@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1555923784;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555923784;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1555978214;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555977691;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <!-- <link rel="stylesheet" href="/static/css/bootstrap.css"> -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <title>COMAZON</title>
 </head>
@@ -35,6 +34,7 @@
 
         </div>
     </div>
+<link rel="stylesheet" href="/static/css/login.css">
 
 <div class="login-main">
     <header class="layui-elip">LOGIN</header>
@@ -51,13 +51,7 @@
             <button lay-submit lay-filter="login" class="layui-btn">Sign in</button>
         </div>
         <hr />
-        <!--<div class="layui-input-inline">
-                <button type="button" class="layui-btn layui-btn-primary">QQ登录</button>
-            </div>
-            <div class="layui-input-inline">
-                <button type="button" class="layui-btn layui-btn-normal">微信登录</button>
-            </div>-->
-        <p><a href="register.html" class="fl">Sign up</a><a href="javascript:;" class="fr">Forget the password?</a></p>
+        <p><a href="signUp" class="fl">Sign up</a><a href="javascript:;" class="fr">Forget the password?</a></p>
     </form>
 </div>
 
@@ -69,9 +63,9 @@
         var form = layui.form;
         var $ = layui.jquery;
         form.on('submit(login)', function (data) {
-            // console.log(data.field);
+            console.log('data.field: ',data.field);
             $.ajax({
-                url: 'login.php',
+                url: 'signIn',
                 data: data.field,
                 dataType: 'text',
                 type: 'post',

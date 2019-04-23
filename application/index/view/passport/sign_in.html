@@ -35,8 +35,9 @@
                 dataType: 'text',
                 type: 'post',
                 success: function (data) {
+                    console.log('data :', data);
                     if (data == '1') {
-                        location.href = "{:url('index/index/index')}";
+                        // location.href = "{:url('index/index/index')}";
                     } else {
                         layer.msg('Account or password error!');
                     }

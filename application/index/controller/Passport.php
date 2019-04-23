@@ -92,7 +92,7 @@ class Passport extends Base
             }
             return $this->renderError($model->getError() ?: 'Login failed');
         }
-        // $this->view->engine->layout(false);
+        
         return view();
     }
 

@@ -1,0 +1,41 @@
+body {
+    background-color: #4b555e;
+}
+.navbar-default {
+    background-color: #24292e;
+    border-color: #22252b;
+    border-radius: 0;
+}
+
+.navbar-default .navbar-nav>li>a{
+    color: rgb(191, 198, 204);
+}
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover{
+    color: hsla(0,0%,100%,1);
+}
+.container-body {
+    padding-top: 60px;
+}
+
+.container.index {
+    color:#fff;
+}
+
+.panel-sign {
+    padding: 30px;
+}
+
+h2 {
+    color: #fff;
+    line-height:38px
+}
+h4 {
+    line-height:28px;
+}
+.verify-info {
+    color: #ccc;
+    font-size: 12px;
+}
+
+

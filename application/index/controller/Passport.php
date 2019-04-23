@@ -87,12 +87,12 @@ class Passport extends Base
             var_dump($user);
             $model = new User;
             if ($model->login($user)) {
-                return view("sign_up");
-                return $this->renderSuccess('Login successfully', url('index/index'));
+                // return $this->renderSuccess('Login successfully', url('index/index'));
+                return 1;
             }
-            return $this->renderError($model->getError() ?: 'Login failed');
+            // return $this->renderError($model->getError() ?: 'Login failed');
+            return 0;
         }
-        // $this->view->engine->layout(false);
         return view();
     }
 

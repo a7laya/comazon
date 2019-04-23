@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1555978214;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555977691;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1555989386;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555977691;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,10 +70,11 @@
                 dataType: 'text',
                 type: 'post',
                 success: function (data) {
+                    console.log('data :', data);
                     if (data == '1') {
-                        location.href = "../index.php";
+                        // location.href = "<?php echo url('index/index/index'); ?>";
                     } else {
-                        layer.msg('登录名或密码错误');
+                        layer.msg('Account or password error!');
                     }
                 }
             })

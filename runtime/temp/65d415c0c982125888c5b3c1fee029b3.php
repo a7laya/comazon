@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555977950;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555977691;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_up.html";i:1555979120;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1555977691;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,6 +45,10 @@
             <div class="layui-inline" style="width: 85%">
                 <input type="text" id="user" name="username" required lay-verify="required" placeholder="username"
                     autocomplete="off" class="layui-input">
+            </div>
+            <!-- loading -->
+            <div class="layui-inline">
+                <i class="layui-icon loading" id="loading" hidden></i>
             </div>
             <!-- 对号 -->
             <div class="layui-inline">

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:91:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\index\index.html";i:1555202805;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556004826;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:91:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\index\index.html";i:1555202805;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556005784;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 

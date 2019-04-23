@@ -28,7 +28,7 @@ class User extends Model
             'username' => $data['account'],
             'password' => shop_hash($data['password'])
         ])->find()
-        || !$user = self::useGlobalScope(false)->where([
+        && !$user = self::useGlobalScope(false)->where([
             'email' => $data['account'],
             'password' => shop_hash($data['password'])
         ])->find()) {

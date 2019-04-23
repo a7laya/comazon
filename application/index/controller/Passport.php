@@ -13,8 +13,6 @@ use think\Session;
 class Passport extends Controller
 {
         
-
-    
     // 注册页面
     public function signUp()
     {       

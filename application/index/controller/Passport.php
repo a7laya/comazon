@@ -1,7 +1,7 @@
 <?php
 
 namespace app\index\controller;
-
+use think\Controller;
 use app\index\model\User;
 use think\Session;
 
@@ -10,11 +10,9 @@ use think\Session;
  * Class Passport
  * @package app\store\controller
  */
-class Passport extends Base
+class Passport extends Controller
 {
         
-
-    
     // 注册页面
     public function signUp()
     {       
@@ -103,8 +101,8 @@ class Passport extends Base
      */
     public function logout()
     {
-        Session::clear('yoshop_store');
-        $this->redirect('passport/login');
+        session(null);//退出清空session
+        $this->redirect('index/passport/signIn');
     }
 
 }

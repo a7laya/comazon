@@ -25,7 +25,7 @@ class User extends Model
     {
         // 验证用户名密码是否正确
         if (!$user = self::useGlobalScope(false)->where([
-            'username' => $data['username'],
+            'username' => $data['account'],
             // 'password' => shop_hash($data['password'])
             'password' => $data['password']
         ])->find()) {

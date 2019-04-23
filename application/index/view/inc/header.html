@@ -21,8 +21,14 @@
                 <li><a href="#">Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{:url('index/passport/signIn')}">{$shop_user.username}</a></li>
+                
+
+                {if condition="($shop_user == null)"} 
+                <li><a href="{:url('index/passport/signIn')}">Sign in</a></li>
                 <li><a href="{:url('index/passport/signUp')}">Sign up</a></li>
+                {else /} 
+                <li><a href="{:url('index/user/index')}">{$shop_user.username}</a></li>
+                {/if}
                 <li><a href="{:url('index/passport/logout')}">Logout</a></li>
             </ul>
             <form action="#" class="navbar-form navbar-right">

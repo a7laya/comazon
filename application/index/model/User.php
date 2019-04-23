@@ -23,28 +23,27 @@ class User extends Model
      */
     public function login($data)
     {
-        // 验证用户名密码是否正确
-        if (!$user = self::useGlobalScope(false)->where([
+        $user1 = self::useGlobalScope(false)->where([
             'username' => $data['account'],
             'password' => shop_hash($data['password'])
-        ])->find()
-        && !$user = self::useGlobalScope(false)->where([
+        ])->find();
+        $user2 = self::useGlobalScope(false)->where([
             'email' => $data['account'],
             'password' => shop_hash($data['password'])
-        ])->find()) {
+        ])->find();
+        $user = isset($user1) ? $user1 : $user2;
+        // 验证用户名密码是否正确
+        if (isset($user)) {
+            // 保存登录状态
+            Session::set('shop_user', [
+                'username' => $user['username'],
+                'is_login' => true,
+            ]);
+            return true;
+        } else {
             $this->error = '登录失败, 用户名或密码错误';
             return false;
         }
-
-        // 保存登录状态
-        Session::set('shop_user', [
-            'user' => [
-                'user_id' => $user['user_id'],
-                'username' => $user['username'],
-            ],
-            'is_login' => true,
-        ]);
-        return true;
     }
 
      /**

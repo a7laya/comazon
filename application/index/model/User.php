@@ -105,7 +105,7 @@ class User extends Model
      */
     public function renew($data)
     {
-        if ($data['password'] !== $data['password_confirm']) {
+        if ($data['password'] !== $data['repassword']) {
             $this->error = '确认密码不正确';
             return false;
         }

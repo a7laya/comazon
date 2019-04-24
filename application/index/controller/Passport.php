@@ -102,7 +102,7 @@ class Passport extends Base
     public function logout()
     {
         session(null);//退出清空session
-        $this->redirect('index/index');
+        $this->redirect('passport/signin');
     }
 
 }

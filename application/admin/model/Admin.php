@@ -23,21 +23,17 @@ class Admin extends Model
      */
     public function login($data)
     {
-        $user1 = self::useGlobalScope(false)->where([
+        $user = self::useGlobalScope(false)->where([
             'username' => $data['account'],
             'password' => shop_hash($data['password'])
         ])->find();
-        $user2 = self::useGlobalScope(false)->where([
-            'email' => $data['account'],
-            'password' => shop_hash($data['password'])
-        ])->find();
-        $user = isset($user1) ? $user1 : $user2;
+
         // 验证用户名密码是否正确
         if (isset($user)) {
             // 保存登录状态
-            Session::set('shop_user', [
-                'username' => $user['username'],
-                'is_login' => true,
+            Session::set('shop_admin', [
+                'admin_username' => $user['username'],
+                'admin_is_login' => true,
             ]);
             return true;
         } else {
@@ -63,9 +59,9 @@ class Admin extends Model
             return false;
         }
         // 更新session
-        Session::set('shop_admin.Admin', [
+        Session::set('shop_admin', [
             'admin_id' => $this['admin_id'],
-            'username' => $data['username'],
+            'admin_username' => $data['username'],
         ]);
         return true;
     }

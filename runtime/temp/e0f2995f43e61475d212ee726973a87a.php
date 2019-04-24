@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:73:"D:\phpworkspace\comazon\public/../application/admin\view\index\login.html";i:1556024704;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:73:"D:\phpworkspace\comazon\public/../application/admin\view\index\login.html";i:1556081015;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 

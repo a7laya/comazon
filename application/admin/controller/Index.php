@@ -1,7 +1,7 @@
 <?php
 namespace app\Admin\controller;
 use think\Session;
-use app\admin\Admin;
+use app\admin\model\Admin;
 class Index extends Base
 {
     public function _initialize()
@@ -10,7 +10,7 @@ class Index extends Base
     }
 
     public function index(){
-        $user = Session::get('shop_user'); 
+        $user = Session::get('admin_user'); 
         if(isset($user)) {
             // 模板输出
             return  $this->fetch();
@@ -18,16 +18,17 @@ class Index extends Base
             $this->redirect('index/login'); 
         }
     }
+
     public function login(){
         if ($this->request->isAjax()) {
             $user = input();
             $model = new Admin;
             if ($model->login($user)) {
-                // return $this->renderSuccess('Login successfully', url('index/index'));
-                return 1;
+                return 1; 
+            } else {
+                return 0;
             }
-            // return $this->renderError($model->getError() ?: 'Login failed');
-            return 0;
+
         }
         // 模板输出
         return view();

@@ -91,10 +91,6 @@ class Passport extends Base
     }
 
 
-    // public function login()
-    // {
-
-    // }
 
     /**
      * 退出登录

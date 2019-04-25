@@ -11,7 +11,12 @@ class Index extends Base
 
     public function index(){
         // 模板输出
-        return  $this->fetch();
+        if($this->shop_user){
+            return  view();
+        } else {
+            // 判断session是否存在，不存在的话就重定向
+            return $this->redirect('index/passport/signIn');
+        }
     }
 
 

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556005784;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556065434;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556112495;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +18,7 @@
             <div class="navbar-brand">COMAZON</div>
             <ul class="nav navbar-nav">
                 <li><a href="<?php echo url('index/index/index'); ?>">Home</a></li>
-                <li><a href="<?php echo url('index/product/index'); ?>">Product</a></li>
+                <li><a href="<?php echo url('index/products/productsList'); ?>">Products</a></li>
                 <li><a href="#">Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -29,7 +29,6 @@
                 <li><a href="<?php echo url('index/passport/signUp'); ?>">Sign up</a></li>
                 <?php else: ?> 
                 <li><a href="<?php echo url('index/user/index'); ?>"><?php echo $shop_user['username']; ?></a></li>
-                
                 <li><a href="<?php echo url('index/passport/logout'); ?>">Logout</a></li>
                 <?php endif; ?>
             </ul>

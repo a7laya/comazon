@@ -27,7 +27,7 @@
                 <li><a href="{:url('index/passport/signIn')}">Sign in</a></li>
                 <li><a href="{:url('index/passport/signUp')}">Sign up</a></li>
                 {else /} 
-                <li><a href="{:url('index/user/index')}">{$shop_user.username}</a></li>
+                <li id="username"><a href="{:url('index/user/index')}">{$shop_user.username}</a></li>
                 <li><a href="{:url('index/passport/logout')}">Logout</a></li>
                 {/if}
             </ul>

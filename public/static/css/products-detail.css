@@ -1,0 +1,86 @@
+.container div {
+    /* border: 1px soli d rgb(129, 129, 129); */
+}
+
+.container .img-wrapper {
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
+}
+
+
+.container .img-wrapper img {
+    max-width: 250px;
+    height: 280px;
+}
+
+.container .left,
+.container .right {
+    padding: 5px;
+}
+
+.container .left .detail {
+    background-color: #fff;
+    padding: 10px;
+}
+
+.container .left .detail .title {
+    font-size: 24px;
+}
+
+.container .left .detail .info {
+    position: relative;
+    color: red;
+}
+
+.container .left .detail .info .price {
+    font-size: 28px;
+}
+
+.container .left .detail .info .asin {
+    margin-left: 10px;
+    position: absolute;
+    bottom: 2px;
+    color: #999;
+}
+
+.container .left .detail .op {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.container .right .card-purchased {
+    margin-bottom: 15px;
+    display: -webkit-flex;
+    /* Safari */
+    display: flex;
+}
+.container .right .card-purchased .content {
+    margin-left: 10px;
+}
+.container .right .card-purchased .content .title {
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.container .right .card-purchased .content .op {
+    margin-top: 5px;
+}
+
+.container .right .card-purchased .img-wrapper {
+    flex: 0 0 auto;
+    width: 80px;
+    height: 80px;
+}
+
+.container .right .card-purchased .img-wrapper img {
+    margin: 0 auto;
+    max-width: 80px;
+    max-height: 80px;
+}

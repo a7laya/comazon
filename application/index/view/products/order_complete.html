@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/css/order-complete.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="layui-container">
+        <div class="layui-row grid-demo">
+            <div class="layui-col-xs3">
+                <div class="img-wrapper">
+                    <img src="__STATIC__/{$order['img_url']}" alt="">
+                </div>
+            </div>
+            <div class="layui-col-xs9">
+                <div class="title">{$order['title']}</div>
+                <div class="price">
+                    Price:<span style="color: red"> $<span
+                            style="color:red; font-size:26px">{$order['price']}</span></span>
+                    <span class="asin">ASIN: {$order['ASIN']}</span>
+                </div>
+                <div class="date">Order date: {$order['ts']|substr=0,10}</div>
+                <div class="user">Username/Mail: {$order['username']} / {$order['email']}</div>
+            </div>
+
+
+            <div class="layui-col-xs12">
+                <hr>
+                <form class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">OrderID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="order_id" placeholder="Please enter the order number."
+                                autocomplete="off" class="layui-input" value="{$order['order_id']}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            Upload</label>
+                        <div class="layui-input-block">
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn" id="cover">Upload screenshots of review</button>
+                            </div>
+                            <div class="layui-input-inline">
+                                <img id="preview" width="220px" height="180px" src="__STATIC__/{$order['review_img']}">
+                            </div>
+                            <input type="text" style="display:none" name="review_img" id="review_img" value="{$order['review_img']}">
+                            <input type="text" style="display:none" name="purchased_id" id="purchased_id"
+                                value="{$order['purchased_id']}">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="submit">Complete</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">Reset</button>
+                        </div>
+                    </div>
+                    <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script src="__STATIC__/layui/layui.js"></script>
+<script>
+    layui.use(['upload', 'form'], function () {
+        var form = layui.form;
+        //各种基于事件的操作，下面会有进一步介绍
+
+        var upload = layui.upload;
+        var $ = layui.jquery;
+        var uploadInst = upload.render({
+            elem: '#cover',
+            url: '{:url("index/products/uploadReview")}',
+            accept: 'file' // 允许上传的文件类型
+                ,
+            auto: true // 自动上传
+                ,
+            before: function (obj) {
+                    console.log(obj);
+                    // 预览
+                    obj.preview(function (index, file, result) {
+                        // console.log(file.name);    //图片名字
+                        // console.log(file.type);    //图片格式
+                        // console.log(file.size);    //图片大小
+                        // console.log(result);       //图片地址
+                        $('#preview').attr('src', result); //图片链接 base64
+                    });
+                    // layer.load();
+                }
+                // 上传成功回调
+                ,
+            done: function (res) {
+                    // console.log(upload);
+                    // console.log(res);
+                    $('#review_img').val(res.savename);
+                    if (res.code == 0) {
+                        return layer.msg(res.msg);
+                    }
+                    return layer.msg(res.msg);
+                }
+                // 上传失败回调
+                ,
+            error: function (index, upload) {
+                return layer.msg(res.msg);
+            }
+
+        });
+
+        form.on('submit(submit)', function (data) {
+            console.log('123456 :', 123456);
+            $.ajax({
+                url: './orderCompleteSubmit',
+                method: 'post',
+                data: data.field,
+                dataType: 'JSON',
+                success: function (res) {
+                    console.log('res :', res);
+                    if(res){
+                        return layer.msg('Update success');
+                    } else {
+                        return layer.msg('Update no');
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+
+        });
+    });
+</script>
+
+</html>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556112495;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556269776;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +28,7 @@
                 <li><a href="<?php echo url('index/passport/signIn'); ?>">Sign in</a></li>
                 <li><a href="<?php echo url('index/passport/signUp'); ?>">Sign up</a></li>
                 <?php else: ?> 
-                <li><a href="<?php echo url('index/user/index'); ?>"><?php echo $shop_user['username']; ?></a></li>
+                <li id="username"><a href="<?php echo url('index/user/index'); ?>"><?php echo $shop_user['username']; ?></a></li>
                 <li><a href="<?php echo url('index/passport/logout'); ?>">Logout</a></li>
                 <?php endif; ?>
             </ul>

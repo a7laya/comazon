@@ -14,7 +14,7 @@ class Index extends Base
         if($this->shop_user){
             return  view();
         } else {
-            // 判断session是否存在，不存在的话就重定向
+            // 判断session不存在->重定向至登录界面
             return $this->redirect('index/passport/signIn');
         }
     }

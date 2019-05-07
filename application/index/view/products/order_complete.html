@@ -116,8 +116,8 @@
 
         });
 
+        // 表单提交
         form.on('submit(submit)', function (data) {
-            console.log('123456 :', 123456);
             $.ajax({
                 url: './orderCompleteSubmit',
                 method: 'post',
@@ -126,9 +126,9 @@
                 success: function (res) {
                     console.log('res :', res);
                     if(res){
-                        return layer.msg('Update success');
+                        return layer.msg('Successful order updating!');
                     } else {
-                        return layer.msg('Update no');
+                        return layer.msg('Nothing changes.');
                     }
                 },
                 error: function (data) {

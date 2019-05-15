@@ -1,0 +1,53 @@
+.layui-container {
+    padding: 10px;
+}
+.img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 160px;
+    /* border: 1px solid #000; */
+}
+
+.img-wrapper img {
+    max-width: 140px;
+    max-height: 160px;
+}
+.title {
+    font-size: 18px;
+    line-height: 20px;
+    
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.user,
+.date,
+.price,
+.order-num {
+    margin-top: 8px;
+    color: #999;
+    position: relative;
+    width: 100%;
+}
+.order-num {
+    color: #666;
+}
+.order-num span{
+    color: rgb(255, 102, 0);
+    font-size: 18px;
+}
+.asin{
+    position: absolute;
+    margin-left: 20px;
+    bottom: 5px;
+}
+
+#preview {
+    border: #666 solid 2px
+}

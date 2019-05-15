@@ -23,10 +23,7 @@
                             <span class="asin">ASIN: {$detail['ASIN']}</span>
                         </div>
                         <div class="description">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloremque sit, repellat
-                            blanditiis quam deserunt possimus, totam reprehenderit earum debitis, magni eveniet! Fuga
-                            neque,
-                            soluta in nisi aliquam tenetur architecto!
+                            Description: {$detail['description']}
                         </div>
                         <div class="op">
                             <button data-method="purchase" class="layui-btn layui-btn-lg">Purchase</button>
@@ -40,7 +37,7 @@
     <input type="text" style="display:none" id="product_id" value="{$detail['product_id']}">
     <div class="col-md-4 right">
         <div class="layui-card">
-            <div class="layui-card-header">本日已购</div>
+            <div class="layui-card-header">Purchased today ({$dayCount}/{$dayLimit})</div>
             <div class="layui-card-body">
                 <ul>
                     {volist name="dayPurchase" id="data"}
@@ -50,11 +47,24 @@
                         </div>
                         <div class="content">
                             <div class="title">{$data.title}</div>
+
+                            {eq name="data['admin_review']" value="on"}
+                            
                             <div class="op">
-                                <button data-method="complete" data-arg="{$data.purchased_id}" class="layui-btn  layui-btn-sm">完善订单</button>
-                                <button data-method="cancel" data-arg="{$data.purchased_id}" class="layui-btn layui-btn-danger layui-btn-sm">取消订单</button>
+                                <button data-method="complete" data-arg="{$data.purchased_id}"
+                                    class="layui-btn layui-btn-sm layui-btn-normal">Order Pass Audit</button>
                             </div>
+                            {else/}
+                            
+                            <div class="op">
+                                <button data-method="complete" data-arg="{$data.purchased_id}"
+                                    class="layui-btn  layui-btn-sm">Complete order</button>
+                                <button data-method="cancel" data-arg="{$data.purchased_id}"
+                                    class="layui-btn layui-btn-danger layui-btn-sm">Cancel order</button>
+                            </div>
+                            {/eq}
                         </div>
+                        
                     </li>
                     {/volist}
 
@@ -63,7 +73,7 @@
             </div>
         </div>
         <div class="layui-card">
-            <div class="layui-card-header">本周已购</div>
+            <div class="layui-card-header">Purchased this week ({$weekCount}/{$weekLimit})</div>
             <div class="layui-card-body">
                 <ul>
                     {volist name="weekPurchase" id="data"}
@@ -73,11 +83,20 @@
                         </div>
                         <div class="content">
                             <div class="title">{$data.title}</div>
+                            
+                            {eq name="data['admin_review']" value="on"}
                             <div class="op">
-                                <button class="layui-btn  layui-btn-sm">完善订单</button>
-                                <button data-method="cancel" data-arg="{$data.purchased_id}"
-                                    class="layui-btn layui-btn-danger layui-btn-sm">取消订单</button>
+                                <button data-method="complete" data-arg="{$data.purchased_id}"
+                                    class="layui-btn layui-btn-sm layui-btn-normal">Order Pass Audit</button>
                             </div>
+                            {else/}
+                            <div class="op">
+                                <button data-method="complete" data-arg="{$data.purchased_id}"
+                                    class="layui-btn  layui-btn-sm">Complete order</button>
+                                <button data-method="cancel" data-arg="{$data.purchased_id}"
+                                    class="layui-btn layui-btn-danger layui-btn-sm">Cancel order</button>
+                            </div>
+                            {/eq}
                         </div>
                     </li>
                     {/volist}
@@ -116,36 +135,30 @@
             complete: function (purchased_id) {
                 console.log('comp->purchased_id :', purchased_id);
                 layer.open({
-                    type: 2
-                    ,title :'Order-complete'
-                    ,area: ['600px', '550px']
+                    type: 2,
+                    title: 'Order-complete',
+                    area: ['600px', '550px'],
                     //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-                    ,content: '{:url("index/products/orderComplete")}?purchased_id='+purchased_id
-                }); 
+                    content: '{:url("index/products/orderComplete")}?purchased_id=' +
+                        purchased_id
+                });
             },
             purchase: function () {
                 layer.open({
                     type: 1,
-                    title: false //不显示标题栏
-                        ,
+                    title: false, //不显示标题栏
                     closeBtn: false,
                     area: '300px;',
                     shade: 0.8,
-                    id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                        ,
+                    id: 'LAY_layuipro', //设定一个id，防止重复弹出
                     btn: ['OK', 'CANCEL'],
                     btnAlign: 'c',
-                    moveType: 1 //拖拽模式，0或者1
-                        ,
+                    moveType: 1, //拖拽模式，0或者1
                     content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">Are you sure to add the item to the order?</div>',
                     success: function (layero) {
                         var product_id = $('#product_id').val();
                         var username = "{$shop_user['username']}"
                         var btn = layero.find('.layui-layer-btn');
-                        //   btn.find('.layui-layer-btn0').attr({
-                        //     href: '{:url("index/products/addPurchased",["product_id"=>'+product_id+', "username"=>'+username+'])}'
-                        //     ,target: '_blank'
-                        //   });
                         btn.find('.layui-layer-btn0').click(function () {
                             var index = parent.layer.getFrameIndex(window.name);
                             $.ajax({
@@ -157,11 +170,11 @@
                                 success: function (d) {
                                     console.log('d :', d);
                                     // 更新数据后刷新父级页面
-                                    if (d) {
-                                        layer.msg('下单成功，正在刷新页面');
+                                    if (d.code) {
+                                        layer.msg(d.msg);
                                         window.parent.location.reload();
                                     } else {
-                                        layer.msg('下单失败，请勿重复下单');
+                                        layer.msg(d.msg);
                                     }
                                 }
                             })
@@ -174,14 +187,17 @@
                 layer.open({
                     type: 1,
                     title: false //不显示标题栏
-                    ,closeBtn: false,
+                        ,
+                    closeBtn: false,
                     area: '300px;',
                     shade: 0.8,
                     id: 'LAY_layuipro2' //设定一个id，防止重复弹出
-                    ,btn: ['OK', 'CANCEL'],
+                        ,
+                    btn: ['OK', 'CANCEL'],
                     btnAlign: 'c',
                     moveType: 1 //拖拽模式，0或者1
-                    ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">Are you sure to remove the item to the order?</div>',
+                        ,
+                    content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">Are you sure to remove the item to the order?</div>',
                     success: function (layero) {
                         var username = "{$shop_user['username']}"
                         var btn = layero.find('.layui-layer-btn');
@@ -197,10 +213,10 @@
                                     console.log('d :', d);
                                     // 更新数据后刷新父级页面
                                     if (d) {
-                                        layer.msg('删除成功，正在刷新页面');
+                                        layer.msg('Delete successfully!');
                                         window.parent.location.reload();
                                     } else {
-                                        layer.msg('删除失败');
+                                        layer.msg('Delete failed.');
                                     }
                                 }
                             })

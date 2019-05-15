@@ -6,6 +6,7 @@ use app\index\model\Product;
 use app\index\model\Mark;
 use app\index\model\Vpurchased;
 use app\index\model\Purchased;
+use app\index\model\Limit;
 class Products extends Base
 {
     public function _initialize()
@@ -13,8 +14,17 @@ class Products extends Base
         parent::_initialize();
         $this->product = new Product;
         $this->mark = new Mark;
+        $this->limit = new Limit; // 购买限制
         $this->purchased = new Purchased; // 表用于写入和删除
         $this->vpurchased = new Vpurchased; // 视图
+
+        // 获取购买限制数量
+        $this->day_limit = $this->limit->getLimit('day');
+        $this->week_limit = $this->limit->getLimit('week');
+
+        // 获取已购买数量
+        $this->day_count = count($this->vpurchased->dayPurchase());
+        $this->week_count = count($this->vpurchased->weekPurchase());
     }
 
 
@@ -25,8 +35,9 @@ class Products extends Base
         $res['total_page'] = ceil($count/$page_size);  //总页数
         $cur_page = intval($request->param('page'))-1;  //默认前端page传过来为1 
         $res['data'] = $this->product
-            ->limit(($cur_page*$page_size),$page_size)  //limit默认要从零开始
-            ->select();
+                        ->order('product_id desc') // 后面加入的数据显示在前面
+                        ->limit(($cur_page*$page_size),$page_size)  //limit默认要从零开始
+                        ->select();
         // dump($this->product->getLastSql());die;
         return json($res);  //返回json
     }
@@ -54,6 +65,11 @@ class Products extends Base
         $weekPurchase = $this->vpurchased->weekPurchase();
         // var_dump($weekPurchase);
         $this->assign('weekPurchase', $weekPurchase);
+
+        $this->assign('weekLimit', $this->week_limit);
+        $this->assign('weekCount', $this->week_count);
+        $this->assign('dayLimit', $this->day_limit);
+        $this->assign('dayCount', $this->day_count);
 
 
         // 模板输出
@@ -127,10 +143,24 @@ class Products extends Base
     public function addPurchased()
     {   // $data:['username'=>xxxx, 'product_id'=>12]
         $data = input();
-        if($this->purchased->add($data)){
-            return 1; // 存在返回 1
+        $data['ts'] = date('Y-m-d H:i:s');
+
+        // 返回信息
+        $res = ['code'=>0, 'msg'=>''];
+
+        // 先判断本周购买次数是否已用完
+        if($this->week_count >= $this->week_limit) {
+            $res['msg'] = 'Only '.(string)$this->week_limit.' item(s) can be purchased this week.';
+            return $res;
+        }
+
+        // 再判断日购买是否超标
+        if($this->day_count < $this->day_limit) {
+            $res = $this->purchased->add($data);
+            return $res;
         } else {
-            return 0; // 不存在返回 0
+            $res['msg'] = 'Only '.(string)$this->day_limit.' item(s) can be purchased today.';
+            return $res;
         }
     }
 

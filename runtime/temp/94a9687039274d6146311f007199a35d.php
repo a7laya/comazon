@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556269776;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1557281599;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <!-- <link rel="stylesheet" href="/static/css/bootstrap.css"> -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/static/admin/common/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <title>COMAZON</title>
 </head>

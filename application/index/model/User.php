@@ -3,6 +3,8 @@
 namespace app\index\model;
 
 use think\Model;
+// 软删除
+use traits\model\SoftDelete;
 use think\Session;
 use think\Db;
 
@@ -13,6 +15,10 @@ use think\Db;
  */
 class User extends Model
 {
+    // 软删除
+    use SoftDelete;
+    protected $deleteTime = 'delete_time';
+
     /**
      * 用户登录
      * @param $data
@@ -23,11 +29,11 @@ class User extends Model
      */
     public function login($data)
     {
-        $user1 = self::useGlobalScope(false)->where([
+        $user1 = $this->where([
             'username' => $data['account'],
             'password' => shop_hash($data['password'])
         ])->find();
-        $user2 = self::useGlobalScope(false)->where([
+        $user2 = $this->where([
             'email' => $data['account'],
             'password' => shop_hash($data['password'])
         ])->find();
@@ -45,7 +51,7 @@ class User extends Model
             return false;
         }
     }
-
+   
      /**
      * 添加买家
      * @param array $data
@@ -59,6 +65,7 @@ class User extends Model
             if(isset($data['password']) ) {
                 $data['password'] = shop_hash($data['password']);
             }
+            $data['ts'] = date('Y-m-d H:i:s');
             // 添加买家
             $this->allowField(true)->save($data);
 
@@ -91,6 +98,8 @@ class User extends Model
         return true;
 
     }
+
+   
 
     /**
      * 信息
@@ -127,6 +136,37 @@ class User extends Model
             'username' => $data['username'],
         ]);
         return true;
+    }
+
+
+    public function tableData(array $arr)
+    {   
+        $key_word = isset($arr['key_word']) ? $arr['key_word'] : '';
+        $data     = $this->where('username|email','like',"%{$key_word}%")
+                    ->order('user_id desc')  // 商品列表排序
+                    ->limit($arr['limit'])
+                    ->page($arr['page'])
+                    ->select();
+        $res['code']  = 0;
+        $res['msg']   = '';
+        $res['count'] = $this->where('username|email','like',"%{$key_word}%")->count();
+        $res['data']  = $data;
+        return $res;
+    }
+
+    public function tableDataBlack(array $arr)
+    {   
+        $key_word = isset($arr['key_word']) ? $arr['key_word'] : '';
+        $data     = self::onlyTrashed()->where('username|email','like',"%{$key_word}%")
+                    ->order('user_id desc')  // 商品列表排序
+                    ->limit($arr['limit'])
+                    ->page($arr['page'])
+                    ->select();
+        $res['code']  = 0;
+        $res['msg']   = '';
+        $res['count'] = self::onlyTrashed()->where('username|email','like',"%{$key_word}%")->count();
+        $res['data']  = $data;
+        return $res;
     }
 
 }

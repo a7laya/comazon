@@ -7,12 +7,10 @@
     align-items: center;
     width: 100px;
     height: 120px;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
 }
 
 .img-wrapper img {
-    flex: 0 0 auto;
-    margin: 0 auto;
     max-width: 100px;
     max-height: 120px;
 }
@@ -40,4 +38,8 @@
     position: absolute;
     margin-left: 20px;
     bottom: 5px;
+}
+
+#preview {
+    border: #666 solid 2px
 }

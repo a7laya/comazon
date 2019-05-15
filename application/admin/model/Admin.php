@@ -15,7 +15,7 @@ class Admin extends Model
 {
     /**
      * 管理员登录
-     * @param $data
+     * @param $data：['username'=>xxxx, 'password'=>xxxxx]
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -23,24 +23,22 @@ class Admin extends Model
      */
     public function login($data)
     {
-        // 验证管理员名密码是否正确
-        if (!$Admin = self::useGlobalScope(false)->where([
-            'username' => $data['account'],
+        $user = self::useGlobalScope(false)->where([
+            'username' => $data['username'],
             'password' => shop_hash($data['password'])
-        ])->find()) {
-            $this->error = '登录失败, 管理员名或密码错误';
+        ])->find();
+        // 验证用户名密码是否正确
+        if (isset($user)) {
+            // 保存登录状态
+            Session::set('session_admin', [
+                'admin' => $user['username'],
+                'is_login' => true,
+            ]);
+            return true;
+        } else {
+            $this->error = '登录失败, 用户名或密码错误';
             return false;
         }
-
-        // 保存登录状态
-        Session::set('shop_admin', [
-            'Admin' => [
-                'admin_id' => $Admin['admin_id'],
-                'username' => $Admin['username'],
-            ],
-            'is_login' => true,
-        ]);
-        return true;
     }
 
    

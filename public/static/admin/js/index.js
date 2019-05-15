@@ -15,7 +15,32 @@ layui.use(['jquery','layer','element'],function(){
 	window.jQuery = window.$ = layui.jquery;
 	window.layer = layui.layer;
   var element = layui.element();
-  
+
+  // 点击左导航出现弹出框
+  $('.laya-nav-child a').on('click', function () {
+    console.log('1234 :', 1234);
+    var othis = $(this),
+        width = othis.data('width'),
+        height = othis.data('height'),
+        title = othis.data('title'),
+        url = othis.data('url');
+        layer.open({
+          type: 2,
+          title: title,
+          area: [width, height],
+          //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+          content: url
+        });
+  });
+
+
+
+
+
+
+
+
+
 // larry-side-menu向左折叠
 $('.larry-side-menu').click(function() {
   var sideWidth = $('#larry-side').width();

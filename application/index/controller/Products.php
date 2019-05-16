@@ -45,6 +45,16 @@ class Products extends Base
 
     // 商品列表页
     public function productsList(){
+        if ($this->request->isAjax()) {
+            $page = input();
+            $product = new Product;
+            if ($product->login($user)) {
+                // return $this->renderSuccess('Login successfully', url('index/index'));
+                return 1;
+            }
+            // return $this->renderError($model->getError() ?: 'Login failed');
+            return 0;
+        }
         // 模板输出
         return  $this->fetch();
     }
@@ -175,6 +185,8 @@ class Products extends Base
             return 0; // 不存在返回 0
         }
     }
+
+
 
 
 }

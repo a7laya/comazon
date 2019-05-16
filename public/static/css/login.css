@@ -255,7 +255,11 @@
     font-size: 30px;
     font-weight: 100;
     text-align: center;
+<<<<<<< HEAD
     color: rgb(88, 88, 88);
+=======
+    color: rgb(0, 0, 0);
+>>>>>>> 3f8da86ad8fc48bf634c52042b5fc8b42ad19f33
 }
 
 .login-main header, .login-main form, .login-main form .layui-input-inline {

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1558011327;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556089449;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1556066867;}*/ ?>
+>>>>>>> 3f8da86ad8fc48bf634c52042b5fc8b42ad19f33
 <!DOCTYPE html>
 <html lang="en">
 

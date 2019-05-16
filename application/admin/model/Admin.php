@@ -58,9 +58,9 @@ class Admin extends Model
             return false;
         }
         // 更新session
-        Session::set('shop_admin.Admin', [
+        Session::set('shop_admin', [
             'admin_id' => $this['admin_id'],
-            'username' => $data['username'],
+            'admin_username' => $data['username'],
         ]);
         return true;
     }

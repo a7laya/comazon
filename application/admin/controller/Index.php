@@ -22,7 +22,18 @@ class Index extends Base
             return $this->redirect('admin/passport/login');
         }
     }
+
     public function login(){
+        if ($this->request->isAjax()) {
+            $user = input();
+            $model = new Admin;
+            if ($model->login($user)) {
+                return 1; 
+            } else {
+                return 0;
+            }
+
+        }
         // 模板输出
         return view();
     }

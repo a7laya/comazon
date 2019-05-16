@@ -1,6 +1,6 @@
 <?php
 namespace app\index\controller;
-
+use think\Session;
 class Index extends Base
 {
     public function _initialize()

@@ -36,7 +36,7 @@ class Vpurchased extends Model
     // 待审核订单数->main
     static function checkPending()
     {
-        $key_word = isset($arr['key_word']) ? $arr['key_word'] : '';
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
         $data = self::useGlobalScope(false)
                 ->where('order_id|review_img', 'not null')
                 ->where('admin_review', 'null')
@@ -54,9 +54,9 @@ class Vpurchased extends Model
     // 待审核订单
     public function tableData(array $arr)
     {
-        $key_word = isset($arr['key_word']) ? $arr['key_word'] : '';
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
         $data = self::useGlobalScope(false)
-                ->where('title|ASIN|username|email|order_id','like',"%{$key_word}%")
+                ->where('title|ASIN|username|email|order_id','like',"%{$keywords}%")
                 ->where('admin_review', 'null')
                 ->where('order_id|review_img', 'not null')
                 ->order('update_time desc')  // 商品列表排序
@@ -67,7 +67,7 @@ class Vpurchased extends Model
         $res['msg'] = '';
         $res['data'] = $data;
         $res['count'] = self::useGlobalScope(false)
-        ->where('title|ASIN|username|email|order_id','like',"%{$key_word}%")
+        ->where('title|ASIN|username|email|order_id','like',"%{$keywords}%")
         ->where('admin_review', 'null')
         ->where('order_id|review_img', 'not null')
         ->count();
@@ -76,9 +76,9 @@ class Vpurchased extends Model
     // 已审核订单
     public function tableDataReviewed(array $arr)
     {
-        $key_word = isset($arr['key_word']) ? $arr['key_word'] : '';
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
         $data = self::useGlobalScope(false)
-                ->where('title|ASIN|username|email|order_id','like',"%{$key_word}%")
+                ->where('title|ASIN|username|email|order_id','like',"%{$keywords}%")
                 ->where('admin_review', 'not null')
                 ->where('order_id|review_img', 'not null')
                 ->order('update_time desc')  // 商品列表排序
@@ -89,7 +89,7 @@ class Vpurchased extends Model
         $res['msg'] = '';
         $res['data'] = $data;
         $res['count'] = self::useGlobalScope(false)
-        ->where('title|ASIN|username|email|order_id','like',"%{$key_word}%")
+        ->where('title|ASIN|username|email|order_id','like',"%{$keywords}%")
         ->where('admin_review', 'not null')
         ->where('order_id|review_img', 'not null')
         ->count();

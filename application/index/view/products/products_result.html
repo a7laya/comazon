@@ -1,6 +1,21 @@
 {include file='inc/header'/}
 <link rel="stylesheet" href="__CSS__/products-list.css">
+<style>
+#search-res {
+    background-color: #ccc;
+    width: 100%;
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 10px;
+}
+
+#search-res span {
+    color: red;
+    font-size: 24px;
+}
+</style>
 <div class="container">
+    <div id="search-res"></div>
     <ul id="demo">
         
     </ul>
@@ -11,6 +26,7 @@
     layui.use('flow', function () {
         var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
         var flow = layui.flow;
+        // $('#keywords').val('{$keywords}');
         flow.load({
             elem: '#demo' //指定列表容器
                 ,
@@ -22,15 +38,18 @@
                 ,
             done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
                 var lis = [];
+                var keywords = $('#keywords').val();
                 console.log('page :', page);
                 //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
                 $.get(
                     'getList', {
                         page: page,
-                        page_size: 18 // 设置一次加载的条数
+                        page_size: 18, // 设置一次加载的条数
+                        keywords:keywords // 通过搜索表单传过来的变量
                     },
                     function (res) {
                         console.log('res :', res);
+                        $('#search-res').html('Find <span>'+ res.data.length +'</span> result(s) by keyword "<span>'+keywords+'</span>".')
                         //假设你的列表返回在data集合中
                         layui.each(res.data, function (index, item) {
                             lis.push(

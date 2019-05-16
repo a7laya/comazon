@@ -41,29 +41,29 @@ class Product extends Model
     }
     public function tableData(array $arr)
     {   
-        $key_word = isset($arr['key_word']) ? $arr['key_word'] : '';
-        $data     = $this->where('title|ASIN','like',"%{$key_word}%")
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
+        $data     = $this->where('title|ASIN','like',"%{$keywords}%")
                     ->order('product_id desc')  // 商品列表排序
                     ->limit($arr['limit'])
                     ->page($arr['page'])
                     ->select();
         $res['code']  = 0;
         $res['msg']   = '';
-        $res['count'] = $this->where('title|ASIN','like',"%{$key_word}%")->count();
+        $res['count'] = $this->where('title|ASIN','like',"%{$keywords}%")->count();
         $res['data']  = $data;
         return $res;
     }
     public function tableDataRestore(array $arr)
     {   
-        $key_word = isset($arr['key_word']) ? $arr['key_word'] : '';
-        $data     = $this::onlyTrashed()->where('title|ASIN','like',"%{$key_word}%")
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
+        $data     = $this::onlyTrashed()->where('title|ASIN','like',"%{$keywords}%")
                     ->order('delete_time desc')  // 商品列表排序
                     ->limit($arr['limit'])
                     ->page($arr['page'])
                     ->select();
         $res['code']  = 0;
         $res['msg']   = '';
-        $res['count'] = $this::onlyTrashed()->where('title|ASIN','like',"%{$key_word}%")->count();
+        $res['count'] = $this::onlyTrashed()->where('title|ASIN','like',"%{$keywords}%")->count();
         $res['data']  = $data;
         return $res;
     }

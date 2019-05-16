@@ -31,10 +31,11 @@
 .container .left .detail .info {
     position: relative;
     color: red;
+    margin-top: 10px;
 }
 
 .container .left .detail .info .price {
-    font-size: 28px;
+    font-size: 22px;
 }
 
 .container .left .detail .info .asin {

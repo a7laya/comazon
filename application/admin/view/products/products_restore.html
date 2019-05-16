@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>商品回收站</title>
+  <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
+</head>
+
+<body style="padding:5px">
+
+  <blockquote class="layui-elem-quote layui-quote-nm">商品管理 / 回收站
+
+    <form class="layui-form" style="position:absolute; right: 0px; top: 13px">
+      <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+      <div class="layui-form-item">
+        <div class="layui-input-inline">
+          <input type="text" name="key_word" placeholder="Enter Title or ASIN" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+          <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
+        </div>
+      </div>
+    </form>
+
+  </blockquote>
+  <table id="demo" lay-filter="test" style="margin-top:-15px"></table>
+  <script src="__STATIC__/js/jquery.min.js"></script>
+  <script src="__STATIC__/layui/layui.js"></script>
+  <script>    
+  layui.use(['table', 'form'], function () {
+      var table = layui.table;
+      var form = layui.form;
+      //第一个实例
+      var render1 = table.render({
+        elem: '#demo'
+          // ,height: 312
+          ,
+        url: '{:url("admin/products/tableDataRestore")}' //数据接口
+          ,
+        height: 'full-80' // 高度最大化减去差值
+          ,
+        page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+          layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+            ,
+          curr: 1 //设定初始在第 5 页
+            ,
+          limit: 10 //一页显示多少条
+            ,
+          limits: [10, 20, 50] //每页条数的选择项
+            ,
+          groups: 3 //只显示 2 个连续页码
+        },
+        cols: [
+          [ //表头
+            {
+              type: 'checkbox',
+              fixed: 'left'
+            }, {
+              field: 'product_id',
+              title: 'ID',
+              width: 80,
+              sort: true,
+              fixed: 'left'
+            }, {
+              field: 'title',
+              title: 'Title',
+            }, {
+              field: 'price',
+              title: 'Price',
+              width: 80,
+              sort: true
+            }, {
+              field: 'ASIN',
+              title: 'ASIN',
+              width: 120
+            },{
+              field: 'img_url',
+              title: 'Img_url',
+              width: 160
+            }, {
+              field: 'delete_time',
+              title: 'Delete_time',
+              width: 200
+            }, {
+              fixed: 'right',
+              title: 'Operation',
+              toolbar: '#barDemo',
+              width: 150
+            }
+          ]
+        ]
+        ,id:'idTest'
+      });
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data; // 改行的一个数据对象
+        console.log(data)
+        // 删除单条商品数据
+        if (obj.event === 'restore') {
+          layer.confirm('Do you really want to restore it?', function (index) {
+            console.log('index :', index);
+            $.ajax({
+              url: "{:url('admin/products/restoreProduct')}",
+              type: 'POST',
+              data: {
+                product_id: data.product_id
+              },
+              success: function (d) {
+                if (d) {
+                  console.log('d :', d);
+                  layer.close(index);
+                  // 刷新数据表格
+                  // window.parent.location.reload();
+                  render1.reload({
+                    page: {
+                      curr: $(".layui-laypage-skip .layui-input").val()
+                    }
+                  });
+                } else {
+                  layer.msg('Restore failed');
+                }
+              }
+            })
+          });
+        // 编辑单条商品数据
+        } else if (obj.event === 'edit') {
+          console.log('product_id :', data.product_id);
+          layer.open({
+            type: 2,
+            title: 'Edit-product',
+            area: ['700px', '550px'],
+            //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+            content: '{:url("admin/products/productsEdit")}?product_id=' + data.product_id + '&arg=restore'
+          });
+        }
+      });
+      // 监听搜索提交
+      form.on('submit(search_submit)', function (data) {
+        // console.log('data :', data);
+        // layer.msg(JSON.stringify(data.field));
+        var key_word = data.field.key_word;
+        table.reload('idTest', {
+          where: {
+            key_word: key_word
+          }
+        });
+        return false;
+      });
+    });
+  </script>
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">Edit</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="restore">Restore</a>
+  </script>
+</body>
+
+</html>

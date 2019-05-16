@@ -34,11 +34,10 @@
                         //假设你的列表返回在data集合中
                         layui.each(res.data, function (index, item) {
                             lis.push(
-                                `<a href="{:url('index/products/productsDetail')}?product_id=`+item.product_id+`" target="_blank"><li><div class="img-wrapper"><img lay-src="__STATIC__/` +
+                                `<a href="{:url('index/products/productsDetail')}?product_id=`+item.product_id+`" target="_blank"><li title="`+item.title+`"><div class="img-wrapper"><img lay-src="__STATIC__/` +
                                 item.img_url +
                                 `"></div><div class="info"><div class="price"><span class="dollar">$</span>` +
-                                item.price + `</div><div class="title">` + item
-                                .title +
+                                item.price + `</div><div class="title">` + item.title +
                                 `</div></div></li></a>`
                             );
                         });

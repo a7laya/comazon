@@ -100,9 +100,9 @@ class Passport extends Base
      * 退出登录
      */
     public function logout()
-    {
-        session(null);//退出清空session
-        $this->redirect('index/index');
+    {   
+        Session::set('shop_user', null);// 退出当前session
+        $this->redirect('index/passport/signIn');
     }
 
 }

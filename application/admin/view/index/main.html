@@ -23,8 +23,8 @@
 				<div class="symbol userblue layui-anim layui-anim-rotate"> <i class="iconpx-users"></i>
 				</div>
 				<div class="value">
-					<a href="#">
-						<h1 id="count1">999</h1>
+					<a href="{:url('admin/users/usersList')}">
+						<h1 id="count1">{$user_count}</h1>
 					</a>
 					<p>总用户</p>
 				</div>
@@ -32,13 +32,13 @@
 		</div>
 		<div class="col-lg-3 col-sm-6 layui-anim layui-anim-up">
 			<section class="panel">
-				<div class="symbol commred layui-anim layui-anim-rotate"> <i class="iconpx-user-add"></i>
+				<div class="symbol commred layui-anim layui-anim-rotate"> <i class="iconpx-check-circle"></i>
 				</div>
 				<div class="value">
-					<a href="#">
-						<h1 id="count2">999</h1>
+					<a href="{:url('admin/products/productsList')}">
+						<h1 id="count2">{$product_count}</h1>
 					</a>
-					<p>总表数</p>
+					<p>总商品数</p>
 				</div>
 			</section>
 		</div>
@@ -49,9 +49,9 @@
 				</div>
 				<div class="value">
 					<a href="#">
-						<h1 id="count3">50</h1>
+						<h1 id="count3">{$purchased_count}</h1>
 					</a>
-					<p>已抄</p>
+					<p>下单数</p>
 				</div>
 			</section>
 		</div>
@@ -61,10 +61,10 @@
 					<i class="iconpx-check-circle"></i>
 				</div>
 				<div class="value">
-					<a href="#">
-						<h1 id="count4">0</h1>
+					<a href="{:url('admin/orders/ordersForReview')}">
+						<h1 id="count4">{$check_pending_count}</h1>
 					</a>
-					<p>未抄</p>
+					<p>待审核订单</p>
 				</div>
 			</section>
 		</div>
@@ -74,7 +74,7 @@
 		<div class="col-lg-6">
 			
       <!-- 网站信息统计｛SEO数据统计｝ -->
-      <section class="panel">
+      <!-- <section class="panel">
                   <header class="panel-heading bm0">
                        <span class='span-title'>表状态统计</span>
                        <span class="tools pull-right"><a href="javascript:;" class="iconpx-chevron-down"></a></span>
@@ -82,11 +82,11 @@
                   <div class="panel-body laery-seo-box">
                         <div class="larry-seo-stats" id="larry-seo-stats"></div>
                   </div>
-      </section>
+      </section> -->
 		</div>
 		<div class="col-lg-6">
 		     <!-- 快捷操作 -->
-             <section class="panel">
+             <!-- <section class="panel">
                   <header class="panel-heading bm0">
                         <span class='span-title'>快捷操作</span>
                         <span class="tools pull-right"><a href="javascript:;" class="iconpx-chevron-down"></a></span>
@@ -102,9 +102,9 @@
                             </tr>
                         </table>
                   </div>
-             </section>
+             </section> -->
           <!-- 系统公告 -->
-             <section class="panel">
+             <!-- <section class="panel">
                  <header class="panel-heading bm0">
                         <span class='span-title'>系统公告</span>
                         <span class="tools pull-right"><a href="javascript:;" class="iconpx-chevron-down"></a></span>
@@ -120,7 +120,7 @@
                             </tr>
                         </table>
                   </div>
-             </section>
+             </section> -->
 
               
 		</div>
@@ -128,7 +128,7 @@
 
 </section>
 
-<script type="text/javascript" src="common/layui/layui.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/common/layui/layui.js"></script>
 <script type="text/javascript">
 	layui.use(['jquery','layer','element'],function(){
 		window.jQuery = window.$ = layui.jquery;

@@ -44,13 +44,16 @@
                         <label class="layui-form-label">
                             Upload</label>
                         <div class="layui-input-block">
-                            <div class="layui-upload">
-                                <button type="button" class="layui-btn" id="cover">Upload screenshots of review</button>
+                            <!-- 点击上传图片 -->
+                            <div class="layui-input-inline" style="cursor:pointer;" id="cover">
+                                {eq name="order['review_img']" value=""}
+                                <img id="preview" style="max-height: 220px;" src='__STATIC__/imgs/blank_review.jpg'>
+                                {else/}
+                                <img id="preview" style="max-height: 220px;" src='__STATIC__/{$order["review_img"]}'>
+                                {/eq}
                             </div>
-                            <div class="layui-input-inline">
-                                <img id="preview" width="220px" height="180px" src="__STATIC__/{$order['review_img']}">
-                            </div>
-                            <input type="text" style="display:none" name="review_img" id="review_img" value="{$order['review_img']}">
+                            <input type="text" style="display:none" name="review_img" id="review_img"
+                                value="{$order['review_img']}">
                             <input type="text" style="display:none" name="purchased_id" id="purchased_id"
                                 value="{$order['purchased_id']}">
                         </div>
@@ -58,7 +61,7 @@
                     <hr>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit lay-filter="submit">Complete</button>
+                            <button class="layui-btn" lay-submit lay-filter="submit" id="submit">Complete</button>
                             <button type="reset" class="layui-btn layui-btn-primary">Reset</button>
                         </div>
                     </div>
@@ -75,7 +78,7 @@
     layui.use(['upload', 'form'], function () {
         var form = layui.form;
         //各种基于事件的操作，下面会有进一步介绍
-
+        var loading;
         var upload = layui.upload;
         var $ = layui.jquery;
         var uploadInst = upload.render({
@@ -87,6 +90,10 @@
                 ,
             before: function (obj) {
                     console.log(obj);
+                    // 上传等待loading动画
+                    loading = layer.load(2);
+                    // 在上传图片的过程中不能点提交按钮
+                    $('#submit').addClass('layui-btn-disabled');
                     // 预览
                     obj.preview(function (index, file, result) {
                         // console.log(file.name);    //图片名字
@@ -102,7 +109,13 @@
             done: function (res) {
                     // console.log(upload);
                     // console.log(res);
+
+                    // 关闭loading动画
+                    layer.close(loading);
+                    // 在隐藏的input里面填写上传的图片地址
                     $('#review_img').val(res.savename);
+                    // 获取到图片地址后可以继续提交
+                    $('#submit').removeClass('layui-btn-disabled');
                     if (res.code == 0) {
                         return layer.msg(res.msg);
                     }
@@ -119,23 +132,23 @@
         // 表单提交
         form.on('submit(submit)', function (data) {
             $.ajax({
-                url: './orderCompleteSubmit',
+                url: '{:url("index/products/orderCompleteSubmit")}',
                 method: 'post',
                 data: data.field,
                 dataType: 'JSON',
                 success: function (res) {
                     console.log('res :', res);
-                    if(res){
-                        return layer.msg('Successful order updating!');
+                    if (res) {
+                        return layer.msg('Successful order updating!',{icon:1,time:2000});
                     } else {
-                        return layer.msg('Nothing changes.');
+                        return layer.msg('Nothing changes.',{icon:6,time:2000});
                     }
                 },
                 error: function (data) {
 
                 }
             });
-
+            return false;
         });
     });
 </script>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1558011327;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1558014938;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,9 +33,13 @@
                 <li><a href="<?php echo url('index/passport/logout'); ?>">Logout</a></li>
                 <?php endif; ?>
             </ul>
-            <form action="#" class="navbar-form navbar-right">
+            <form action="<?php echo url('index/products/productsResult'); ?>" class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="product name or ASIN">
+                    <?php if(!(empty($keywords) || (($keywords instanceof \think\Collection || $keywords instanceof \think\Paginator ) && $keywords->isEmpty()))): ?>
+                    <input type="text" class="form-control" placeholder="product name or ASIN" name="keywords" id="keywords" value='<?php echo $keywords; ?>'> 
+                    <?php else: ?>
+                    <input type="text" class="form-control" placeholder="product name or ASIN" name="keywords" id="keywords"> 
+                    <?php endif; ?>
                 </div>
                 <button type="submit" class="btn btn-default">search</button>
             </form>

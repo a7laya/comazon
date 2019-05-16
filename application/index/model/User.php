@@ -141,30 +141,30 @@ class User extends Model
 
     public function tableData(array $arr)
     {   
-        $key_word = isset($arr['key_word']) ? $arr['key_word'] : '';
-        $data     = $this->where('username|email','like',"%{$key_word}%")
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
+        $data     = $this->where('username|email','like',"%{$keywords}%")
                     ->order('user_id desc')  // 商品列表排序
                     ->limit($arr['limit'])
                     ->page($arr['page'])
                     ->select();
         $res['code']  = 0;
         $res['msg']   = '';
-        $res['count'] = $this->where('username|email','like',"%{$key_word}%")->count();
+        $res['count'] = $this->where('username|email','like',"%{$keywords}%")->count();
         $res['data']  = $data;
         return $res;
     }
 
     public function tableDataBlack(array $arr)
     {   
-        $key_word = isset($arr['key_word']) ? $arr['key_word'] : '';
-        $data     = self::onlyTrashed()->where('username|email','like',"%{$key_word}%")
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
+        $data     = self::onlyTrashed()->where('username|email','like',"%{$keywords}%")
                     ->order('user_id desc')  // 商品列表排序
                     ->limit($arr['limit'])
                     ->page($arr['page'])
                     ->select();
         $res['code']  = 0;
         $res['msg']   = '';
-        $res['count'] = self::onlyTrashed()->where('username|email','like',"%{$key_word}%")->count();
+        $res['count'] = self::onlyTrashed()->where('username|email','like',"%{$keywords}%")->count();
         $res['data']  = $data;
         return $res;
     }

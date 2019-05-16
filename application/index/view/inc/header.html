@@ -32,9 +32,13 @@
                 <li><a href="{:url('index/passport/logout')}">Logout</a></li>
                 {/if}
             </ul>
-            <form action="#" class="navbar-form navbar-right">
+            <form action="{:url('index/products/productsResult')}" class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="product name or ASIN">
+                    {notempty name="keywords"}
+                    <input type="text" class="form-control" placeholder="product name or ASIN" name="keywords" id="keywords" value='{$keywords}'> 
+                    {else /}
+                    <input type="text" class="form-control" placeholder="product name or ASIN" name="keywords" id="keywords"> 
+                    {/notempty}
                 </div>
                 <button type="submit" class="btn btn-default">search</button>
             </form>

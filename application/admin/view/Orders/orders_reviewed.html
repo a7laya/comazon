@@ -30,7 +30,7 @@ input::-webkit-input-placeholder {
       <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
       <div class="layui-form-item">
         <div class="layui-input-inline">
-          <input type="text" name="key_word" placeholder="Title | ASIN | username | email" autocomplete="off" class="layui-input">
+          <input type="text" name="keywords" placeholder="Title | ASIN | username | email" autocomplete="off" class="layui-input">
         </div>
         <div class="layui-input-inline">
           <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
@@ -143,10 +143,10 @@ input::-webkit-input-placeholder {
       form.on('submit(search_submit)', function (data) {
         // console.log('data :', data);
         // layer.msg(JSON.stringify(data.field));
-        var key_word = data.field.key_word;
+        var keywords = data.field.keywords;
         table.reload('idTest', {
           where: {
-            key_word: key_word
+            keywords: keywords
           }
         });
 

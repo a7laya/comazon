@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1557281599;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:96:"C:\Users\Administrator\Desktop\amazon_web\public/../application/index\view\passport\sign_in.html";i:1556096292;s:80:"C:\Users\Administrator\Desktop\amazon_web\application\index\view\inc\header.html";i:1558011327;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 

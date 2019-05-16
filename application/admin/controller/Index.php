@@ -1,5 +1,5 @@
 <?php
-namespace app\Admin\controller;
+namespace app\admin\controller;
 use app\index\model\User;
 use app\index\model\Product;
 use app\index\model\Purchased;

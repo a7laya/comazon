@@ -25,10 +25,10 @@
                             style="color:red; font-size:26px">{$order['price']}</span></span>
                     <span class="asin">ASIN: {$order['ASIN']}</span>
                 </div>
-                <div class="date">Order date: {$order['ts']|substr=0,10}</div>
+                <div class="date">Order Date: {$order['ts']|substr=0,10}</div>
                 <div class="user">Username: {$order['username']}</div>
                 <div class="user">Mail: {$order['email']}</div>
-                <div class="order-num">Order number: <span>{$order['order_id']}</span></div>
+                <div class="order-num">Order Number on Amazon: <span>{$order['order_id']}</span></div>
             </div>
 
 
@@ -37,7 +37,7 @@
                 <form class="layui-form" lay-filter="form1">
                     <div class="layui-form-item">
                         <label class="layui-form-label">
-                            Review screenshots</label>
+                            Review Screenshots</label>
                         <div class="layui-input-block">
                             <!-- 点击上传图片 -->
                             <div class="layui-input-inline">
@@ -49,7 +49,7 @@
                     </div>
                     
                     <div class="layui-form-item">
-                        <label class="layui-form-label">Manager review</label>
+                        <label class="layui-form-label">If Review</label>
                         <div class="layui-input-block">
                             <input type="checkbox"  name="admin_review" lay-skin="switch" lay-filter="switchTest"
                                 lay-text="OK|NO">

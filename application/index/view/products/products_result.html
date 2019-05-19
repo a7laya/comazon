@@ -36,6 +36,7 @@
                 ,
             mb: 200 //与底部的临界距离，默认50。即当滚动条与底部产生该距离时，触发加载。注意：只有在isAuto为true时有效。
                 ,
+            end: 'No more',
             done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
                 var lis = [];
                 var keywords = $('#keywords').val();

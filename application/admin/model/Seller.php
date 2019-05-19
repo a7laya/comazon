@@ -1,6 +1,6 @@
 <?php
 
-namespace app\index\model;
+namespace app\admin\model;
 
 use think\Model;
 // 软删除
@@ -9,18 +9,20 @@ use think\Session;
 use think\Db;
 
 /**
- * 商品模型
+ * 卖家(店铺)模型
  * Class User
  * @package app\store\model
  */
-class Product extends Model
+class Seller extends Model
 {
     // 软删除
     use SoftDelete;
     protected $deleteTime = 'delete_time';
 
+    // 设置搜索关键字对应的字段
+    protected $keywords_fields = 'seller_id|seller_name';
     /**
-     * 添加商品
+     * 添加卖家
      * @param array $data
      * @return bool
      */
@@ -29,9 +31,8 @@ class Product extends Model
         // 开启事务
         Db::startTrans();
         try {
-            // 添加商品
+            // 添加卖家
             $this->allowField(true)->save($data);
-
             Db::commit();
             return true;
         } catch (\Exception $e) {
@@ -42,28 +43,33 @@ class Product extends Model
     public function tableData(array $arr)
     {   
         $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
-        $data     = $this->where('title|ASIN','like',"%{$keywords}%")
-                    ->order('product_id desc')  // 商品列表排序
+        $data     = $this->where($keywords_fields,'like',"%{$keywords}%")
+                    // ->order('seller_id desc')  // 卖家列表排序
                     ->limit($arr['limit'])
                     ->page($arr['page'])
                     ->select();
         $res['code']  = 0;
         $res['msg']   = '';
-        $res['count'] = $this->where('title|ASIN','like',"%{$keywords}%")->count();
+        $res['count'] = $this
+                        ->where($keywords_fields,'like',"%{$keywords}%")
+                        ->count();
         $res['data']  = $data;
         return $res;
     }
     public function tableDataRestore(array $arr)
     {   
         $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
-        $data     = $this::onlyTrashed()->where('title|ASIN','like',"%{$keywords}%")
-                    ->order('delete_time desc')  // 商品列表排序
+        $data     = $this::onlyTrashed()
+                    ->where($keywords_fields,'like',"%{$keywords}%")
+                    ->order('delete_time desc')  // 卖家列表排序
                     ->limit($arr['limit'])
                     ->page($arr['page'])
                     ->select();
         $res['code']  = 0;
         $res['msg']   = '';
-        $res['count'] = $this::onlyTrashed()->where('title|ASIN','like',"%{$keywords}%")->count();
+        $res['count'] = $this::onlyTrashed()
+                        ->where($keywords_fields,'like',"%{$keywords}%")
+                        ->count();
         $res['data']  = $data;
         return $res;
     }

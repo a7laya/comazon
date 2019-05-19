@@ -49,7 +49,13 @@ class Products extends Base
     public function productsResult()
     {   
         $this->assign('keywords', $_GET['keywords']);
-        return View();
+        // 模板输出
+        if($this->shop_user){
+            return  view();
+        } else {
+            // 判断session不存在->重定向至登录界面
+            return $this->redirect('index/passport/signIn');
+        }
     }
 
 
@@ -66,7 +72,12 @@ class Products extends Base
             return 0;
         }
         // 模板输出
-        return  $this->fetch();
+        if($this->shop_user){
+            return  view();
+        } else {
+            // 判断session不存在->重定向至登录界面
+            return $this->redirect('index/passport/signIn');
+        }
     }
 
     // 商品详情页
@@ -93,7 +104,12 @@ class Products extends Base
 
 
         // 模板输出
-        return  $this->fetch();
+        if($this->shop_user){
+            return  view();
+        } else {
+            // 判断session不存在->重定向至登录界面
+            return $this->redirect('index/passport/signIn');
+        }
     }
 
     // 订单完善页面
@@ -105,7 +121,12 @@ class Products extends Base
         // var_dump($data);
         // echo $data['purchased_id'];
         // 模板输出
-        return  $this->fetch();
+        if($this->shop_user){
+            return  view();
+        } else {
+            // 判断session不存在->重定向至登录界面
+            return $this->redirect('index/passport/signIn');
+        }
     }
 
     // 订单完善后的提交

@@ -29,7 +29,7 @@ layui.define('jquery', function(exports){
     var notDocment = options.scrollElem && options.scrollElem !== document;
     
     //加载更多
-    var ELEM_TEXT = '<cite>加载更多</cite>'
+    var ELEM_TEXT = '<cite>Load more</cite>'
     ,more = $('<div class="layui-flow-more"><a href="javascript:;">'+ ELEM_TEXT +'</a></div>');
     
     if(!elem.find('.layui-flow-more')[0]){

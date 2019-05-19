@@ -5098,7 +5098,7 @@ layui.define("jquery", function(e) {
 				s = !("isAuto" in e) || e.isAuto,
 				y = e.end || "没有更多了",
 				v = e.scrollElem && e.scrollElem !== document,
-				d = "<cite>加载更多</cite>",
+				d = "<cite>Load more</cite>",
 				h = l('<div class="layui-flow-more"><a href="javascript:;">' + d + "</a></div>");
 			u.find(".layui-flow-more")[0] || u.append(h);
 			var p = function(e, t) {

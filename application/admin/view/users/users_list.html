@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>用户列表</title>
+  <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
+</head>
+<style>
+.layui-form-item .layui-input-inline {
+    float: left;
+    width: 208px;
+    margin-right: 4px;
+}
+input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #caced4;
+    /* placeholder字体大小  */
+    font-size: 12px;
+    /* placeholder位置  */
+    text-align: left;
+}
+</style>
+
+<body style="padding:5px">
+
+  <blockquote class="layui-elem-quote layui-quote-nm">用户管理 / 用户列表
+    
+    <form class="layui-form" style="position:absolute; right: 0px; top: 13px">
+      <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+      <div class="layui-form-item">
+        <div class="layui-input-inline">
+          <input type="text" name="keywords" placeholder="Username | Email" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+          <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
+        </div>
+      </div>
+    </form>
+
+  </blockquote>
+  <table id="demo" lay-filter="test" style="margin-top:-15px"></table>
+  <script src="__STATIC__/js/jquery.min.js"></script>
+  <script src="__STATIC__/layui/layui.js"></script>
+  <script>
+    layui.use(['table', 'form', ], function () {
+      var table = layui.table;
+      var form = layui.form;
+      //第一个实例
+      table.render({
+        elem: '#demo',// ,height: 312
+        url: '{:url("admin/users/tableData")}', //数据接口
+        height: 'full-80', // 高度最大化减去差值
+        page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+          layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
+          curr: 1, //设定初始在第 5 页
+          limit: 10, //一页显示多少条
+          limits: [10, 20, 50], //每页条数的选择项
+          groups: 3 //只显示 2 个连续页码
+        },
+        cols: [
+          [ //表头
+            {
+              field: 'user_id',
+              title: 'ID',
+              width: 60,
+              sort: true,
+              fixed: 'left'
+            }, {
+              field: 'username',
+              title: 'Username',
+            },{
+              field: 'password',
+              title: 'Password',
+            }, {
+              field: 'email',
+              title: 'Email',
+              width: 220,
+              sort: true
+            }, {
+              field: 'ts',
+              title: 'Registration time',
+              width: 220,
+              sort: true
+            },{
+              fixed: 'right',
+              title: 'Operation',
+              toolbar: '#barDemo',
+              width: 100
+            }
+          ]
+        ],
+        id: 'idTest'
+      });
+
+      
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data; // 改行的一个数据对象
+        console.log(data)
+        // 拉黑用户
+        if (obj.event === 'del') {
+          layer.confirm('Do you really want to pull black this user?', function (index) {
+            $.ajax({
+              url: "{:url('admin/users/delUser')}",
+              type: 'POST',
+              data: {
+                user_id: data.user_id
+              },
+              success: function (d) {
+                if (d) {
+                  layer.close(index);
+                  table.reload('idTest', {});
+                } else {
+                  layer.msg('Pull black failed');
+                }
+              }
+            })
+          });
+        // 编辑单条用户数据
+        } else if (obj.event === 'edit') {
+          console.log('purchased_id :', data.purchased_id);
+          layer.open({
+            type: 2,
+            title: 'Review-order',
+            area: ['800px', '550px'],
+            //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+            content: '{:url("admin/orders/reviewOrder")}?purchased_id=' + data.purchased_id
+          });
+        }
+      });
+
+      // 监听搜索提交
+      form.on('submit(search_submit)', function (data) {
+        // console.log('data :', data);
+        // layer.msg(JSON.stringify(data.field));
+        var keywords = data.field.keywords;
+        table.reload('idTest', {
+          where: {
+            keywords: keywords
+          }
+        });
+
+        return false;
+      });
+
+    });
+  </script>
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">Pull black</a>
+  </script>
+</body>
+
+</html>

@@ -15,7 +15,7 @@ class Administrator extends Base
     {   
         $res = $this->admin->find(1);
         $this->assign('admin', $res);
-        return View();
+        return view();
     }
 
     // 接口 - 修改管理员信息

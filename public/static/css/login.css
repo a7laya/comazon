@@ -4,6 +4,17 @@
     background: none;
 }
 
+.layui-form-pane .layui-form-label {
+    width: 135px;
+}
+.layui-form-pane .layui-input-block {
+    margin-left: 135px;
+}
+
+.layui-form-pane .layui-form-label .star {
+    color:red; font-size:20px; position: relative; top:5px
+}
+
 .layui-layout-admin .my-header {
     position: fixed;
     top: 0;
@@ -159,7 +170,7 @@
 
 .layui-icon.ri,
 .layui-icon.wr {
-    font-size: 30px;
+    font-size: 24px;
     font-weight: bolder;
 }
 
@@ -249,17 +260,13 @@
 }
 
 .login-main header {
-    margin-top: 100px;
+    margin-top: 60px;
     height: 35px;
     line-height: 35px;
     font-size: 30px;
     font-weight: 100;
     text-align: center;
-<<<<<<< HEAD
     color: rgb(88, 88, 88);
-=======
-    color: rgb(0, 0, 0);
->>>>>>> 3f8da86ad8fc48bf634c52042b5fc8b42ad19f33
 }
 
 .login-main header, .login-main form, .login-main form .layui-input-inline {
@@ -267,7 +274,7 @@
 }
 
 .login-main form .layui-input-inline, .login-main form .layui-input-inline input, .login-main form .layui-input-inline button {
-    width: 100%;
+    width: 97%;
 }
 
 .login-main form .login-btn {

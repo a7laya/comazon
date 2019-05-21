@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>邀请码列表</title>
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
+</head>
+<style>
+    .layui-form-item .layui-input-inline {
+        float: left;
+        width: 208px;
+        margin-right: 4px;
+    }
+
+    input::-webkit-input-placeholder {
+        /* placeholder颜色  */
+        color: #caced4;
+        /* placeholder字体大小  */
+        font-size: 12px;
+        /* placeholder位置  */
+        text-align: left;
+    }
+</style>
+
+<body style="padding:5px">
+
+    <blockquote class="layui-elem-quote layui-quote-nm">买家管理 / 邀请码列表
+        <button class="laya-btn layui-btn layui-btn-sm" id="add" data-method="add">
+            <i class="layui-icon layui-icon-add-1"></i> Create Referral Code
+        </button>
+
+        <form class="layui-form" style="position:absolute; right: 0px; top: 13px">
+            <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" name="keywords" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                    <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
+                </div>
+            </div>
+        </form>
+
+    </blockquote>
+    <table id="demo" lay-filter="test" style="margin-top:-15px"></table>
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <script src="__STATIC__/layui/layui.js"></script>
+    <!-- 实现复制功能 -->
+    <script src="__STATIC__/js/clipboard.min.js"></script>
+    <script>
+        // 实例化一个复制类
+        var clipboard=new ClipboardJS('.btn');
+        
+
+        layui.use(['table', 'form', ], function () {
+            var table = layui.table;
+            var form = layui.form;
+            // 复制成功的提示
+            clipboard.on('success',function(e) {
+                console.log('e :', e);
+                layer.open({
+                    title:'Copy Successfully',
+                    content: '邀请链接已成功复制:<br>被邀请人可以直接点击该链接直达注册页面,<br>邀请链接或邀请码使用过后将失效。',
+                    yes: function (index, layero) {
+                        //do something
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    }
+                });
+            });
+            //第一个实例
+            table.render({
+                elem: '#demo', // ,height: 312
+                url: '{:url("admin/users/tableDataCode")}', //数据接口
+                height: 'full-80', // 高度最大化减去差值
+                page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
+                    curr: 1, //设定初始在第 5 页
+                    limit: 10, //一页显示多少条
+                    limits: [10, 20, 50], //每页条数的选择项
+                    groups: 3 //只显示 2 个连续页码
+                },
+                cols: [
+                    [ //表头
+                        {
+                            field: 'code_id',
+                            title: 'ID',
+                            width: 60,
+                            sort: true,
+                            fixed: 'left'
+                        }, {
+                            field: 'code',
+                            title: 'Referral Code',
+                            templet:'#code',
+                            width: 160,
+                        }, {
+                            field: 'code',
+                            title: 'Referral Link',
+                            templet:'#code_url',
+                        }, {
+                            field: 'create_time',
+                            title: 'Create Time',
+                            width: 160,
+                        }, {
+                            fixed: 'right',
+                            title: 'Operation',
+                            toolbar: '#barDemo',
+                            width: 120
+                        }
+                    ]
+                ],
+                id: 'idTest'
+            });
+
+
+
+            // 
+            var active = {
+                // 生成邀请码
+                add: function () {
+                    $.ajax({
+                        url: "{:url('admin/users/createCode')}",
+                        success: function () {
+                            table.reload('idTest', {});
+                        }
+                    })
+                },
+
+            }
+
+
+            $('.laya-btn').on('click', function () {
+                var othis = $(this),
+                    method = othis.data('method'),
+                    arg = othis.data('arg');
+                console.log('othis :', othis);
+                console.log('arg :', arg);
+                active[method] ? active[method].call(this, arg) : '';
+            });
+
+            //监听行工具事件
+            table.on('tool(test)', function (obj) {
+                var data = obj.data; // 改行的一个数据对象
+                console.log(data)
+                // 删除邀请码
+                if (obj.event === 'del') {
+
+                    $.ajax({
+                        url: "{:url('admin/users/delCode')}",
+                        type: 'POST',
+                        data: {
+                            code_id: data.code_id
+                        },
+                        success: function (d) {
+                            if (d) {
+                                layer.msg('Delete successfully');
+                                table.reload('idTest', {});
+                            } else {
+                                layer.msg('Delete failed');
+                            }
+                        }
+                    })
+
+                    // 复制邀请码链接
+                } else if (obj.event === 'copy') {
+                    console.log('code :', data.code);
+                }
+            });
+
+            // 监听搜索提交
+            form.on('submit(search_submit)', function (data) {
+                // console.log('data :', data);
+                // layer.msg(JSON.stringify(data.field));
+                var keywords = data.field.keywords;
+                table.reload('idTest', {
+                    where: {
+                        keywords: keywords
+                    }
+                });
+
+                return false;
+            });
+
+        });
+    </script>
+
+    <script type="text/html" id="code">
+        <span  style='color:red'>{{d.code}}</span>
+    </script>
+    <script type="text/html" id="code_url">
+        <!-- 组合url和邀请码成为一个邀请链接 -->
+        {{#
+            var fn = function (code) {
+                var domain = document.domain;
+                return 'http://'+domain+'/index/passport/signup?code='+code
+            }
+            
+        }}
+        <button class="btn layui-btn layui-btn-xs" data-clipboard-action="copy" data-clipboard-target="#code_{{d.code_id}}">Copy</button>
+        <span id='code_{{d.code_id}}' style='color:red'>{{fn(d.code)}}</span>
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">Delete</a>
+    </script>
+</body>
+
+</html>

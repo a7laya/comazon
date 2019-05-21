@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>{$setting.site_name}-{$shop_user.username}</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<!-- load css -->
+	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/layui/css/layui.css" media="all">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/global.css" media="all">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/adminstyle.css" media="all">
+    <style>
+    .header-demo .logo {
+        left: 10px;
+        top: 12px;
+        color: #FFFFFF;
+        font-size: 20px;
+    }
+    </style>
+	
+
+</head>
+
+<body>
+	<div class="layui-layout layui-layout-admin" id="layui_layout">
+		<!-- 顶部区域 -->
+		<div class="layui-header header header-demo">
+			<div class="layui-main">
+				<!-- logo区域 -->
+				<div class="admin-logo-box">
+					<a class="logo" href="#" title="logo">Personal Center</a>
+				</div>
+				<div class="larry-side-menu">
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</div>
+				
+				<!-- 右侧导航 -->
+				<ul class="layui-nav larry-header-item">
+					<li class="layui-nav-item">
+						{$shop_user['username']}
+					</li>
+					<li class="layui-nav-item">
+						<a href="{:url('index/passport/logout')}">
+							<i class="iconfont icon-exit"></i>
+							退出</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- 左侧侧边导航开始 -->
+		<div class="layui-side layui-side-bg layui-larry-side" id="larry-side">
+			<div class="layui-side-scroll" id="larry-nav-side" lay-filter="side">
+
+				<!-- 左侧菜单 -->
+				<ul class="layui-nav layui-nav-tree">
+					<li class="layui-nav-item layui-this">
+						<a href="{:url('index/index/index')}" data-url="404.html">
+							<i class="iconfont icon-home1" data-icon='icon-home1'></i>
+							<span >HOME</span>
+						</a>
+                    </li>
+                    <!-- 个人资料 -->
+					<li class="layui-nav-item">
+                            <a href="javascript:;">
+                                <i class="iconfont icon-geren1"></i>
+                                <span>Personal Data</span>
+                                <em class="layui-nav-more"></em>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd>
+                                    <a href="{:url('index/users/usersCenterMain')}" target="main" data-url="404.html">
+                                        <i class="iconfont icon-gerenkuozhan" data-icon='icon-gerenkuozhan'></i>
+                                        <span>My Information</span>
+                                    </a>
+                                </dd>
+                                <dd>
+                                    <a href="{:url('admin/users/usersCode')}" target="main" data-url="404.html">
+                                        <i class="iconfont icon-pinglun1" data-icon='icon-pinglun1'></i>
+                                        <span>Modifying Data</span>
+                                    </a>
+                                </dd>
+                            </dl>
+                        </li>
+					<!-- 安全设置 -->
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<i class="iconfont icon-anquanshezhi6"></i>
+							<span>Security Setting</span>
+							<em class="layui-nav-more"></em>
+						</a>
+						<dl class="layui-nav-child">
+							<dd class="laya-nav-child">
+								<a href="javascript:;" data-title="Change Password" data-url="{:url('admin/Administrator/editAdmin')}" data-width="450px" data-height="350px">
+									<i class="iconfont icon-iconfuzhi01" data-icon='icon-iconfuzhi01'></i>
+									<span>Change Password</span>
+								</a>
+							</dd>
+						</dl>
+					</li>
+					<!-- 订单管理 -->
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<i class="iconfont icon-wenzhang1"></i>
+							<span>Order Management</span>
+							<em class="layui-nav-more"></em>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="{:url('admin/orders/ordersForReview')}" target="main">
+									<i class="iconfont icon-neirong" data-icon='icon-neirong'></i>
+									<span>All Orders</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="{:url('admin/orders/ordersForReview')}" target="main">
+									<i class="iconfont icon-caidan1" data-icon='icon-caidan1'></i>
+									<span>Pending</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="{:url('admin/orders/ordersReviewed')}" target="main">
+									<i class="iconfont icon-dengji5" data-icon='icon-dengji5'></i>
+									<span>Shipped</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="{:url('admin/orders/ordersReviewed')}" target="main">
+									<i class="iconfont icon-huanyuan" data-icon='icon-huanyuan'></i>
+									<span>Received</span>
+								</a>
+							</dd>
+						</dl>
+					</li>	
+					
+							
+				</ul>
+			</div>
+		</div>
+
+		<!-- 左侧侧边导航结束 -->
+		<!-- 右侧主体内容 -->
+		<div class="layui-body" id="larry-body" style="bottom: 0;border-left: solid 2px #2299ee;">
+			<div class="layui-tab layui-tab-card larry-tab-box" id="larry-tab" lay-filter="demo" lay-allowclose="true">
+				<div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧">
+					<i class="larry-icon larry-weibiaoti6-copy"></i> 
+				</div>
+				<div class="layui-tab-content" style="min-height: 150px; ">
+					<div class="layui-tab-item layui-show">
+						<iframe class="larry-iframe" data-id='0' src="{:url('admin/index/main')}" style="max-height:1500px" name="main" id="main"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 底部区域 -->
+		<div class="layui-footer layui-larry-foot" id="larry-footer">
+			<div class="layui-mian">
+				<p class="p-admin">
+					<span>2019 &copy;</span>
+					XXXX公司,版权所有
+				</p>
+			</div>
+		</div>
+	</div>
+	<!-- 加载js文件-->
+	<script type="text/javascript" src="__STATIC__/admin/common/layui/layui.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/js/larry.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/js/index.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>
+	<script>
+		// 让iframe的高度匹配所在窗口高度
+		$(function(){
+			function setHeight(){
+				var h = $('#larry-body').height()-$('#larry-footer').height();
+				$('#main').height(h);
+				console.log('h :', h);
+			}
+			setHeight();
+			//窗口大小改变时，执行
+			$(window).resize(function () {
+				//执行代码块
+				setHeight();
+			});
+		})
+	</script>
+
+</body>
+
+</html>

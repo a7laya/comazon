@@ -65,7 +65,7 @@ class User extends Model
             if(isset($data['password']) ) {
                 $data['password'] = shop_hash($data['password']);
             }
-            $data['ts'] = date('Y-m-d H:i:s');
+            $data['create_time'] = date('Y-m-d H:i:s');
             // 添加买家
             $this->allowField(true)->save($data);
 
@@ -89,10 +89,11 @@ class User extends Model
     }
 
     public function findUsername(array $data)
-    {
-        if (!$user = self::useGlobalScope(false)->where([
-            'username' => $data['username']
-        ])->find()) {
+    {   
+        $username = $data['username'];
+        if (!self::useGlobalScope(false)
+        ->where('username', $username)->find()) 
+        {
             return false;
         }
         return true;

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <!-- <link rel="stylesheet" href="__CSS__/bootstrap.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="__STATIC__/admin/common/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="__CSS__/main.css">
+    <title>COMAZON</title>
+</head>
+<body style="background:#fff">
+<link rel="stylesheet" href="__CSS__/login.css">
+<style>
+	.login-main form{
+		position: relative;
+		/* left: -40px; */
+	}
+    .layui-form-item {
+        position: relative;
+    }
+
+    .layui-input {
+        width: 100%;
+    }
+
+
+    .layui-inline {
+        position: absolute;
+        top: 0;
+        left: 330px;
+    }
+</style>
+<div class="login-main">
+	<br>
+    <form class="layui-form layui-form-pane" action="">
+        <input type="text" id="setting_id" name="setting_id" style="display:none" value="{$data.setting_id}">
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">Site Name</label>
+            <div class="layui-input-block">
+                <input type="text" id="site_name" name="site_name" lay-verify="" autocomplete="off" placeholder="" value="{$data.site_name}"
+                    class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">Contact Editor</label>
+            <div class="layui-input-block">
+                <textarea placeholder="" class="layui-textarea" id="contact" name="contact"  style="display: none">{$data.contact}</textarea>
+            </div>
+        </div>
+		
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="sub" id="submit">Submit</button>
+				<button type="reset" class="layui-btn layui-btn-primary">Reset</button>
+			</div>
+		</div>
+    </form>
+
+ 
+</div>
+
+
+<script src="__STATIC__/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'jquery', 'layer', 'layedit'], function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var layedit = layui.layedit;
+
+        //构建一个默认的编辑器
+        var index = layedit.build('contact', {
+    tool: ['face', 'link', 'unlink', '|', 'left', 'center', 'right']
+    ,height: 100
+  });
+        
+        //添加表单监听事件,提交注册信息
+        form.on('submit(sub)', function (data) {
+            $.ajax({
+                url: '{:url("admin/settings/updateSetting")}',
+                type: 'post',
+                data: {
+					setting_id:$('#setting_id').val(),
+                    site_name:$('#site_name').val(),
+                    contact:layedit.getContent(index),
+                },
+                success: function (d) {
+                    console.log('submit-data.status :', d);
+                    // var d = JSON.parse(d);
+                    console.log('d.code :', d.code);
+                    if (d.code == 1) {
+                        layer.open({
+                            title:'Congratulations',
+                            content: d.msg,
+                            yes: function (index, layero) {
+                                //do something
+								layer.close(index); //如果设定了yes回调，需进行手工关闭
+								// 关闭弹出层并刷新表格
+								var frame_index = parent.layer.getFrameIndex(window.name);
+								parent.layer.close(frame_index);
+								parent.layui.table.reload('idTest', {})
+                            }
+                        });
+                        // layer.msg('Registration succeed');
+
+                    } else {
+                        layer.msg('未更新');
+                    }
+                }
+            })
+            //防止页面跳转
+            return false;
+        });
+
+    });
+</script>

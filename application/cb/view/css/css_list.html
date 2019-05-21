@@ -3,16 +3,16 @@
 
 <head>
     <meta charset="utf-8">
-    <title>店铺列表</title>
+    <title>水表列表</title>
     <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
 </head>
 
 <body style="padding:5px">
 
-    <blockquote class="layui-elem-quote layui-quote-nm">店铺管理 / 店铺列表
+    <blockquote class="layui-elem-quote layui-quote-nm">表管理 / 水表列表
 
         <button class="laya-btn layui-btn layui-btn-sm" id="add" data-method="add">
-            <i class="layui-icon">&#xe608;</i> Add Seller
+            <i class="layui-icon">&#xe608;</i> Add
         </button>
         <!-- <button class="laya-btn layui-btn layui-btn-xs" id="batchDel" data-method="batchDel" data-arg="">
         <i class="layui-icon layui-icon-delete"></i> Delete
@@ -22,7 +22,7 @@
             <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <input type="text" name="keywords" placeholder="Seller ID | Seller name" autocomplete="off"
+                    <input type="text" name="keywords" id="keywords" placeholder="ID" autocomplete="off"
                         class="layui-input">
                 </div>
                 <div class="layui-input-inline">
@@ -42,7 +42,7 @@
             //第一个实例
             table.render({
                 elem: '#demo', // ,height: 312
-                url: '{:url("admin/sellers/tableData")}', //数据接口
+                url: '{:url("cb/css/tableData")}', //数据接口
                 height: 'full-80', // 高度最大化减去差值
                 page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
@@ -57,14 +57,20 @@
                             type: 'checkbox',
                             fixed: 'left'
                         }, {
-                            field: 'seller_id',
+                            field: 'identifier',
                             title: 'ID',
                             width: 80,
                             sort: true,
                             fixed: 'left'
                         }, {
-                            field: 'seller_name',
-                            title: 'Name',
+                            field: 'online',
+                            title: 'online',
+                        }, {
+                            field: 'ip',
+                            title: 'ip',
+                        }, {
+                            field: 'ssll',
+                            title: 'ssll',
                         }, {
                             fixed: 'right',
                             title: 'Operation',
@@ -84,7 +90,7 @@
                             title: 'Add Seller',
                             area: ['360px', '250px'],
                             //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-                            content: "{:url('admin/sellers/sellersAdd')}"
+                            content: "{:url('cb/css/cssAdd')}"
                         });
                     },
 
@@ -186,6 +192,17 @@
 
                 return false;
             });
+
+            function reload(){
+                var keywords = $('#keywords').val();
+                table.reload('idTest', {
+                    where: {
+                        keywords: keywords
+                    }
+                });
+            }
+
+            setInterval(reload,5000);
 
         });
     </script>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>添加店铺</title>
+	<meta name="renderer" content="webkit">	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">	
+	<meta name="apple-mobile-web-app-capable" content="yes">	
+	<meta name="format-detection" content="telephone=no">	
+	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/layui/css/layui.css" media="all">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/bootstrap/css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/global.css" media="all">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/personal.css" media="all">
+</head>
+
+<style>
+    .layui-form .layui-form-item label.layui-form-label{
+        width: 100px;
+    }
+</style>
+<body class="childrenBody" style="padding:10px;background-color:#fff">
+	<form class="layui-form">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">Name</label>
+				<div class="layui-input-inline">
+					<input class="layui-input newsAuthor" lay-verify="required" placeholder="Enter a seller name" type="text" name="seller_name"
+						value="">
+				</div>
+            </div>
+        </div>
+        <br>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="submit" id="submit">Add</button>
+				<button type="reset" class="layui-btn layui-btn-primary">Reset</button>
+		    </div>
+		</div>
+	</form>
+	<!-- <script type="text/javascript" src="__STATIC__/admin/common/layui/layui.js"></script> -->
+	<script src="__STATIC__/layui/layui.js"></script>
+	<!-- <script type="text/javascript" src="__STATIC__/admin/js/newsadd.js"></script> -->
+	<script>
+		layui.use(['upload', 'form'], function () {
+			var form = layui.form;
+			//各种基于事件的操作，下面会有进一步介绍
+			var loading;
+			var upload = layui.upload;
+			var $ = layui.jquery;
+			var uploadInst = upload.render({
+				elem: '#cover',
+				url: '{:url("admin/products/uploadImg")}',
+				accept: 'file' // 允许上传的文件类型
+					,
+				auto: true // 自动上传
+					,
+				before: function (obj) {
+						console.log(obj);
+						// 上传等待loading动画
+						loading = layer.load(2);
+						// 在上传图片的过程中不能点提交按钮
+						$('#submit').addClass('layui-btn-disabled');
+						// 预览
+						obj.preview(function (index, file, result) {
+							// console.log(file.name);    //图片名字
+							// console.log(file.type);    //图片格式
+							// console.log(file.size);    //图片大小
+							// console.log(result);       //图片地址
+							$('#preview').attr('src', result); //图片链接 base64
+						});
+						// layer.load();
+					}
+					// 上传成功回调
+					,
+				done: function (res) {
+						// console.log(upload);
+						// console.log(res);
+	
+						// 关闭loading动画
+						layer.close(loading); 
+						// 在隐藏的input里面填写上传的图片地址
+						$('#img_url').val(res.savename);
+						// 获取到图片地址后可以继续提交
+						$('#submit').removeClass('layui-btn-disabled');
+						if (res.code == 0) {
+							return layer.msg(res.msg);
+						}
+						return layer.msg(res.msg);
+					}
+					// 上传失败回调
+					,
+				error: function (index, upload) {
+					return layer.msg(res.msg);
+				}
+	
+			});
+	
+			// 表单提交
+			form.on('submit(submit)', function (data) {
+				$.ajax({
+					url: './addSeller',
+					method: 'post',
+					data: data.field,
+					dataType: 'JSON',
+					success: function (res) {
+						console.log('res :', res);
+						if(res){
+                            var frame_index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(frame_index);
+                            parent.layui.table.reload('idTest', {});
+							
+						} else {
+							return layer.msg('Add failed.',{icon:2,time:2000});
+						}
+					},
+					error: function (data) {
+	
+					}
+				});
+				return false;
+			});
+		});
+	</script>
+</body>
+</html>

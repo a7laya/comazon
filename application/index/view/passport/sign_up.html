@@ -1,84 +1,119 @@
 {include file='inc/header'/}
 <link rel="stylesheet" href="__CSS__/login.css">
+<style>
+    .layui-form-item {
+        position: relative;
+    }
 
+    .layui-input {
+        width: 90%;
+    }
+
+
+    .layui-inline {
+        position: absolute;
+        top: 0;
+        left: 330px;
+    }
+</style>
 <div class="login-main">
-    <header class="layui-elip" style="width: 82%">Create your account</header>
-    <!-- 表单选项 -->
-    <form class="layui-form">
-        <div class="layui-input-inline">
-            <!-- 用户名 -->
-            <div class="layui-inline" style="width: 85%">
-                <input type="text" id="user" name="username" required lay-verify="required" placeholder="username"
-                    autocomplete="off" class="layui-input">
+    <header class="layui-elip" style="text-align: center"> Create Your Account</header>
+
+    <form class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class='star'>*</span> Username</label>
+            <div class="layui-input-block">
+                <input type="text" id="user" name="username" lay-verify="required|username" autocomplete="off" placeholder=""
+                    class="layui-input">
             </div>
-            <!-- loading -->
-            <div class="layui-inline">
-                <i class="layui-icon loading" id="loading" hidden></i>
-            </div>
-            <!-- 对号 -->
-            <div class="layui-inline">
+            <!-- 用户名判断反馈 -->
+            <div class="layui-inline checkUser">
                 <i class="layui-icon ri" id="ri" hidden></i>
-            </div>
-            <!-- 错号 -->
-            <div class="layui-inline">
                 <i class="layui-icon wr" id="wr" hidden>ဆ</i>
+                <i class="layui-icon " id="checking" style="font-size:12px; color:#999; position:relative; top:15px" hidden>checking...</i>
             </div>
         </div>
-        <div class="layui-input-inline">
-            <!-- 邮箱 -->
-            <div class="layui-inline" style="width: 85%">
-                <input type="text" id="email" name="email" required lay-verify="required" placeholder="email"
-                    autocomplete="off" class="layui-input">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class='star'>*</span> Password</label>
+            <div class="layui-input-block">
+                <input type="password" id="pwd" name="password" lay-verify="required" autocomplete="off" placeholder=""
+                    class="layui-input">
             </div>
-            <!-- 对号 -->
-            <div class="layui-inline">
-                <i class="layui-icon ri" id="e-ri" hidden></i>
-            </div>
-            <!-- 错号 -->
-            <div class="layui-inline">
-                <i class="layui-icon wr" id="e-wr" hidden>ဆ</i>
-            </div>
-        </div>
-        <!-- 密码 -->
-        <div class="layui-input-inline">
-            <div class="layui-inline" style="width: 85%">
-                <input type="password" id="pwd" name="password" required lay-verify="required" placeholder="password"
-                    autocomplete="off" class="layui-input">
-            </div>
-            <!-- 对号 -->
-            <div class="layui-inline">
-                <i class="layui-icon ri" id="pri" hidden></i>
-            </div>
-            <!-- 错号 -->
-            <div class="layui-inline">
-                <i class="layui-icon wr" id="pwr" hidden>ဆ</i>
-            </div>
-        </div>
-        <!-- 确认密码 -->
-        <div class="layui-input-inline">
-            <div class="layui-inline" style="width: 85%">
-                <input type="password" id="rpwd" name="repassword" required lay-verify="required"
-                    placeholder="Please confirm your password" autocomplete="off" class="layui-input">
-            </div>
-            <!-- 对号 -->
-            <div class="layui-inline">
-                <i class="layui-icon ri" id="rpri" hidden></i>
-            </div>
-            <!-- 错号 -->
-            <div class="layui-inline">
-                <i class="layui-icon wr" id="rpwr" hidden>ဆ</i>
+            
+            <!-- 用密码判断反馈 -->
+            <div class="layui-inline checkPwd">
+                <i class="layui-icon ri" id="ri" hidden></i>
+                <i class="layui-icon wr" id="wr" hidden>ဆ</i>
+                <i class="layui-icon " id="checking" style="font-size:12px; color:#999; position:relative; top:15px" hidden>checking...</i>
             </div>
         </div>
 
 
-        <div class="layui-input-inline login-btn" style="width: 85%">
-            <button type="submit" lay-submit lay-filter="sub" class="layui-btn">Sign in</button>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class='star'>*</span> Repassword</label>
+            <div class="layui-input-block">
+                <input type="password" id="rpwd" name="repassword" lay-verify="required|pass" autocomplete="off" placeholder=""
+                    class="layui-input">
+            </div>
+            
+            <!-- 用密码判断反馈 -->
+            <div class="layui-inline checkRpwd">
+                <i class="layui-icon ri" id="ri" hidden></i>
+                <i class="layui-icon wr" id="wr" hidden>ဆ</i>
+                <i class="layui-icon " id="checking" style="font-size:12px; color:#999; position:relative; top:15px" hidden>checking...</i>
+            </div>
         </div>
-        <hr style="width: 85%" />
-        <p style="width: 85%"><a href="signIn" class="fl">Login immediately</a><a href="javascript:;" class="fr">Forget
-                password</a>
-        </p>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class='star'>*</span> Email</label>
+            <div class="layui-input-block">
+                <input type="text" id="email" name="email" lay-verify="required|email" autocomplete="off" placeholder=""
+                    class="layui-input">
+            </div>
+            <!-- 邮箱判断反馈 -->
+            <div class="layui-inline checkEmail">
+                <i class="layui-icon ri" id="ri" hidden></i>
+                <i class="layui-icon wr" id="wr" hidden>ဆ</i>
+                <i class="layui-icon " id="checking" style="font-size:12px; color:#999; position:relative; top:15px" hidden>checking...</i>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class='star'>*</span> Referral Code</label>
+            <div class="layui-input-block">
+                {notempty name="code"}
+                <input type="text" id="code" name="referral_code" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="{$code}" disabled>
+                {else /}
+                <input type="text" id="code" name="referral_code" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="">
+                {/notempty}
+            </div>
+
+            
+            
+            <!-- 邀请码判断反馈 -->
+            <div class="layui-inline checkCode">
+                <i class="layui-icon ri" id="ri" hidden></i>
+                <i class="layui-icon wr" id="wr" hidden>ဆ</i>
+                <i class="layui-icon " id="checking" style="font-size:12px; color:#999; position:relative; top:15px" hidden>checking...</i>
+            </div>
+        </div>
+        <!-- <hr> -->
+        <!-- <div class="layui-form-item">
+            <label class="layui-form-label"> Tel</label>
+            <div class="layui-input-block">
+            <input type="text" name="code" autocomplete="off" placeholder="" class="layui-input">
+            </div>
+        </div> -->
+
+        <!-- <div class="layui-form-item"> -->
+            <div class="layui-input-inline">
+                <button type="submit" lay-submit lay-filter="sub" class="layui-btn">Sign Up</button>
+            </div>
+        <!-- </div> -->
     </form>
+
+ 
 </div>
 
 
@@ -91,6 +126,8 @@
         //添加表单失焦事件
         //验证表单
         $('#user').blur(function () {
+            $('.checkUser i').attr('hidden', 'hidden');
+            $('.checkUser #checking').removeAttr('hidden');
             var user = $(this).val();
             var re = /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
             // 先进行前端正则验证用户名格式是否正确，
@@ -106,29 +143,28 @@
                     //验证用户名是否可用
                     success: function (data) {
                         if (data == 0) {
-                            $('#ri').removeAttr('hidden');
-                            $('#wr').attr('hidden', 'hidden');
-
-
+                            $('.checkUser i').attr('hidden', 'hidden');
+                            $('.checkUser #ri').removeAttr('hidden');
                         } else {
-                            $('#wr').removeAttr('hidden');
-                            $('#ri').attr('hidden', 'hidden');
-                            layer.msg('The current username has been occupied!')
-
+                            $('.checkUser i').attr('hidden', 'hidden');
+                            $('.checkUser #wr').removeAttr('hidden');
+                            layer.msg('Username has been occupied!')
                         }
-
                     }
                 })
             } else {
-                $('#wr').removeAttr('hidden');
-                $('#ri').attr('hidden', 'hidden');
-                layer.msg('Username must be 3-16 letters and numbers, beginning with letters! ')
+                $('.checkUser i').attr('hidden', 'hidden');
+                $('.checkUser #wr').removeAttr('hidden');
+                // layer.msg('Username must be 3-16 letters and numbers,<br>No blank and beginning with letters! ')
+                layer.tips('Username must be 3-16 letters and numbers,No blank and beginning with letters!', $('#user'), {
+                    tips: [3, '#5fb878']
+                })
             }
-
-
-
         });
+
         $('#email').blur(function () {
+            $('.checkEmail i').attr('hidden', 'hidden');
+            $('.checkEmail #checking').removeAttr('hidden');
             var email = $(this).val();
             var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
             // 先进行前端正则验证邮箱格式是否正确，
@@ -145,71 +181,116 @@
                     success: function (data) {
                         console.log('email-data :', data);
                         if (data == 0) {
-                            $('#e-ri').removeAttr('hidden');
-                            $('#e-wr').attr('hidden', 'hidden');
+                            $('.checkEmail i').attr('hidden', 'hidden');
+                            $('.checkEmail #ri').removeAttr('hidden');
                         } else {
-                            $('#e-wr').removeAttr('hidden');
-                            $('#e-ri').attr('hidden', 'hidden');
-                            layer.msg('The current emailname has been occupied!')
-
+                            $('.checkEmail i').attr('hidden', 'hidden');
+                            $('.checkEmail #wr').removeAttr('hidden');
+                            // layer.msg('The current emailname has been occupied!')
+                            layer.tips('The email has been occupied!', $('#email'), {
+                                tips: [3, '#5fb878']
+                            })
                         }
 
                     }
                 })
             } else {
-                $('#e-wr').removeAttr('hidden');
-                $('#e-ri').attr('hidden', 'hidden');
-                layer.msg('The email format is incorrect! ')
+                $('.checkEmail i').attr('hidden', 'hidden');
+                $('.checkEmail #wr').removeAttr('hidden');
+                // layer.msg('The email format is incorrect! ')
+                layer.tips('The email format is incorrect!', $('#email'), {
+                    tips: [3, '#5fb878']
+                })
             }
-
-
-
         });
 
-        // you code ...
-        // 为密码添加正则验证
+        
+        // 密码验证
         $('#pwd').blur(function () {
-            var reg = /^[\w]{6,12}$/;
-            if (!($('#pwd').val().match(reg))) {
-                //layer.msg('请输入合法密码');
-                $('#pwr').removeAttr('hidden');
-                $('#pri').attr('hidden', 'hidden');
-                layer.msg('Password must be 6-12 letters and numbers, not null!');
-            } else {
-                $('#pri').removeAttr('hidden');
-                $('#pwr').attr('hidden', 'hidden');
-            }
-        });
+            $('.checkPwd i').attr('hidden', 'hidden');
+            $('.checkPwd #checking').removeAttr('hidden');
+            var password = $(this).val();
+            var re = /^[\S]{6,}$/;
 
+            if (!re.test(password)) {
+                $('.checkPwd i').attr('hidden', 'hidden');
+                $('.checkPwd #wr').removeAttr('hidden');
+                // layer.msg('Two inconsistent passwords!');
+                layer.tips('Passwords must be more than 6 bits and no spaces should appear!', $('#pwd'), {
+                    tips: [3, '#5fb878']
+                })
+            } else {
+                $('.checkPwd i').attr('hidden', 'hidden');
+                $('.checkPwd #ri').removeAttr('hidden');
+            };
+        });
         //验证两次密码是否一致
         $('#rpwd').blur(function () {
             if ($('#pwd').val() != $('#rpwd').val()) {
-                $('#rpwr').removeAttr('hidden');
-                $('#rpri').attr('hidden', 'hidden');
-                layer.msg('Two inconsistent passwords!');
+                $('.checkRpwd i').attr('hidden', 'hidden');
+                $('.checkRpwd #wr').removeAttr('hidden');
+                // layer.msg('Two inconsistent passwords!');
             } else {
-                $('#rpri').removeAttr('hidden');
-                $('#rpwr').attr('hidden', 'hidden');
+                $('.checkRpwd i').attr('hidden', 'hidden');
+                $('.checkRpwd #ri').removeAttr('hidden');
             };
         });
 
-        //
-        //添加表单监听事件,提交注册信息
-        form.on('submit(sub)', function () {
+        // 验证邀请码
+        $('#code').keyup(function () {
+            $('.checkCode i').attr('hidden', 'hidden');
+            $('.checkCode #checking').removeAttr('hidden');
+            var code = $(this).val();
             $.ajax({
-                url: 'signUpRes',
+                url: '{:url("index/passport/checkCode")}',
                 type: 'post',
                 dataType: 'text',
                 data: {
-                    username: $('#user').val(),
-                    email: $('#email').val(),
-                    password: $('#pwd').val(),
+                    referral_code: code
                 },
+                // 返回结果
                 success: function (data) {
-                    console.log('submit-data.status :', data);
                     if (data == 1) {
+                        $('.checkCode i').attr('hidden', 'hidden');
+                        $('.checkCode #ri').removeAttr('hidden');
+                    } else {
+                        $('.checkCode i').attr('hidden', 'hidden');
+                        $('.checkCode #wr').removeAttr('hidden');
+                        // layer.msg('Referral code is illegal!')
+                    }
+                }
+            })
+        });
+        //自定义验证规则
+        form.verify({
+            username: [/^[a-zA-Z][a-zA-Z0-9]{2,15}$/,'Username must be 3-16 letters and numbers,<br>beginning with letters!']
+            ,pass: [
+                /^[\S]{6,}$/
+                ,'Passwords must be more than 6 bits and no spaces should appear.'
+            ]
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+        //添加表单监听事件,提交注册信息
+        form.on('submit(sub)', function (data) {
+            $.ajax({
+                url: '{:url("index/passport/signUpRes")}',
+                type: 'post',
+                data: {
+                    username:$('#user').val(),
+                    password:$('#pwd').val(),
+                    email:$('#email').val(),
+                    referral_code:$('#code').val()
+                },
+                success: function (d) {
+                    console.log('submit-data.status :', d);
+                    // var d = JSON.parse(d);
+                    console.log('d.code :', d.code);
+                    if (d.code == 1) {
                         layer.open({
-                            content: 'Registration succeed',
+                            title:'Congratulations',
+                            content: d.msg,
                             yes: function (index, layero) {
                                 //do something
                                 layer.close(index); //如果设定了yes回调，需进行手工关闭
@@ -217,9 +298,9 @@
                             }
                         });
                         // layer.msg('Registration succeed');
-                        
+
                     } else {
-                        layer.msg('Registration failed');
+                        layer.msg('Err:'+d.msg);
                     }
                 }
             })

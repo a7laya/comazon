@@ -19,8 +19,6 @@ class Seller extends Model
     use SoftDelete;
     protected $deleteTime = 'delete_time';
 
-    // 设置搜索关键字对应的字段
-    protected $keywords_fields = 'seller_id|seller_name';
     /**
      * 添加卖家
      * @param array $data
@@ -43,7 +41,7 @@ class Seller extends Model
     public function tableData(array $arr)
     {   
         $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
-        $data     = $this->where($keywords_fields,'like',"%{$keywords}%")
+        $data     = $this->where('seller_id|seller_name','like',"%{$keywords}%")
                     // ->order('seller_id desc')  // 卖家列表排序
                     ->limit($arr['limit'])
                     ->page($arr['page'])
@@ -51,7 +49,7 @@ class Seller extends Model
         $res['code']  = 0;
         $res['msg']   = '';
         $res['count'] = $this
-                        ->where($keywords_fields,'like',"%{$keywords}%")
+                        ->where('seller_id|seller_name','like',"%{$keywords}%")
                         ->count();
         $res['data']  = $data;
         return $res;
@@ -60,7 +58,7 @@ class Seller extends Model
     {   
         $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
         $data     = $this::onlyTrashed()
-                    ->where($keywords_fields,'like',"%{$keywords}%")
+                    ->where('seller_id|seller_name','like',"%{$keywords}%")
                     ->order('delete_time desc')  // 卖家列表排序
                     ->limit($arr['limit'])
                     ->page($arr['page'])
@@ -68,7 +66,7 @@ class Seller extends Model
         $res['code']  = 0;
         $res['msg']   = '';
         $res['count'] = $this::onlyTrashed()
-                        ->where($keywords_fields,'like',"%{$keywords}%")
+                        ->where('seller_id|seller_name','like',"%{$keywords}%")
                         ->count();
         $res['data']  = $data;
         return $res;

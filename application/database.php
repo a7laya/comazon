@@ -13,13 +13,16 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '132.232.148.169',
+    // 'hostname'        => '132.232.148.169',
+    'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => 'comazon',
+    // 'database'        => 'comazon',
+    'database'        => 'test',
     // 用户名
     'username'        => 'root',
     // 密码
-    'password'        => '123qwe',
+    // 'password'        => '123qwe',
+    'password'        => '',
     // 端口
     'hostport'        => '',
     // 连接dsn

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>用户黑名单</title>
+  <title>买家黑名单</title>
   <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
 </head>
 <style>
@@ -24,7 +24,7 @@ input::-webkit-input-placeholder {
 
 <body style="padding:5px">
 
-  <blockquote class="layui-elem-quote layui-quote-nm">用户管理 / 黑名单
+  <blockquote class="layui-elem-quote layui-quote-nm">买家管理 / 黑名单
     
     <form class="layui-form" style="position:absolute; right: 0px; top: 13px">
       <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
@@ -70,23 +70,32 @@ input::-webkit-input-placeholder {
               field: 'username',
               title: 'Username',
             },{
-              field: 'password',
-              title: 'Password',
+              field: 'referral_code',
+              title: 'Referral Code',
+              width: 120,
             }, {
               field: 'email',
               title: 'Email',
-              width: 220,
-              sort: true
+              width: 150,
             }, {
-              field: 'ts',
+              field: 'tel',
+              title: 'Tel',
+              width: 120,
+            }, {
+              field: 'create_time',
               title: 'Registration time',
+              width: 160,
+              sort: true
+            },{
+              field: 'bz',
+              title: 'Remarks',
               width: 220,
               sort: true
             },{
               fixed: 'right',
               title: 'Operation',
               toolbar: '#barDemo',
-              width: 100
+              width: 150
             }
           ]
         ],
@@ -99,9 +108,9 @@ input::-webkit-input-placeholder {
       table.on('tool(test)', function (obj) {
         var data = obj.data; // 改行的一个数据对象
         console.log(data)
-        // 拉黑用户
+        // 拉黑买家
         if (obj.event === 'restore') {
-          layer.confirm('Do you really want to push white this user?', function (index) {
+          layer.confirm('确定要恢复买家: '+data.username+' ?',  function (index) {
             $.ajax({
               url: "{:url('admin/users/restoreUser')}",
               type: 'POST',
@@ -118,7 +127,7 @@ input::-webkit-input-placeholder {
               }
             })
           });
-        // 编辑单条用户数据
+        // 编辑单条买家数据
         } else if (obj.event === 'edit') {
           console.log('purchased_id :', data.purchased_id);
           layer.open({
@@ -148,7 +157,7 @@ input::-webkit-input-placeholder {
     });
   </script>
   <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="restore">Push white</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="restore">Restroe</a>
   </script>
 </body>
 

@@ -13,38 +13,23 @@ class Orders extends Base
        $this->user = Model('User');
        $this->purchased = new Purchased; 
        $this->vpurchased = new Vpurchased; // 视图
+       // 权限控制-未登陆不给看
+       if (!$this->session_admin){return $this->redirect('admin/passport/login');}
     }
 
    
     public function ordersForReview(){
-        // 模板输出
-        if($this->session_admin){
             return  view();
-        } else {
-            // 判断session不存在->重定向至登录界面
-            return $this->redirect('admin/passport/login');
-        }
     }
     public function ordersReviewed(){
-        // 模板输出
-        if($this->session_admin){
             return  view();
-        } else {
-            // 判断session不存在->重定向至登录界面
-            return $this->redirect('admin/passport/login');
-        }
     }
     public function reviewOrder(){
         $purchased_id = (int)$_GET['purchased_id'];
         $data = $this->vpurchased->where('purchased_id', $purchased_id)->find();
         $this->assign('order', $data);
         // 模板输出
-        if($this->session_admin){
-            return  view();
-        } else {
-            // 判断session不存在->重定向至登录界面
-            return $this->redirect('admin/passport/login');
-        }
+        return  view();
     }
     public function orderReviewSubmit()
     {   

@@ -26,6 +26,7 @@ layui.use(['jquery','layer','element'],function(){
         url = othis.data('url');
         layer.open({
           type: 2,
+          shadeClose: true,
           title: title,
           area: [width, height],
           //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']

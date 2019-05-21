@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>A7LAYA-CMS后台管理</title>
+	<title>CMS后台管理</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
@@ -79,7 +79,7 @@
 					<!-- 系统设置 -->
 					<li class="layui-nav-item">
 						<a href="javascript:;">
-							<i class="iconfont icon-jiaoseguanli"></i>
+							<i class="iconfont icon-shezhi1"></i>
 							<span>系统设置</span>
 							<em class="layui-nav-more"></em>
 						</a>
@@ -96,10 +96,11 @@
 									<span>修改管理员密码</span>
 								</a>
 							</dd>
-							<dd>
-								<a href="{:url('admin/sellers/sellersList')}" target="main" data-url="404.html">
-									<i class="iconfont icon-lanmuguanli" data-icon='icon-lanmuguanli'></i>
-									<span>店铺设置</span>
+							<!-- 加了 laya-nav-child 就可以应用弹出层了-->
+							<dd class="laya-nav-child">
+								<a href="javascript:;" data-title="网站设置" data-url="{:url('admin/settings/settingsEdit')}" data-width="450px" data-height="450px">
+									<i class="iconfont icon-pinglun1" data-icon='icon-pinglun1'></i>
+									<span>网站设置</span>
 								</a>
 							</dd>
 							<!-- 加了 laya-nav-child 就可以应用弹出层了-->
@@ -115,6 +116,29 @@
 									<span>日志信息</span>
 								</a>
 							</dd> -->
+						</dl>
+					</li>
+					<!-- 店铺管理 -->
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<i class="iconfont icon-30wangzhanguanli1"></i>
+							<span>店铺管理</span>
+							<em class="layui-nav-more"></em>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="{:url('admin/sellers/sellersList')}" target="main" data-url="404.html">
+									<i class="iconfont icon-yonghu1" data-icon='icon-yonghu1'></i>
+									<span>店铺列表</span>
+								</a>
+							</dd>
+							
+							<dd>
+								<a href="{:url('admin/sellers/sellersRestore')}" target="main" data-url="404.html">
+									<i class="iconfont icon-quanxian2" data-icon='icon-quanxian2'></i>
+									<span>回收站</span>
+								</a>
+							</dd>
 						</dl>
 					</li>
 					<!-- 商品管理 -->
@@ -139,7 +163,7 @@
 							</dd>
 							<dd>
 								<a href="{:url('admin/products/productsRestore')}" target="main" data-url="404.html">
-									<i class="iconfont icon-zhuti" data-icon='icon-zhuti'></i>
+									<i class="iconfont icon-quanxian2" data-icon='icon-quanxian2'></i>
 									<span>回收站</span>
 								</a>
 							</dd>
@@ -155,13 +179,19 @@
 						<dl class="layui-nav-child">
 							<dd>
 								<a href="{:url('admin/orders/ordersForReview')}" target="main">
-									<i class="iconfont icon-wenzhang2" data-icon='icon-wenzhang2'></i>
+									<i class="iconfont icon-caidan1" data-icon='icon-caidan1'></i>
 									<span>订单审核</span>
 								</a>
 							</dd>
 							<dd>
 								<a href="{:url('admin/orders/ordersReviewed')}" target="main">
-									<i class="iconfont icon-wenzhang2" data-icon='icon-wenzhang2'></i>
+									<i class="iconfont icon-neirong" data-icon='icon-neirong'></i>
+									<span>已审核订单</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="{:url('admin/orders/ordersReviewed')}" target="main">
+									<i class="iconfont icon-neirong1" data-icon='icon-neirong1'></i>
 									<span>已审核订单</span>
 								</a>
 							</dd>
@@ -175,6 +205,13 @@
 							<em class="layui-nav-more"></em>
 						</a>
 						<dl class="layui-nav-child">
+							<dd>
+								<a href="{:url('admin/users/usersCode')}" target="main" data-url="404.html">
+									<i class="iconfont icon-anquanshezhi1" data-icon='icon-anquanshezhi1'></i>
+									<span>邀请码</span>
+								</a>
+							</dd>
+
 							<dd>
 								<a href="{:url('admin/users/usersList')}" target="main" data-url="404.html">
 									<i class="iconfont icon-yonghu1" data-icon='icon-yonghu1'></i>
@@ -205,9 +242,9 @@
 		<!-- 右侧主体内容 -->
 		<div class="layui-body" id="larry-body" style="bottom: 0;border-left: solid 2px #2299ee;">
 			<div class="layui-tab layui-tab-card larry-tab-box" id="larry-tab" lay-filter="demo" lay-allowclose="true">
-				<div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧"><i
-						class="larry-icon larry-weibiaoti6-copy"></i> </div>
-				
+				<div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧">
+					<i class="larry-icon larry-weibiaoti6-copy"></i> 
+				</div>
 				<div class="layui-tab-content" style="min-height: 150px; ">
 					<div class="layui-tab-item layui-show">
 						<iframe class="larry-iframe" data-id='0' src="{:url('admin/index/main')}" style="max-height:1500px" name="main" id="main"></iframe>

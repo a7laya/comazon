@@ -22,7 +22,8 @@ layui.define('layer', function(exports){
       verify: {
         required: [
           /[\S]+/
-          ,'必填项不能为空'
+          ,'Can not be empty.'
+          // ,'必填项不能为空.'
         ]
         ,phone: [
           /^1\d{10}$/
@@ -30,7 +31,8 @@ layui.define('layer', function(exports){
         ]
         ,email: [
           /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
-          ,'邮箱格式不正确'
+          ,'The mailbox format is incorrect.'
+          // ,'邮箱格式不正确'
         ]
         ,url: [
           /(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/

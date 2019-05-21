@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\controller;
 use think\Request;
-// use think\Db;
+use think\Db;
 use app\index\model\Product;
 use app\index\model\Mark;
 use app\index\model\Vpurchased;
@@ -35,6 +35,8 @@ class Products extends Base
 
     // 添加商品页
     public function productsAdd(){
+        $sellers = Db::table('seller')->select();
+        $this->assign('sellers', $sellers);
         // 模板输出
         return  $this->fetch();
     }

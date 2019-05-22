@@ -35,12 +35,69 @@ class Users extends Base
     public function usersCenter()
     {
         // 模板输出
-        return  view();
+        return view();
     }
 
-    // 页面-用户中心
-    public function usersCenterMain()
+    // 页面 - 修改密码
+    public function usersPassword()
+    {   
+        return view();
+    }
+
+    // 接口 - 修改密码
+    public function updatePassword()
+    {   
+        $data = input();
+        $old = shop_hash($data["old_password"]);
+        $res = $this->user->where([
+            'username'=>$data['username'], 
+            'password'=>$old
+            ])->find();
+        if($res){
+            $data['password'] = shop_hash($data['password']);
+            $this->user->allowField(['password'])->save($data, ['username' => $data['username']]);
+            return ['code'=>1, 'msg'=>'Password Update Successfully!'];
+        } else {
+            return ['code'=>0, 'msg'=>'Original password error.'];
+        }
+    }
+
+    // 页面-修改个人资料
+    public function usersEdit()
     {
+        $username = $this->shop_user['username'];
+        $res = User::get(['username'=>$username]);
+        $this->assign('data', $res);
+        return view();
+    }
+
+    // 接口-修改个人资料
+    public function editUser()
+    {
+        $data = input();
+        // 如果新密码被设置则更新密码
+        if(trim($data['newpassword']) !=''){
+            $data['password'] = shop_hash($data['newpassword']);
+        }
+        $res = $this->user->allowField(true)->save($data,['user_id' => $data['user_id']]);
+        return ['code'=>$res, 'msg'=>'Edit Success!'];
+    }
+
+    // 页面-用户中心-个人信息（默认页）
+    public function usersCenterMain()
+    {   
+        $username = $this->shop_user['username'];
+        $res = $this->user->where(['username'=>$username])->find();
+        $this->assign([
+            'data'=>$res,
+            'day_limit'=>$this->day_limit,
+            'week_limit'=>$this->week_limit,
+            'day_count'=>$this->day_count,
+            'week_count'=>$this->week_count,
+            // 当日 当周 剩余可购买数量
+            'day_surplus'=>$this->day_limit-$this->day_count,
+            'week_surplus'=>$this->week_limit-$this->week_count,
+            ]);
         // 模板输出
         return  view();
     }

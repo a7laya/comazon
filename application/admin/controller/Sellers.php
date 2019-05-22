@@ -9,6 +9,8 @@ class Sellers extends Base
     {
         parent::_initialize();
         $this->seller = new Seller;
+        // 权限控制-未登陆不给看
+        if (!$this->session_admin){return $this->redirect('admin/passport/login');}
     }
 
    

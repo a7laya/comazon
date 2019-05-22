@@ -8,6 +8,8 @@ class Administrator extends Base
     {
         parent::_initialize();
         $this->admin = new Admin;
+        // 权限控制-未登陆不给看
+        if (!$this->session_admin){return $this->redirect('admin/passport/login');}
     }
 
     // 页面 - 修改管理员信息
@@ -27,9 +29,9 @@ class Administrator extends Base
         if($res){
             $data['password'] = shop_hash($data['password']);
             $this->admin->allowField(['username','password'])->save($data, ['admin_id' => $data['admin_id']]);
-            return ['code'=>1, 'msg'=>'Administrator Information Update Successfully!'];
+            return ['code'=>1, 'msg'=>'Update Successfully!'];
         } else {
-            return ['code'=>0, 'msg'=>'Administrator Information Update Failed!'];
+            return ['code'=>0, 'msg'=>'Original password error.'];
         }
     }
     

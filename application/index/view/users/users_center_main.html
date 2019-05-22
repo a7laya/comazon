@@ -5,11 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/global.css" media="all">  
+    <style>
+    .container {
+        margin: 10px 0;
+        width: 100%;
+    }
+    .container > div {
+        margin-top: 15px;
+    }
+    .layui-card {
+        border: 1px solid #e1e4e8;
+    }
+    .layui-card-header {
+        background-color: #f3f5f8;
+        border-bottom: 1px solid #e1e4e8;
+        color: #586069;
+    }
+    .layui-card-header .iconfont {
+        position: relative;
+        top:0px;
+    }
+    .layui-card-body .item label {
+        font-weight: 600;
+        color: #5a636b;
+    }
+    .layui-card-body .item content {
+        color: #66707c;
+    }
+    .layui-card-body .item notice {
+        color: #ff0000;
+    }
+    </style>
     <title>My Information</title>
 </head>
 <body>
-    <div class="container">
-        
+<div class="container">
+        <div class="col-sm-7 left">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="iconfont icon-geren1"></i>
+                    Personal Information
+                </div>
+                <div class="layui-card-body">
+                    <div class="item">
+                        <label>Username: </label>
+                        <content>{$data.username}</content>
+                    </div>
+                    <div class="item">
+                        <label>Email: </label>
+                        <content>{$data.email}</content>
+                    </div>
+                    <div class="item">
+                        <label>Tel: </label>
+                        <content>{$data.tel|default="You haven't filled in yet."}</content>
+                    </div>
+                    <div class="item">
+                        <label>Default PayPal: </label>
+                        <content>{$data.paypal|default="You haven't filled in yet."}</content>
+                    </div>
+                    <div class="item">
+                        <label>Default Address: </label>
+                        <content>{$data.address|default="You haven't filled in yet."}</content>
+                    </div>
+                    <div class="item">
+                        <label>Registration Time: </label>
+                        <content>{$data.create_time}</content>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5 right">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="iconfont icon-anquanshezhi4"></i>
+                    Safety Tips 
+                </div>
+                <div class="layui-card-body" style="height:194px">
+                    <div class="item">
+                        <label>Last Login Time: </label>
+                        <content>{$data.last_login_time|default='This is your first login.'}</content>
+                    </div>
+                    <div class="item">
+                        <label>Last Login IP: </label>
+                        <content>{$data.last_login_ip|default='This is your first login.'}</content>
+                    </div>
+                    <div class="item">
+                        <label>Account Update Time: </label>
+                        <content>{$data.update_time|default='This is your first login.'}</content>
+                    </div>
+                    <hr style="margin:6px 0">
+                    <div class="item">
+                        <notice>
+                            Please check the above information carefully. If it is inconsistent with your last login information, please change your password in time.
+                        </notice>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="iconfont icon-chatlist"></i>
+                    Can I Place an Order Today?
+                </div>
+                <div class="layui-card-body">
+                    <div class="item">
+                    {gt name="week_limit" value="$week_count"}
+                        {gt name="day_limit" value="$day_count"}
+                        <notice style="color:green">
+                            {gt name="day_surplus" value="$week_surplus"}
+                                You can buy {$week_surplus} item(s) today.
+                            {else /}
+                                You can buy {$day_surplus} item(s) today.
+                            {/gt}
+                        </notice>
+                        {else/}
+                        <notice style="color:red">
+                            Sorry,You can't buy anymore today.
+                        </notice>
+                        {/gt}
+                    {else /}
+                        <notice style="color:red">
+                            Sorry,You can't buy anymore this week.
+                        </notice>
+                    {/gt}
+                    </div>
+                    <hr style="margin:6px 0">
+                    <div class="item">
+                        <label>Restricted Purchase Today: </label>
+                        <content>{$day_limit} - You have placed {$day_count} {lt name="day_count" value="2"} order {else /} orders {/lt}today.</content>
+                    </div>
+                    
+                    <div class="item">
+                        <label>Restricted Purchase This Week: </label>
+                        <content>{$week_limit} - You have placed {$week_count} {lt name="week_count" value="2"} order {else /} orders {/lt}this week.</content>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    
     </div>
 </body>
 </html>

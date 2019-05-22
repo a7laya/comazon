@@ -12,6 +12,8 @@ class Users extends Base
         $this->limit = new Limit;
         $this->user = new User;
         $this->code = new Code;
+        // 权限控制-未登陆不给看
+        if (!$this->session_admin){return $this->redirect('admin/passport/login');}
     }
 
     // 页面-修改限制
@@ -45,7 +47,8 @@ class Users extends Base
 
     // 页面-编辑用户界面
     public function usersEdit()
-    {   $user_id = $_GET['user_id'];
+    {   
+        $user_id = $_GET['user_id'];
         $res = User::get($user_id);
         $this->assign('data', $res);
         return view();
@@ -55,6 +58,7 @@ class Users extends Base
     public function editUser()
     {
         $data = input();
+        // 如果新密码被设置则更新密码
         if(trim($data['newpassword']) !=''){
             $data['password'] = shop_hash($data['newpassword']);
         }

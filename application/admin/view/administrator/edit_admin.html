@@ -90,16 +90,15 @@
                     }
                 },
                 pass: [
-                    /^[\S]{6,12}$/, 'Passwords must be between 6 and 12 bits, and no spaces are allowed.'
+                    /^[\S]{6,}$/, 'Password must be no less than 6 digits.'
                 ],
                 content: function (value) {
                     layedit.sync(editIndex);
                 },
                 
                 repass: function (value) {
-                    //获取密码
-                    var pass = $("#pass").val();
-                    if (!new RegExp(pass).test(value)) {
+                    // 两次密码输入是否一致
+                    if($("[name=password]").val() !== value) {
                         return 'Two inconsistent passwords';
                     }
                 }
@@ -132,8 +131,10 @@
                             }, function (index) {
                                 // submitForm();  
                                 layer.close(index);
+								var frame_index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(frame_index);
                                 // 刷新页面
-                                window.location.reload();
+                                // window.location.reload();
                             });
                         } else {
                             return layer.msg(res.msg, {

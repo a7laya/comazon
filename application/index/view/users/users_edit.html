@@ -14,6 +14,11 @@
 <body>
 <link rel="stylesheet" href="__CSS__/login.css">
 <style>
+    .login-main .title {
+        font-size: 33px;
+        font-weight: 600;
+        color: rgb(76, 83, 97)
+    }
 	.login-main form{
 		position: relative;
 		left: -40px;
@@ -34,6 +39,8 @@
     }
 </style>
 <div class="login-main">
+	<br>
+    <div class="title">Modify Profile</div>
 	<br>
     <form class="layui-form layui-form-pane" action="">
 		<input type="text" id="user_id" name="user_id" style="display:none" value="{$data.user_id}">
@@ -80,12 +87,6 @@
                 <input type="text" id="address" name="address" lay-verify="" autocomplete="off" placeholder="" class="layui-input" value="{$data.address}">
             </div>
 		</div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">Remarks</label>
-            <div class="layui-input-block">
-                <input type="text" id="remarks" name="remarks" lay-verify="" autocomplete="off" placeholder="" class="layui-input" value="{$data.remarks}">
-            </div>
-		</div>
 		
 		<div class="layui-form-item">
 			<div class="layui-input-block">
@@ -120,7 +121,7 @@
         //添加表单监听事件,提交注册信息
         form.on('submit(sub)', function (data) {
             $.ajax({
-                url: '{:url("admin/users/editUser")}',
+                url: '{:url("index/users/editUser")}',
                 type: 'post',
                 data: data.field,
                 success: function (d) {
@@ -136,8 +137,8 @@
 								layer.close(index); //如果设定了yes回调，需进行手工关闭
 								// 关闭弹出层并刷新表格
 								var frame_index = parent.layer.getFrameIndex(window.name);
-								parent.layer.close(frame_index);
-								parent.layui.table.reload('idTest', {})
+                                parent.layer.close(frame_index);
+                                // window.location.href="{:url('index/users/usersCenterMain')}";
                             }
                         });
                         // layer.msg('Registration succeed');

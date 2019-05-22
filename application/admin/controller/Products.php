@@ -16,6 +16,8 @@ class Products extends Base
         $this->mark = new Mark;
         $this->purchased = new Purchased; // 表用于写入和删除
         $this->vpurchased = new Vpurchased; // 视图
+        // 权限控制-未登陆不给看
+        if (!$this->session_admin){return $this->redirect('admin/passport/login');}
     }
 
 

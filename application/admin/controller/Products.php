@@ -7,6 +7,7 @@ use app\index\model\Mark;
 use app\index\model\Vpurchased;
 use app\index\model\Purchased;
 use app\index\model\Limit;
+use app\admin\model\Seller;
 class Products extends Base
 {
     public function _initialize()
@@ -22,23 +23,24 @@ class Products extends Base
 
 
     // 商品懒加载方法
-    public function getList(Request $request){
-        $page_size = intval($request->param('page_size'));  //每页显示条数
-        $count = $this->product->count();  //总记录数
-        $res['total_page'] = ceil($count/$page_size);  //总页数
-        $cur_page = intval($request->param('page'))-1;  //默认前端page传过来为1 
-        $res['data'] = $this->product
-            ->limit(($cur_page*$page_size),$page_size)  //limit默认要从零开始
-            ->select();
-        // dump($this->product->getLastSql());die;
-        return json($res);  //返回json
-    }
+    // public function getList(Request $request){
+    //     $page_size = intval($request->param('page_size'));  //每页显示条数
+    //     $count = $this->product->count();  //总记录数
+    //     $res['total_page'] = ceil($count/$page_size);  //总页数
+    //     $cur_page = intval($request->param('page'))-1;  //默认前端page传过来为1 
+    //     $res['data'] = $this->product
+    //         ->limit(($cur_page*$page_size),$page_size)  //limit默认要从零开始
+    //         ->select();
+    //     // dump($this->product->getLastSql());die;
+    //     return json($res);  //返回json
+    // }
 
 
     // 添加商品页
     public function productsAdd(){
-        $sellers = Db::table('seller')->select();
-        $this->assign('sellers', $sellers);
+        $sellers = new Seller();
+        $res     = $sellers->select();
+        $this->assign('sellers', $res);
         // 模板输出
         return  $this->fetch();
     }

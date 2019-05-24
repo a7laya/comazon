@@ -22,7 +22,7 @@
             <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <input type="text" name="keywords" id="keywords" placeholder="ID" autocomplete="off"
+                    <input type="text" name="keywords" id="keywords" placeholder="ID | 位置" autocomplete="off"
                         class="layui-input">
                 </div>
                 <div class="layui-input-inline">
@@ -57,20 +57,23 @@
                             type: 'checkbox',
                             fixed: 'left'
                         }, {
-                            field: 'identifier',
+                            field: 'meter_id',
                             title: 'ID',
                             width: 80,
                             sort: true,
                             fixed: 'left'
                         }, {
                             field: 'online',
-                            title: 'online',
+                            title: '是否在线',
                         }, {
                             field: 'ip',
                             title: 'ip',
                         }, {
                             field: 'ssll',
-                            title: 'ssll',
+                            title: '瞬时流量',
+                        }, {
+                            field: 'location',
+                            title: '位置',
                         }, {
                             fixed: 'right',
                             title: 'Operation',
@@ -83,12 +86,12 @@
             });
 
             var active = {
-                // 添加店铺
+                // 添加水表
                 add: function () {
                         layer.open({
                             type: 2,
-                            title: 'Add Seller',
-                            area: ['360px', '250px'],
+                            title: '添加水表',
+                            area: ['360px', '300px'],
                             //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
                             content: "{:url('cb/css/cssAdd')}"
                         });
@@ -106,14 +109,14 @@
                     if (delList != '') {
                         layer.confirm('确定删除所选项吗？', function (index) {
                             $.ajax({
-                                url: '{:url("admin/sellers/delSeller")}',
+                                url: '{:url("cb/css/delCs")}',
                                 type: 'post',
                                 dataType: 'json',
                                 data: "seller_id=" + delList,
                                 success: function (code, statusText) {
                                     console.log('code :', code);
                                     if (code !== '0') {
-                                        layer.msg('成功删除了' + code + '个店铺');
+                                        layer.msg('成功删除了' + code + '个水表');
                                         table.reload('idTest', {});
                                     } else {
                                         layer.msg('删除失败');
@@ -146,14 +149,14 @@
             table.on('tool(test)', function (obj) {
                 var data = obj.data; // 改行的一个数据对象
                 console.log(data)
-                // 删除单条店铺数据
+                // 删除单条水表数据
                 if (obj.event === 'del') {
                     layer.confirm('Do you really want to delete it?', function (index) {
                         $.ajax({
-                            url: "{:url('admin/sellers/delSeller')}",
+                            url: "{:url('cb/css/delCs')}",
                             type: 'POST',
                             data: {
-                                seller_id: data.seller_id
+                                id: data.id
                             },
                             success: function (d) {
                                 if (d) {
@@ -165,7 +168,7 @@
                             }
                         })
                     });
-                    // 编辑单条店铺数据
+                    // 编辑单条水表数据
                 } else if (obj.event === 'edit') {
                     console.log('seller_id :', data.seller_id);
                     layer.open({
@@ -173,8 +176,7 @@
                         title: 'Edit-seller',
                         area: ['450px', '250px'],
                         //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-                        content: '{:url("admin/sellers/sellersEdit")}?seller_id=' + data
-                            .seller_id
+                        content: '{:url("cb/css/cssEdit")}?id=' + data.id
                     });
                 }
             });
@@ -201,8 +203,8 @@
                     }
                 });
             }
-
-            setInterval(reload,5000);
+            // reload();
+            setInterval(reload,30000);
 
         });
     </script>

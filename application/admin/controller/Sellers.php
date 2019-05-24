@@ -75,7 +75,8 @@ class Sellers extends Base
     
     // 接口-添加卖家
     public function addSeller()
-    {
+    {   
+        $_POST['create_time'] = date('Y-m-d H:i:s');
         $res = $this->seller->allowField(true)->save($_POST);
         return $res;
     }

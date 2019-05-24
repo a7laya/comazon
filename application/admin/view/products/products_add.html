@@ -1,72 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-	<title>添加商品</title>
-	<meta name="renderer" content="webkit">	
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">	
-	<meta name="apple-mobile-web-app-capable" content="yes">	
-	<meta name="format-detection" content="telephone=no">	
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/layui/css/layui.css" media="all">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/bootstrap/css/bootstrap.css" media="all">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/global.css" media="all">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/personal.css" media="all">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="__STATIC__\layui\css\layui.css">
+	<title>product add</title>
+	<style>
+	.laya-img .layui-input-inline {
+		margin-right: -30px;
+		margin-bottom: 10px;
+	}
+	</style>
 </head>
-<body class="childrenBody" style="padding:10px;background-color:#fff">
-	<form class="layui-form">
+
+<body style="padding:20px 20px 10px 10px">
+	<form class="layui-form" lay-filter='test' action="">
+		
 		<div class="layui-form-item">
 			<label class="layui-form-label">Title</label>
 			<div class="layui-input-block">
-				<input class="layui-input newsName" lay-verify="required" name="title" placeholder="Please enter the title of the item." type="text">
+				<input type="text" name="title" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<div class="layui-inline">		
-				<label class="layui-form-label">Price</label>
+			<div class="layui-inline">
+				<label class="layui-form-label">Seller ID</label>
 				<div class="layui-input-inline">
-					<input class="layui-input newsAuthor" lay-verify="required|number" placeholder="$" type="text" name="price" autocomplete="">
+					<select name="seller_id" lay-verify="required">
+						<option>Please chose</option>//加上这一行，先占个坑
+						{volist name="sellers" id="seller"}
+						<option value="{$seller['seller_id']}">{$seller['seller_id']}-{$seller['seller_name']}</option>
+						{/volist}
+					</select>
+				</div>
+				
+				<div class="layui-form-mid layui-word-aux">
+					No desired option? 
+					<a class="laya-btn layui-btn layui-btn-sm layui-btn-warm" data-title="Add a Seller" data-url="{:url('admin/sellers/sellersAdd')}" data-width="350px" data-height="250px">
+						Click here to add one
+					</a>
 				</div>
 			</div>
-			<div class="layui-inline">		
+		</div>
+		<div class="layui-form-item">
+
+			<div class="layui-inline">
+				<label class="layui-form-label">Price</label>
+				<div class="layui-input-inline">
+					<input class="layui-input newsAuthor" lay-verify="required|number" placeholder="$" type="text" name="price"
+						autocomplete="">
+				</div>
+			</div>
+			<div class="layui-inline">
 				<label class="layui-form-label">ASIN</label>
 				<div class="layui-input-inline">
 					<input class="layui-input newsAuthor" lay-verify="required" placeholder="" type="text" name="ASIN">
 				</div>
 			</div>
-			<div class="layui-inline">		
+			<div class="layui-inline">
 				<label class="layui-form-label">Quantity</label>
 				<div class="layui-input-inline">
 					<input class="layui-input newsAuthor" lay-verify="required|number" placeholder="" type="text" name="quantity">
 				</div>
 			</div>
-			<div class="layui-inline">		
-				<label class="layui-form-label">Seller ID</label>
-				<div class="layui-input-block">
-					<select name="seller_id" lay-verify="required">
-						{volist name="sellers" id="seller"}
-							<option value="{$seller['seller_id']}">{$seller['seller_name']}</option>
-						{/volist}
-					</select>
-				</div>
-			</div>
-			<!-- <div class="layui-inline">		
-				<label class="layui-form-label">CreateDate</label>
-				<div class="layui-input-inline">
-					<input class="layui-input newsTime" lay-verify="required|date" onClick="layui.laydate({elem:this})" type="text">
-				</div>
-			</div> -->
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">Image</label>
-			<div class="layui-input-block">
-				<!-- 点击上传图片 -->
+			<!-- 点击上传图片 -->
+			<div class="layui-input-block laya-img">
 				<div class="layui-input-inline" style="cursor:pointer;" id="cover">
-					<img id="preview" style="max-height: 220px; border: #666 solid 2px" src="__STATIC__/imgs/blank.jpg">
+					<img id="preview" style="height: 150px; width: 150px; border: #666 solid 2px"
+						src="__STATIC__/imgs/blank.jpg">
+					<input type="text" style="display:none" name="img_url" id="img_url" value="">
 				</div>
-				<input type="text" style="display:none"  name="img_url" id="img_url" value="">
+				<div class="layui-input-inline" style="cursor:pointer;" id="cover2">
+					<img id="preview2" style="height: 150px; width: 150px; border: #666 solid 2px"
+						src="__STATIC__/imgs/blank.jpg">
+					<input type="text" style="display:none" name="img_url2" id="img_url2" value="">
+				</div>
+				<div class="layui-input-inline" style="cursor:pointer;" id="cover3">
+					<img id="preview3" style="height: 150px; width: 150px; border: #666 solid 2px"
+						src="__STATIC__/imgs/blank.jpg">
+					<input type="text" style="display:none" name="img_url3" id="img_url3" value="">
+				</div>
+				<div class="layui-input-inline" style="cursor:pointer;" id="cover4">
+					<img id="preview4" style="height: 150px; width: 150px; border: #666 solid 2px"
+						src="__STATIC__/imgs/blank.jpg">
+					<input type="text" style="display:none" name="img_url4" id="img_url4" value="">
+				</div>
+				<div class="layui-input-inline" style="cursor:pointer;" id="cover5">
+					<img id="preview5" style="height: 150px; width: 150px; border: #666 solid 2px"
+						src="__STATIC__/imgs/blank.jpg">
+					<input type="text" style="display:none" name="img_url5" id="img_url5" value="">
+				</div>
+				<div class="layui-input-inline" style="cursor:pointer;" id="cover6">
+					<img id="preview6" style="height: 150px; width: 150px; border: #666 solid 2px"
+						src="__STATIC__/imgs/blank.jpg">
+					<input type="text" style="display:none" name="img_url6" id="img_url6" value="">
+				</div>
+				<div class="layui-input-inline" style="cursor:pointer;" id="cover7">
+					<img id="preview7" style="height: 150px; width: 150px; border: #666 solid 2px"
+						src="__STATIC__/imgs/blank.jpg">
+					<input type="text" style="display:none" name="img_url7" id="img_url7" value="">
+				</div>
 			</div>
+
+
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">Description</label>
@@ -78,39 +119,53 @@
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="submit" id="submit">Submit</button>
 				<button type="reset" class="layui-btn layui-btn-primary">Reset</button>
-		    </div>
+			</div>
 		</div>
 	</form>
-	<!-- <script type="text/javascript" src="__STATIC__/admin/common/layui/layui.js"></script> -->
-	<script src="__STATIC__/layui/layui.js"></script>
-	<!-- <script type="text/javascript" src="__STATIC__/admin/js/newsadd.js"></script> -->
-	<script>
-		layui.use(['upload', 'form'], function () {
-			var form = layui.form;
-			//各种基于事件的操作，下面会有进一步介绍
-			var loading;
-			var upload = layui.upload;
-			var $ = layui.jquery;
-			var uploadInst = upload.render({
-				elem: '#cover',
+</body>
+
+</html>
+
+
+
+
+
+<!-- <script type="text/javascript" src="__STATIC__/admin/common/layui/layui.js"></script> -->
+<script src="__STATIC__/layui/layui.js"></script>
+<!-- <script type="text/javascript" src="__STATIC__/admin/js/newsadd.js"></script> -->
+<script>
+	layui.use(['upload', 'form', 'layer', 'element'], function () {
+		var form = layui.form;
+  	window.layer = layui.layer;
+		//各种基于事件的操作，下面会有进一步介绍
+		var loading;
+		var upload = layui.upload;
+		var $ = layui.jquery;
+
+		uploadImg('#cover', '#preview', '#img_url')
+		uploadImg('#cover2', '#preview2', '#img_url2')
+		uploadImg('#cover3', '#preview3', '#img_url3')
+		uploadImg('#cover4', '#preview4', '#img_url4')
+		uploadImg('#cover5', '#preview5', '#img_url5')
+		uploadImg('#cover6', '#preview6', '#img_url6')
+		uploadImg('#cover7', '#preview7', '#img_url7')
+
+		function uploadImg(el, pre, img_url) {
+			upload.render({
+				elem: el,
 				url: '{:url("admin/products/uploadImg")}',
 				accept: 'file' // 允许上传的文件类型
 					,
 				auto: true // 自动上传
 					,
 				before: function (obj) {
-						console.log(obj);
 						// 上传等待loading动画
 						loading = layer.load(2);
 						// 在上传图片的过程中不能点提交按钮
 						$('#submit').addClass('layui-btn-disabled');
 						// 预览
 						obj.preview(function (index, file, result) {
-							// console.log(file.name);    //图片名字
-							// console.log(file.type);    //图片格式
-							// console.log(file.size);    //图片大小
-							// console.log(result);       //图片地址
-							$('#preview').attr('src', result); //图片链接 base64
+							$(pre).attr('src', result); //图片链接 base64
 						});
 						// layer.load();
 					}
@@ -119,11 +174,11 @@
 				done: function (res) {
 						// console.log(upload);
 						// console.log(res);
-	
+
 						// 关闭loading动画
-						layer.close(loading); 
+						layer.close(loading);
 						// 在隐藏的input里面填写上传的图片地址
-						$('#img_url').val(res.savename);
+						$(img_url).val(res.savename);
 						// 获取到图片地址后可以继续提交
 						$('#submit').removeClass('layui-btn-disabled');
 						if (res.code == 0) {
@@ -136,37 +191,83 @@
 				error: function (index, upload) {
 					return layer.msg(res.msg);
 				}
-	
+
 			});
-	
-			// 表单提交
-			form.on('submit(submit)', function (data) {
-				$.ajax({
-					url: './addItem',
-					method: 'post',
-					data: data.field,
-					dataType: 'JSON',
-					success: function (res) {
-						console.log('res :', res);
-						if(res){
-							// return layer.msg('Successful add a item!',{icon:1,time:2000});
-							var message = 'Successful add a item!Do you want to continue adding items?';
-							layer.confirm(message, {icon: 3, title:'信息提示'}, function(index){  
-								//submitForm();  
-								layer.close(index);
-								window.location.reload();
-							});  
-						} else {
-							return layer.msg('Add failed.',{icon:2,time:2000});
-						}
-					},
-					error: function (data) {
-	
+		}
+
+		// 点击左导航出现弹出框
+		$('.laya-btn').on('click', function () {
+			console.log('1234 :', 1234);
+			var othis = $(this),
+				width = othis.data('width'),
+				height = othis.data('height'),
+				title = othis.data('title'),
+				url = othis.data('url');
+			layer.open({
+				type: 2,
+				shadeClose: true,
+				title: title,
+				area: [width, height],
+				//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				content: url,
+				end: function(d){
+					console.log('333 :', d);
+					// form.render();
+					// window.location.reload();
+
+					// 页面重载并传递一个get参数，用于判断是转跳还是当前刷新
+					window.location.href="{:url('admin/products/productsAdd')}?reload=true";
+					if (window.localStorage){
+						window.localStorage.setItem('addProduct','{"title":"'+$("[name=title]").val()+'"}')
 					}
-				});
-				return false;
+				}
 			});
 		});
-	</script>
-</body>
-</html>
+
+		// =======表单信息读取（刷新页面后保留表单内容）=========
+		function getQueryString(name){ // 获取get参数
+				var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r!=null)return  unescape(r[2]); return null;
+		}
+		if (window.localStorage && getQueryString('reload')){
+			 var data = JSON.parse(window.localStorage.getItem('addProduct'));
+			 $('[name=title]').val(data.title);
+		}
+
+
+		// ========表单提交==========================================
+		form.on('submit(submit)', function (data) {
+			$.ajax({
+				url: './addItem',
+				method: 'post',
+				data: data.field,
+				dataType: 'JSON',
+				success: function (res) {
+					console.log('res :', res);
+					if (res) {
+						// return layer.msg('Successful add a item!',{icon:1,time:2000});
+						var message = 'Successful add a item!Do you want to continue adding items?';
+						layer.confirm(message, {
+							icon: 1,
+							title: '信息提示'
+						}, function (index) {
+							//submitForm();  
+							layer.close(index);
+							window.location.reload();
+						});
+					} else {
+						return layer.msg('Add failed.', {
+							icon: 2,
+							time: 2000
+						});
+					}
+				},
+				error: function (data) {
+
+				}
+			});
+			return false;
+		});
+	});
+</script>

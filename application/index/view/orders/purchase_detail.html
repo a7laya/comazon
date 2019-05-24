@@ -11,11 +11,14 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 
     <style>
-        .layui-form-label {
-            width: 80px;
+        .layui-input {
+            width: 180%;
+        }
+        .layui-form-label{
+            width: 90px;
         }
         .layui-input-inline.checkbox {
-            width: 60px;
+            width: 50px;
         }
     </style>
 </head>
@@ -24,21 +27,15 @@
     <br>
     <form class="layui-form" action="" lay-filter="form1">
         
-        <input type="text" name="limit_id" style="display: none" >
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">日购买限制</label>
-                <div class="layui-input-inline">
-                    <input type="tel" name="day" lay-verify="required|number" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
+        <input type="text" name="user_id" style="display: none" >
+        <input type="text" name="username" style="display: none" >
+        <input type="text" name="product_id" style="display: none" >
 
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">周购买限制</label>
+                <label class="layui-form-label">Paypal</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="week" lay-verify="required|number" autocomplete="off"
+                    <input type="text" name="paypal" lay-verify="required" autocomplete="off"
                         class="layui-input">
                 </div>
             </div>
@@ -46,28 +43,26 @@
 
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">店铺限制购</label>
+                <label class="layui-form-label">Address</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="no_repeat_seller" lay-verify="required|number" autocomplete="off"
-                        class="layui-input">
+                    <textarea  name="address" lay-verify="required" autocomplete="off" class="layui-input"></textarea>
                 </div>
-                <div class="layui-form-mid layui-word-aux">天内不能在同一店铺下单</div>
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">限制重复购</label>
+            <label class="layui-form-label">Save Default</label>
             <div class="layui-input-inline checkbox">
-                <input type="checkbox" checked="" name="no_repeat" lay-skin="switch" lay-filter="switchTest"
-                    lay-text="ON|OFF">
+                <input type="checkbox" checked="" name="save_default" lay-skin="switch" lay-filter="switchTest"
+                    lay-text="Yes|NO">
             </div>
-            <div class="layui-form-mid layui-word-aux">限制不能重复购买同一商品</div>
+            <div class="layui-form-mid layui-word-aux">Save to default address and PayPal.</div>
         </div>
         
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">Purchase</button>
+                <button class="layui-btn cancel layui-btn-primary">Cancel</button>
             </div>
         </div>
     </form>
@@ -108,23 +103,25 @@
             //监听提交
             form.on('submit(demo1)', function (data) {
                 $.ajax({
-                    url:"{:url('admin/users/updateLimit')}",
+                    url:'{:url("index/orders/addPurchased")}',
                     method: 'post',
 					data: data.field,
 					dataType: 'JSON',
 					success: function (res) {
 						console.log('res :', res);
-						if(res){
+						if(res.code){
 							// return layer.msg('Successful add a item!',{icon:1,time:2000});
-							var message = 'Successful update the limit?';
-							layer.confirm(message, {icon: 1, title:'信息提示'}, function(index){  
+							layer.confirm(res.msg, {icon: 1, title:'信息提示'}, function(index){  
 								// submitForm();  
                                 layer.close(index);
+                                // 关闭弹出层
                                 var frame_index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(frame_index);
+                                // 刷新页面
+								window.parent.location.reload();
 							});  
 						} else {
-							return layer.msg('Nothing changed.',{icon:3,time:2000});
+							return layer.msg(res.msg,{icon:3,time:2000});
 						}
 					},
 					error: function (data) {
@@ -134,13 +131,20 @@
                 return false;
             });
 
+            $('.cancel').click(function(){
+                // 关闭弹出层
+                var frame_index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(frame_index);
+            })
+
             //表单初始赋值
             form.val('form1', {
-                "limit_id": "{$limit_id}",
-                "no_repeat": "{$no_repeat}", // "name": "value"
-                "no_repeat_seller": "{$no_repeat_seller}", // "name": "value"
-                "day": "{$day_limit}",
-                "week": "{$week_limit}"
+                "user_id": "{$data.user_id}",
+                "username": "{$data.username}",
+                "product_id": "{$data.product_id}",
+                "address": "{$data.address}",
+                "paypal": "{$data.paypal}",
+                "save_default": "on", // "name": "value"
             })
 
 

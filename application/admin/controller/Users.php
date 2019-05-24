@@ -23,10 +23,12 @@ class Users extends Base
         $day_limit = $this->limit->getLimit('day');
         $week_limit = $this->limit->getLimit('week');
         $no_repeat = $this->limit->getLimit('no_repeat');
+        $no_repeat_seller = $this->limit->getLimit('no_repeat_seller');
         $this->assign("limit_id",$limit_id);
         $this->assign("day_limit",$day_limit);
         $this->assign("week_limit",$week_limit);
         $this->assign("no_repeat",$no_repeat);
+        $this->assign("no_repeat_seller",$no_repeat_seller);
         return view();
     }
 

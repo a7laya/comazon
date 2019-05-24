@@ -11,8 +11,11 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 
     <style>
-        .layui-input {
-            width: 66%;
+        .layui-form-label {
+            width: 80px;
+        }
+        .layui-input-inline.checkbox {
+            width: 60px;
         }
     </style>
 </head>
@@ -42,8 +45,19 @@
         </div>
 
         <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">店铺限制购</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="no_repeat_seller" lay-verify="required|number" autocomplete="off"
+                        class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">天内不能在同一店铺下单</div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label">限制重复购</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline checkbox">
                 <input type="checkbox" checked="" name="no_repeat" lay-skin="switch" lay-filter="switchTest"
                     lay-text="ON|OFF">
             </div>
@@ -106,8 +120,8 @@
 							layer.confirm(message, {icon: 1, title:'信息提示'}, function(index){  
 								// submitForm();  
                                 layer.close(index);
-                                // 刷新页面
-								window.location.reload();
+                                var frame_index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(frame_index);
 							});  
 						} else {
 							return layer.msg('Nothing changed.',{icon:3,time:2000});
@@ -124,6 +138,7 @@
             form.val('form1', {
                 "limit_id": "{$limit_id}",
                 "no_repeat": "{$no_repeat}", // "name": "value"
+                "no_repeat_seller": "{$no_repeat_seller}", // "name": "value"
                 "day": "{$day_limit}",
                 "week": "{$week_limit}"
             })

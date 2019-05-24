@@ -113,7 +113,7 @@ layui.define('layer', function(exports){
       
       //下拉选择框
       select: function(){
-        var TIPS = '请选择', CLASS = 'layui-form-select', TITLE = 'layui-select-title'
+        var TIPS = 'Please choose', CLASS = 'layui-form-select', TITLE = 'layui-select-title'
         ,NONE = 'layui-select-none', initValue = '', thatInput
         ,selects = elemForm.find('select')
         
@@ -427,7 +427,7 @@ layui.define('layer', function(exports){
                   arr.push('<dd lay-value="'+ item.value +'" class="'+ (value === item.value ?  THIS : '') + (item.disabled ? (' '+DISABLED) : '') +'">'+ item.innerHTML +'</dd>');
                 }
               });
-              arr.length === 0 && arr.push('<dd lay-value="" class="'+ DISABLED +'">没有选项</dd>');
+              arr.length === 0 && arr.push('<dd lay-value="" class="'+ DISABLED +'">No options</dd>');
               return arr.join('');
             }(othis.find('*')) +'</dl>'
           ,'</div>'].join(''));

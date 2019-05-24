@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>添加店铺</title>
+	<title>编辑水表</title>
 	<meta name="renderer" content="webkit">	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
@@ -23,18 +23,28 @@
 <body class="childrenBody" style="padding:10px;background-color:#fff">
 	<form class="layui-form">
 		<div class="layui-form-item">
+			<input type="text" name='id' style="display:none;" value="{$data.id}">
 			<div class="layui-inline">
-				<label class="layui-form-label">Name</label>
+				<label class="layui-form-label">Meter ID</label>
 				<div class="layui-input-inline">
-					<input class="layui-input newsAuthor" lay-verify="required" placeholder="Enter a seller name" type="text" name="seller_name"
-						value="">
+					<input class="layui-input newsAuthor" lay-verify="required" placeholder="" type="text" name="meter_id"
+					value="{$data.meter_id}">
+				</div>
+            </div>
+        </div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">Location</label>
+				<div class="layui-input-inline">
+					<input class="layui-input newsAuthor" lay-verify="required" placeholder="" type="text" name="location"
+					value="{$data.location}">
 				</div>
             </div>
         </div>
         <br>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="submit" id="submit">Add</button>
+				<button class="layui-btn" lay-submit="" lay-filter="submit" id="submit">Submit</button>
 				<button type="reset" class="layui-btn layui-btn-primary">Reset</button>
 		    </div>
 		</div>
@@ -51,7 +61,7 @@
 			var $ = layui.jquery;
 			var uploadInst = upload.render({
 				elem: '#cover',
-				url: '{:url("admin/products/uploadImg")}',
+				url: '{:url("cb/css/eidtCs")}',
 				accept: 'file' // 允许上传的文件类型
 					,
 				auto: true // 自动上传
@@ -100,7 +110,7 @@
 			// 表单提交
 			form.on('submit(submit)', function (data) {
 				$.ajax({
-					url: './addSeller',
+					url: './editItem',
 					method: 'post',
 					data: data.field,
 					dataType: 'JSON',

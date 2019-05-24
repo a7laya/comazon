@@ -125,13 +125,6 @@
 
         //触发事件
         var active = {
-            confirmTrans: function () {
-                //配置一个透明的询问框
-                layer.msg('大部分参数都是可以公用的<br>合理搭配，展示不一样的风格', {
-                    time: 20000, //20s后自动关闭
-                    btn: ['明白了', '知道了', '哦']
-                });
-            },
             complete: function (purchased_id) {
                 console.log('comp->purchased_id :', purchased_id);
                 layer.open({
@@ -144,42 +137,12 @@
                 });
             },
             purchase: function () {
-                layer.open({
-                    type: 1,
-                    title: false, //不显示标题栏
-                    closeBtn: false,
-                    area: '300px;',
-                    shade: 0.8,
-                    id: 'LAY_layuipro', //设定一个id，防止重复弹出
-                    btn: ['OK', 'CANCEL'],
-                    btnAlign: 'c',
-                    moveType: 1, //拖拽模式，0或者1
-                    content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">Are you sure to add the item to the order?</div>',
-                    success: function (layero) {
-                        var product_id = $('#product_id').val();
-                        var username = "{$shop_user['username']}"
-                        var btn = layero.find('.layui-layer-btn');
-                        btn.find('.layui-layer-btn0').click(function () {
-                            var index = parent.layer.getFrameIndex(window.name);
-                            $.ajax({
-                                url: '{:url("index/products/addPurchased")}',
-                                data: {
-                                    "product_id": product_id,
-                                    "username": username
-                                },
-                                success: function (d) {
-                                    console.log('d :', d);
-                                    // 更新数据后刷新父级页面
-                                    if (d.code) {
-                                        layer.msg(d.msg);
-                                        window.parent.location.reload();
-                                    } else {
-                                        layer.msg(d.msg);
-                                    }
-                                }
-                            })
-                        })
-                    }
+                    layer.open({
+                    type: 2,
+                    shadeClose: true,
+                    title: 'Purchase Confirmation',
+                    area: ['480px', '320px'],
+                    content: "{:url('index/orders/purchaseDetail')}?product_id={$detail['product_id']}"
                 });
             },
             cancel: function (purchased_id) {
@@ -204,7 +167,7 @@
                         btn.find('.layui-layer-btn0').click(function () {
                             var index = parent.layer.getFrameIndex(window.name);
                             $.ajax({
-                                url: '{:url("index/products/removePurchased")}',
+                                url: '{:url("index/orders/removePurchased")}',
                                 data: {
                                     "purchased_id": purchased_id,
                                     "username": username
@@ -224,27 +187,6 @@
                     }
                 });
             },
-            offset: function (othis) {
-                var type = othis.data('type'),
-                    text = othis.text();
-
-                layer.open({
-                    type: 1,
-                    offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                        ,
-                    id: 'layerDemo' + type //防止重复弹出
-                        ,
-                    content: '<div style="padding: 20px 100px;">' + text + '</div>',
-                    btn: '关闭全部',
-                    btnAlign: 'c' //按钮居中
-                        ,
-                    shade: 0 //不显示遮罩
-                        ,
-                    yes: function () {
-                        layer.closeAll();
-                    }
-                });
-            }
         };
 
         $('.layui-btn').on('click', function () {

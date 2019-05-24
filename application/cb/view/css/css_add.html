@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>添加店铺</title>
+	<title>添加水表</title>
 	<meta name="renderer" content="webkit">	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
@@ -24,9 +24,18 @@
 	<form class="layui-form">
 		<div class="layui-form-item">
 			<div class="layui-inline">
-				<label class="layui-form-label">Name</label>
+				<label class="layui-form-label">Meter ID</label>
 				<div class="layui-input-inline">
-					<input class="layui-input newsAuthor" lay-verify="required" placeholder="Enter a seller name" type="text" name="seller_name"
+					<input class="layui-input newsAuthor" lay-verify="required" placeholder="" type="text" name="meter_id"
+						value="">
+				</div>
+            </div>
+        </div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">Location</label>
+				<div class="layui-input-inline">
+					<input class="layui-input newsAuthor" lay-verify="required" placeholder="" type="text" name="location"
 						value="">
 				</div>
             </div>
@@ -51,7 +60,7 @@
 			var $ = layui.jquery;
 			var uploadInst = upload.render({
 				elem: '#cover',
-				url: '{:url("admin/products/uploadImg")}',
+				url: '{:url("cb/css/addCs")}',
 				accept: 'file' // 允许上传的文件类型
 					,
 				auto: true // 自动上传
@@ -100,7 +109,7 @@
 			// 表单提交
 			form.on('submit(submit)', function (data) {
 				$.ajax({
-					url: './addSeller',
+					url: './addItem',
 					method: 'post',
 					data: data.field,
 					dataType: 'JSON',

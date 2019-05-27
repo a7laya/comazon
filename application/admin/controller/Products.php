@@ -3,6 +3,7 @@ namespace app\admin\controller;
 use think\Request;
 use think\Db;
 use app\index\model\Product;
+use app\index\model\Vproduct;
 use app\index\model\Mark;
 use app\index\model\Vpurchased;
 use app\index\model\Purchased;
@@ -13,7 +14,8 @@ class Products extends Base
     public function _initialize()
     {
         parent::_initialize();
-        $this->product = new Product;
+        $this->product = new Product; // 表用于写入和删除
+        $this->vproduct = new VProduct; // 视图 - 用于查询
         $this->mark = new Mark;
         $this->purchased = new Purchased; // 表用于写入和删除
         $this->vpurchased = new Vpurchased; // 视图
@@ -22,30 +24,25 @@ class Products extends Base
     }
 
 
-    // 商品懒加载方法
-    // public function getList(Request $request){
-    //     $page_size = intval($request->param('page_size'));  //每页显示条数
-    //     $count = $this->product->count();  //总记录数
-    //     $res['total_page'] = ceil($count/$page_size);  //总页数
-    //     $cur_page = intval($request->param('page'))-1;  //默认前端page传过来为1 
-    //     $res['data'] = $this->product
-    //         ->limit(($cur_page*$page_size),$page_size)  //limit默认要从零开始
-    //         ->select();
-    //     // dump($this->product->getLastSql());die;
-    //     return json($res);  //返回json
-    // }
-
-
-    // 添加商品页
+    // 页面 - 添加商品页
     public function productsAdd(){
+
+        // 发送店铺列表
         $sellers = new Seller();
         $res     = $sellers->select();
         $this->assign('sellers', $res);
+
         // 模板输出
         return  $this->fetch();
     }
-    // 添加商品页
+    // 页面 - 编辑商品页
     public function productsEdit(){
+
+        // 发送店铺列表
+        $sellers = new Seller();
+        $res     = $sellers->select();
+        $this->assign('sellers', $res);
+
         $product_id = $_GET['product_id'];
         // 判断是否查询软删除数据
         if(isset($_GET['arg']) && $_GET['arg'] == 'restore') {
@@ -57,12 +54,12 @@ class Products extends Base
         // 模板输出
         return  $this->fetch();
     }
-    // 商品列表页
+    // 页面 - 商品列表页
     public function productsList(){
         // 模板输出
         return  $this->fetch();
     }
-    // 商品回收站
+    // 页面 - 商品回收站
     public function productsRestore(){
         // 模板输出
         return  $this->fetch();
@@ -75,32 +72,40 @@ class Products extends Base
         // $data: ['limit'=>10, 'page'=>1]
         $data = input();
         // $data['search_str'] = $search_str;
-        return $this->product->tableData($data);
+        return $this->vproduct->tableData($data);
     }
 
-    // 商品列表数据表格接口
-    public function tableDataRestore(string $search_str = null)
+    // 接口 - 商品列表数据表格
+    public function tableDataRestore()
     {   
         // $data: ['limit'=>10, 'page'=>1]
         $data = input();
         // $data['search_str'] = $search_str;
-        return $this->product->tableDataRestore($data);
+        return $this->vproduct->tableDataRestore($data);
     }
 
-    // 删除商品
+    // 接口 - 删除商品（支持批量操作）
     public function delProduct()
     {   
         $data = $_POST['product_id'];
-        $res = Product::destroy($data);
-        return $res;
+        $count = Product::destroy($data);
+        return $count;
     }
 
-    // 还原商品
+    // 接口 - 还原商品（支持批量操作）
     public function restoreProduct()
     {   
         // 软删除的恢复 用模型的restore方法，传递的是一个where数组
-        $data = $this->product->restore(['product_id' => $_POST['product_id']]);
-        return $data;
+        
+        // 将传递过来的字符串分割成数组
+        $ids = explode(",", $_POST['product_id']);
+        $count = 0;
+        foreach($ids as $id){
+            $res = $this->vproduct->restore(['product_id' => $id]);
+            $count ++;
+        }
+        return $count;
+        
     }
 
     // 商品详情页
@@ -137,27 +142,38 @@ class Products extends Base
         return  $this->fetch();
     }
 
-    // 添加商品
+    // 接口 - 添加商品
     public function addItem()
-    {
-        $res = $this->product->allowField(true)->save($_POST);
-        return $res;
+    {   
+        $_POST['create_time'] = date('Y-m-d H:i:s');
+        $code = $this->product->allowField(true)->save($_POST);
+        $msg = $code ? 'Added successfully！' : 'Add failed.';
+        return ['code'=>$code,'msg'=> $msg];
     }
-    // 修改商品
+    // 接口 - 修改商品
     public function editItem()
     {
-        $res = $this->product->allowField(true)->save($_POST,['id' => $_POST['product_id']]);
-        return $res;
+        $code = $this->product->allowField(true)->save($_POST,['id' => $_POST['product_id']]);
+        $msg = $code ? 'Updated successfully！' : 'Update failed.';
+        return ['code'=>$code,'msg'=> $msg];
     }
 
-    // 修改商品
-    public function updateItem()
-    {
-        $res = $this->product->allowField(true)->save($_POST,['id' => $_POST['purchased_id']]);
-        return $res;
+
+    // 接口 - 删除指定图片
+
+    public function delImg()
+    {   
+        $path = input()['path'];
+        $filename = ROOT_PATH . 'public' . DS . 'static' . DS . $path;
+        if(file_exists($filename)){
+            unlink($filename);
+            return ['code'=>1,'msg'=>'Successful deletion of picture.'];
+        }else{
+            return ['code'=>0,'msg'=>'Delete picture failed.'];
+        }
     }
 
-    // 商品图片上传
+    // 接口 - 商品图片上传
     public function uploadImg(Request $request){
         $file = request()->file('file');
         // 移动到框架应用根目录/public/uploads/ 目录下

@@ -6,7 +6,24 @@
   <title>店铺回收站</title>
   <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
 </head>
-
+<style>
+    .layui-form-item .layui-input-inline {
+        float: left;
+        width: 250px;
+        margin-right: 4px;
+    }
+    .layui-input-inline.search {
+      width: 90px;
+    }
+    input::-webkit-input-placeholder {
+        /* placeholder颜色  */
+        color: #caced4;
+        /* placeholder字体大小  */
+        font-size: 12px;
+        /* placeholder位置  */
+        text-align: left;
+    }
+</style>
 <body style="padding:5px">
 
   <blockquote class="layui-elem-quote layui-quote-nm">店铺管理 / 回收站
@@ -17,7 +34,7 @@
         <div class="layui-input-inline">
           <input type="text" name="keywords" placeholder="Seller ID | Seller name" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline search">
           <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
         </div>
       </div>
@@ -54,22 +71,31 @@
         cols: [
           [ //表头
             {
-              type: 'checkbox',
-              fixed: 'left'
+                type: 'checkbox',
+                fixed: 'left'
             }, {
-              field: 'seller_id',
-              title: 'ID',
-              width: 80,
-              sort: true,
-              fixed: 'left'
+                field: 'seller_id',
+                title: 'ID',
+                width: 80,
+                sort: true,
+                fixed: 'left'
             }, {
-              field: 'seller_name',
-              title: 'Name',
+                field: 'seller_name',
+                title: 'Name',
             }, {
-              fixed: 'right',
-              title: 'Operation',
-              toolbar: '#barDemo',
-              width: 150
+                field: 'create_time',
+                title: 'Create time',
+            }, {
+                field: 'update_time',
+                title: 'Update time',
+            }, {
+                field: 'delete_time',
+                title: 'Delete time',
+            }, {
+                fixed: 'right',
+                title: 'Operation',
+                toolbar: '#barDemo',
+                width: 150
             }
           ]
         ]

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>All Orders</title>
+  <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
+</head>
+<style>
+.layui-form-item .layui-input-inline {
+    float: left;
+    width: 250px;
+    margin-right: 4px;
+}
+.layui-input-inline.search {
+  width: 90px;
+}
+input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #caced4;
+    /* placeholder字体大小  */
+    font-size: 12px;
+    /* placeholder位置  */
+    text-align: left;
+}
+</style>
+
+<body style="padding:5px">
+
+  <blockquote class="layui-elem-quote layui-quote-nm">订单管理 / 所有订单
+    
+    <form class="layui-form" style="position:absolute; right: 0px; top: 13px">
+      <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+      <div class="layui-form-item">
+        <div class="layui-input-inline">
+          <input type="text" name="keywords" placeholder="Title | ASIN | Buyer | Mail | Seller | Order ID" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-input-inline search">
+          <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
+        </div>
+      </div>
+    </form>
+
+  </blockquote>
+  <table id="demo" lay-filter="test" style="margin-top:-15px"></table>
+  <script src="__STATIC__/js/jquery.min.js"></script>
+  <script src="__STATIC__/layui/layui.js"></script>
+  <script>
+    layui.use(['table', 'form', ], function () {
+      var table = layui.table;
+      var form = layui.form;
+      //第一个实例
+      table.render({
+        elem: '#demo',// ,height: 312
+        url: '{:url("admin/orders/tableData")}', //数据接口
+        height: 'full-80', // 高度最大化减去差值
+        page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+          layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
+          curr: 1, //设定初始在第 5 页
+          limit: 10, //一页显示多少条
+          limits: [10, 20, 50], //每页条数的选择项
+          groups: 3 //只显示 2 个连续页码
+        },
+        cols: [
+          [ //表头
+            {
+              field: 'purchased_id',
+              title: 'ID',
+              width: 60,
+              sort: true,
+              fixed: 'left'
+            }, {
+              field: 'status',
+              title: 'Status',
+              width: 85,
+              templet:'#status',
+            }, {
+              field: 'seller_name',
+              title: 'Seller',
+              width: 80,
+            }, {
+              field: 'title',
+              title: 'Title',
+            }, {
+              field: 'ASIN',
+              title: 'ASIN',
+              width: 115,
+              align:'center',
+            }, {
+              field: 'username',
+              title: 'Buyer',
+              width: 80
+            }, {
+              field: 'email',
+              title: 'Email',
+              width: 120,
+            }, {
+              field: 'order_id',
+              title: 'Order number',
+              width: 120,
+            },{
+              field: 'ts',
+              title: 'Order time',
+              width: 160,
+              align:'center',
+            },{
+              fixed: 'right',
+              title: 'Operation',
+              toolbar: '#barDemo',
+              align: 'center',
+              width: 160
+            }
+          ]
+        ],
+        id: 'idTest'
+      });
+
+      
+
+      //监听行工具事件
+      table.on('tool(test)', function (obj) {
+        var data = obj.data; // 改行的一个数据对象
+        console.log(data)
+        // 删除单条商品数据
+        if (obj.event === 'del') {
+          layer.confirm('Do you really want to delete it?', function (index) {
+            $.ajax({
+              url: "{:url('admin/products/delProduct')}",
+              type: 'POST',
+              data: {
+                product_id: data.product_id
+              },
+              success: function (d) {
+                if (d) {
+                  layer.close(index);
+                  table.reload('idTest', {});
+                } else {
+                  layer.msg('Delete failed');
+                }
+              }
+            })
+          });
+        // 设置订单状态
+        } else if (obj.event === 'setShipped') {
+          layer.confirm('Do you really want to ship it?', function (index) {
+            $.ajax({
+              url: './setShipped',
+              data: {
+                purchased_id:data.purchased_id,
+              },
+              success:function(d){
+                  // 弹出提示信息并刷新表格
+                  layer.msg(d.msg);
+                  d.code && table.reload('idTest', {})
+              }
+            })
+          })
+        } else if (obj.event === 'setUnship') {
+          layer.confirm('Do you really want to unship it?', function (index) {
+            $.ajax({
+              url: './setUnship',
+              data: {
+                purchased_id:data.purchased_id,
+              },
+              success:function(d){
+                  // 弹出提示信息并刷新表格
+                  layer.msg(d.msg);
+                  d.code && table.reload('idTest', {})
+              }
+            })
+          })
+        } else if (obj.event === 'detail') {
+          console.log('data.purchased_id :', data.purchased_id);
+          layer.open({
+            type: 2,
+            title: 'Order Detail',
+            area: ['750px', '450px'],
+            shadeClose: true,
+            //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+            content: '{:url("admin/orders/orderDetail")}?purchased_id=' + data.purchased_id
+          });
+        }
+      });
+
+      // 监听搜索提交
+      form.on('submit(search_submit)', function (data) {
+        // console.log('data :', data);
+        // layer.msg(JSON.stringify(data.field));
+        var keywords = data.field.keywords;
+        table.reload('idTest', {
+          where: {
+            keywords: keywords
+          }
+        });
+
+        return false;
+      });
+
+    });
+  </script>
+  <script type="text/html" id="barDemo">
+    {{#
+      var op = function (status) {
+        return {0:'Set Shipped',1:'Set Unship',2:'Watch'}[status]
+      };
+      var event = function (status) {
+        return {0:'setShipped',1:'setUnship',2:' watch '}[status]
+      };
+
+      var bgc = function (status) {
+        return {0:'',1:'layui-btn-warm',2:'layui-btn-normal'}[status]
+      };
+    }}
+    <a class="layui-btn layui-btn-xs " lay-event="detail">Detail</a>
+    <a class="layui-btn layui-btn-xs {{bgc(d.status)}}" lay-event="{{event(d.status)}}">{{op(d.status)}}</a>
+  </script>
+  
+
+  <script type="text/html" id="status">
+    <!-- 根据status值来显示所指状态 -->
+    {{#
+        var fn = function (status) {
+            return {0:'Pending',1:'Shipped',2:'Received'}[status]
+        };
+        
+        var color = function (status) {
+          return {0:'#ffb800',1:'green',2:'#666'}[status]
+        }
+    }}
+    
+    <span style='color:{{color(d.status)}}'>{{fn(d.status)}}</span>
+  </script>
+
+</body>
+
+</html>

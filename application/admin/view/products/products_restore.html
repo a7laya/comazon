@@ -6,18 +6,36 @@
   <title>商品回收站</title>
   <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
 </head>
-
+<style>
+  .layui-form-item .layui-input-inline {
+      float: left;
+      width: 250px;
+      margin-right: 4px;
+  }
+  .layui-input-inline.search {
+    width: 90px;
+  }
+  input::-webkit-input-placeholder {
+      /* placeholder颜色  */
+      color: #caced4;
+      /* placeholder字体大小  */
+      font-size: 12px;
+      /* placeholder位置  */
+      text-align: left;
+  }
+</style>
 <body style="padding:5px">
 
   <blockquote class="layui-elem-quote layui-quote-nm">商品管理 / 回收站
-
+      <i class="laya-btn layui-icon layui-icon-add-circle" id="batchRestore" data-method="batchRestore" data-arg=""
+      style="font-size: 30px; color: rgb(0, 166, 243); position:absolute; left: 150px; top: 20px; cursor: pointer;"></i>
     <form class="layui-form" style="position:absolute; right: 0px; top: 13px">
       <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
       <div class="layui-form-item">
         <div class="layui-input-inline">
-          <input type="text" name="keywords" placeholder="Enter Title or ASIN" autocomplete="off" class="layui-input">
+          <input type="text" name="keywords" placeholder="Title | ASIN | Seller" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline search">
           <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
         </div>
       </div>
@@ -53,13 +71,13 @@
         },
         cols: [
           [ //表头
-            {
+          {
               type: 'checkbox',
               fixed: 'left'
             }, {
               field: 'product_id',
               title: 'ID',
-              width: 80,
+              width: 70,
               sort: true,
               fixed: 'left'
             }, {
@@ -69,24 +87,31 @@
               field: 'price',
               title: 'Price',
               width: 80,
+              align: 'right',
+              sort: true
+            }, {
+              field: 'quantity',
+              title: 'Quantity',
+              width: 100,
+              align: 'center',
               sort: true
             }, {
               field: 'ASIN',
               title: 'ASIN',
               width: 120
-            },{
-              field: 'img_url',
-              title: 'Img_url',
-              width: 160
+            }, {
+              field: 'seller_name',
+              title: 'Seller',
+              width: 120
             }, {
               field: 'delete_time',
-              title: 'Delete_time',
-              width: 200
+              title: 'Delete time',
+              width: 160
             }, {
               fixed: 'right',
               title: 'Operation',
               toolbar: '#barDemo',
-              width: 150
+              width: 130
             }
           ]
         ]
@@ -147,6 +172,55 @@
           }
         });
         return false;
+      });
+      
+      var active = {
+        // 批量还原
+        batchRestore: function () {
+          var checkStatus = table.checkStatus('idTest'),
+            data = checkStatus.data,
+            delList = [];
+          data.forEach(function (n, i) {
+            delList.push(n.product_id);
+          });
+          console.log('delList :', delList);
+          if (delList != '') {
+            layer.confirm('确定还原所选项吗？', function (index) {
+              $.ajax({ 
+                url: '{:url("admin/products/restoreProduct")}',
+                type: 'post',
+                dataType: 'json',
+                data: "product_id=" + delList,
+                success: function (code, statusText) {
+                  console.log('code :', code);
+                  if (code !== '0') {
+                    layer.msg('成功还原了' + code + '个商品');
+                    table.reload('idTest', {});
+                  } else {
+                    layer.msg('还原失败');
+                  }
+                },
+                'error': function () {
+                  layer.msg('系统错误');
+                }
+              })
+            })
+          } else {
+            layer.tips('请选择需要还原的行', $('#batchRestore'), {
+              tips: [3, '#5fb878']
+            })
+          }
+        }
+      }
+
+
+      $('.laya-btn').on('click', function () {
+        var othis = $(this),
+          method = othis.data('method'),
+          arg = othis.data('arg');
+        console.log('othis :', othis);
+        console.log('arg :', arg);
+        active[method] ? active[method].call(this, arg) : '';
       });
     });
   </script>

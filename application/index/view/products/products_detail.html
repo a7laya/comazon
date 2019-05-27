@@ -17,20 +17,51 @@
                             alt="{$detail['title']}">
                     </div>
                     <div class="col-md-8">
-                        <div class="title">{$detail['title']} </div>
+                        <div class="seller">
+                            <span class="name">{$detail['seller_name']}</span>
+                        </div>
+                        <div class="title">
+                            {$detail['title']}
+                            
+                        </div>
                         <div class="info">
-                            $<span class="price">{$detail['price']}</span>
-                            <span class="asin">ASIN: {$detail['ASIN']}</span>
+                            <span>USD$         <price>  {$detail['price']}      </price>  </span>
+                            <span>ASIN:     <content>{$detail['ASIN']}       </content></span>
+                            <span>Quantity: <content>
+                                {eq name='detail.quantity' value='0'}
+                                <span class="layui-badge layui-bg-danger" style="color:white">Out of Stock</span>
+                                {else /}
+                                {$detail['quantity']}   
+                                {/eq}
+                            </content></span>
                         </div>
                         <div class="description">
-                            Description: {$detail['description']}
+                            {$detail['description']}
                         </div>
                         <div class="op">
-                            <button data-method="purchase" class="layui-btn layui-btn-lg">Purchase</button>
+                            {eq name='detail.quantity' value='0'}
+                            <button class="layui-btn layui-btn-disabled layui-btn-lg"><i class="layui-icon layui-icon-dollar"></i>Purchase(Out of stock)</button>
+                            {else /}
+                            <button data-method="purchase" class="layui-btn layui-btn-lg"><i class="layui-icon layui-icon-dollar" style="font-size:20px"></i>Purchase</button>
+                            {/eq}
                         </div>
+                        
                     </div>
+                   
                     <div style="clear:both"></div>
                 </div>
+            </div> 
+            <hr>
+
+            <!-- 展示其他图片 -->
+            <div class="site-demo-flow other-img" id="LAY_demo3">
+                <img lay-src="__STATIC__/{$detail['img_url']}" >
+                <img lay-src="__STATIC__/{$detail['img_url2']}" >
+                <img lay-src="__STATIC__/{$detail['img_url3']}" >
+                <img lay-src="__STATIC__/{$detail['img_url4']}" >
+                <img lay-src="__STATIC__/{$detail['img_url5']}" >
+                <img lay-src="__STATIC__/{$detail['img_url6']}" >
+                <img lay-src="__STATIC__/{$detail['img_url7']}" >
             </div>
         </div>
     </div>
@@ -46,7 +77,15 @@
                             <img src="__STATIC__/{$data.img_url}" alt="">
                         </div>
                         <div class="content">
-                            <div class="title">{$data.title}</div>
+                            <div class="title">
+                                {switch name="data.status"}
+                                {case value='0'}<span class="layui-badge layui-bg-orange">Pending</span>{/case}
+                                {case value='1'}<span class="layui-badge layui-bg-blue">Shipped</span>{/case}
+                                {case value='2'}<span class="layui-badge layui-bg-cyan">Received</span>{/case}
+                                {default /}<span class="layui-badge-dot layui-bg-gray"></span>
+                                {/switch}   
+                                {$data.title} ({$data.ts|substr=0,10})
+                            </div>
 
                             {eq name="data['admin_review']" value="on"}
                             
@@ -57,10 +96,16 @@
                             {else/}
                             
                             <div class="op">
+                                {switch name="data.status"}
+                                {case value='1'}
                                 <button data-method="complete" data-arg="{$data.purchased_id}"
-                                    class="layui-btn  layui-btn-sm">Complete order</button>
+                                    class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-upload-drag"></i>Complete</button>
+                                {/case}
+                                {case value='0'}
                                 <button data-method="cancel" data-arg="{$data.purchased_id}"
-                                    class="layui-btn layui-btn-danger layui-btn-sm">Cancel order</button>
+                                    class="layui-btn layui-btn-warm layui-btn-sm"><i class="layui-icon layui-icon-delete"></i> Cancel </button>
+                                {/case}
+                                {/switch}
                             </div>
                             {/eq}
                         </div>
@@ -82,7 +127,15 @@
                             <img src="__STATIC__/{$data.img_url}" alt="">
                         </div>
                         <div class="content">
-                            <div class="title">{$data.title}</div>
+                            <div class="title">
+                                {switch name="data.status"}
+                                {case value='0'}<span class="layui-badge layui-bg-orange">Pending</span>{/case}
+                                {case value='1'}<span class="layui-badge layui-bg-blue">Shipped</span>{/case}
+                                {case value='2'}<span class="layui-badge layui-bg-cyan">Received</span>{/case}
+                                {default /}<span class="layui-badge-dot layui-bg-gray"></span>
+                                {/switch}   
+                                {$data.title} ({$data.ts|substr=0,10})
+                            </div>
                             
                             {eq name="data['admin_review']" value="on"}
                             <div class="op">
@@ -91,10 +144,16 @@
                             </div>
                             {else/}
                             <div class="op">
+                                {switch name="data.status"}
+                                {case value='1'}
                                 <button data-method="complete" data-arg="{$data.purchased_id}"
-                                    class="layui-btn  layui-btn-sm">Complete order</button>
+                                    class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-upload-drag"></i>Complete</button>
+                                {/case}
+                                {case value='0'}
                                 <button data-method="cancel" data-arg="{$data.purchased_id}"
-                                    class="layui-btn layui-btn-danger layui-btn-sm">Cancel order</button>
+                                    class="layui-btn layui-btn-warm layui-btn-sm"><i class="layui-icon layui-icon-delete"></i> Cancel </button>
+                                {/case}
+                                {/switch}
                             </div>
                             {/eq}
                         </div>
@@ -104,18 +163,16 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt, voluptatum veritatis
-        dolores eligendi quo quod rem veniam soluta, perferendis molestiae animi nostrum atque reiciendis rerum, aperiam
-        necessitatibus! Inventore, suscipit aliquid.</div>
 
 </div>
 </body>
 <script src="__STATIC__/layui/layui.js" charset="utf-8"></script>
 <script>
-    layui.use(['element', 'layer'], function () {
+    layui.use(['element', 'layer', 'flow'], function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
         var $ = layui.jquery,
             layer = layui.layer; //独立版的layer无需执行这一句
+            flow = layui.flow; //独立版的layer无需执行这一句
 
         // 监听导航点击, header下面的面包屑路径导航
         element.on('nav(demo)', function (elem) {
@@ -130,9 +187,9 @@
                 layer.open({
                     type: 2,
                     title: 'Order-complete',
-                    area: ['600px', '550px'],
-                    //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-                    content: '{:url("index/products/orderComplete")}?purchased_id=' +
+                    area: ['550px', '580px'],
+                    shadeClose: true,
+                    content: '{:url("index/orders/orderComplete")}?purchased_id=' +
                         purchased_id
                 });
             },
@@ -141,7 +198,7 @@
                     type: 2,
                     shadeClose: true,
                     title: 'Purchase Confirmation',
-                    area: ['480px', '320px'],
+                    area: ['400px', '340px'],
                     content: "{:url('index/orders/purchaseDetail')}?product_id={$detail['product_id']}"
                 });
             },
@@ -198,6 +255,11 @@
             active[method] ? active[method].call(this, arg) : '';
         });
 
+          
+        //按屏加载图片
+        flow.lazyimg({
+            elem: '#LAY_demo3 img'
+        });
 
     });
 </script>

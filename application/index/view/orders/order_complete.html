@@ -19,14 +19,29 @@
                 </div>
             </div>
             <div class="layui-col-xs9">
-                <div class="title">{$order['title']}</div>
-                <div class="price">
-                    Price:<span style="color: red"> $<span
-                            style="color:red; font-size:26px">{$order['price']}</span></span>
-                    <span class="asin">ASIN: {$order['ASIN']}</span>
+                <div class="title">
+                    {switch name="order.status"}
+                        {case value='0'}<span class="layui-badge layui-bg-orange">Pending</span>{/case}
+                        {case value='1'}<span class="layui-badge layui-bg-blue">Shipped</span>{/case}
+                        {case value='2'}<span class="layui-badge layui-bg-cyan">Received</span>{/case}
+                        {default /}<span class="layui-badge-dot layui-bg-gray"></span>
+                    {/switch}
+                    {$order['title']}
                 </div>
-                <div class="date">Order date: {$order['ts']|substr=0,10}</div>
-                <div class="user">Username/Mail: {$order['username']} / {$order['email']}</div>
+                <div class="info">
+                    <div class="user">Buyer: {$order['username']}</div>
+                    <span class="seller">Seller: {$order['seller_name']}</span>
+                </div>
+                <div class="info">
+                    <div class="user">Mail: {$order['email']}</div>
+                    <span class="asin"  >ASIN: {$order['ASIN']}</span>
+                </div>
+                <div class="info">
+                    <div class="date">Date: {$order['ts']|substr=0,10}</div>
+                    <span class="price" >Price: ${$order['price']}</span></span>
+                </div>
+                <div class="order-num">PayPal: <span>{$order['paypal']}</span></div>
+                <div class="order-num">Address: <span>{$order['address']}</span></div>
             </div>
 
 
@@ -62,7 +77,7 @@
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <button class="layui-btn" lay-submit lay-filter="submit" id="submit">Complete</button>
-                            <button type="reset" class="layui-btn layui-btn-primary">Reset</button>
+                            <button id="close" class="layui-btn layui-btn-primary">Close</button>
                         </div>
                     </div>
                     <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
@@ -83,7 +98,7 @@
         var $ = layui.jquery;
         var uploadInst = upload.render({
             elem: '#cover',
-            url: '{:url("index/products/uploadReview")}',
+            url: '{:url("index/orders/uploadReview")}',
             accept: 'file' // 允许上传的文件类型
                 ,
             auto: true // 自动上传
@@ -132,7 +147,7 @@
         // 表单提交
         form.on('submit(submit)', function (data) {
             $.ajax({
-                url: '{:url("index/products/orderCompleteSubmit")}',
+                url: '{:url("index/orders/orderCompleteSubmit")}',
                 method: 'post',
                 data: data.field,
                 dataType: 'JSON',
@@ -150,6 +165,10 @@
             });
             return false;
         });
+        $('#close').click(function(e){
+            var frame_index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(frame_index);
+        })
     });
 </script>
 

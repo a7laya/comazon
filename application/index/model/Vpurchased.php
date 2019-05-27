@@ -5,7 +5,7 @@ namespace app\index\model;
 use think\Model;
 use think\Session;
 use think\Db;
-
+ 
 /**
  * 已购模型
  * Class Purchased
@@ -32,6 +32,81 @@ class Vpurchased extends Model
         ])->whereTime('ts', 'week')->select();
         return $res;
     }
+    
+    // 所有订单
+    public function tableData(array $arr)
+    {
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
+        $data = self::useGlobalScope(false)
+                ->where('title|ASIN|username|email|order_id|seller_name','like',"%{$keywords}%")
+                ->limit($arr['limit'])
+                ->page($arr['page'])
+                ->select();
+        $res['code'] = 0;
+        $res['msg'] = '';
+        $res['data'] = $data;
+        $res['count'] = self::useGlobalScope(false)
+        ->where('title|ASIN|username|email|order_id|seller_name','like',"%{$keywords}%")
+        ->count();
+        return $res;
+    }
+    // Pending订单
+    public function tableDataPending(array $arr)
+    {
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
+        $data = self::useGlobalScope(false)
+                ->where('title|ASIN|username|email|order_id|seller_name','like',"%{$keywords}%")
+                ->where('status', 0)
+                ->limit($arr['limit'])
+                ->page($arr['page'])
+                ->select();
+        $res['code'] = 0;
+        $res['msg'] = '';
+        $res['data'] = $data;
+        $res['count'] = self::useGlobalScope(false)
+        ->where('title|ASIN|username|email|order_id|seller_name','like',"%{$keywords}%")
+        ->where('status', 0)
+        ->count();
+        return $res;
+    }
+    // Shipped订单
+    public function tableDataShipped(array $arr)
+    {
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
+        $data = self::useGlobalScope(false)
+                ->where('title|ASIN|username|email|order_id|seller_name','like',"%{$keywords}%")
+                ->where('status', 1)
+                ->limit($arr['limit'])
+                ->page($arr['page'])
+                ->select();
+        $res['code'] = 0;
+        $res['msg'] = '';
+        $res['data'] = $data;
+        $res['count'] = self::useGlobalScope(false)
+        ->where('title|ASIN|username|email|order_id|seller_name','like',"%{$keywords}%")
+        ->where('status', 1)
+        ->count();
+        return $res;
+    }
+    // Received订单
+    public function tableDataReceived(array $arr)
+    {
+        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
+        $data = self::useGlobalScope(false)
+                ->where('title|ASIN|username|email|order_id|seller_name','like',"%{$keywords}%")
+                ->where('status', 2)
+                ->limit($arr['limit'])
+                ->page($arr['page'])
+                ->select();
+        $res['code'] = 0;
+        $res['msg'] = '';
+        $res['data'] = $data;
+        $res['count'] = self::useGlobalScope(false)
+        ->where('title|ASIN|username|email|order_id|seller_name','like',"%{$keywords}%")
+        ->where('status', 2)
+        ->count();
+        return $res;
+    }
 
     // 待审核订单数->main
     static function checkPending()
@@ -51,28 +126,6 @@ class Vpurchased extends Model
         return $res;
     }
     
-    // 待审核订单
-    public function tableData(array $arr)
-    {
-        $keywords = isset($arr['keywords']) ? $arr['keywords'] : '';
-        $data = self::useGlobalScope(false)
-                ->where('title|ASIN|username|email|order_id','like',"%{$keywords}%")
-                ->where('admin_review', 'null')
-                ->where('order_id|review_img', 'not null')
-                ->order('update_time desc')  // 商品列表排序
-                ->limit($arr['limit'])
-                ->page($arr['page'])
-                ->select();
-        $res['code'] = 0;
-        $res['msg'] = '';
-        $res['data'] = $data;
-        $res['count'] = self::useGlobalScope(false)
-        ->where('title|ASIN|username|email|order_id','like',"%{$keywords}%")
-        ->where('admin_review', 'null')
-        ->where('order_id|review_img', 'not null')
-        ->count();
-        return $res;
-    }
     // 已审核订单
     public function tableDataReviewed(array $arr)
     {

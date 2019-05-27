@@ -6,7 +6,24 @@
   <title>商品列表</title>
   <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
 </head>
-
+<style>
+  .layui-form-item .layui-input-inline {
+      float: left;
+      width: 250px;
+      margin-right: 4px;
+  }
+  .layui-input-inline.search {
+    width: 90px;
+  }
+  input::-webkit-input-placeholder {
+      /* placeholder颜色  */
+      color: #caced4;
+      /* placeholder字体大小  */
+      font-size: 12px;
+      /* placeholder位置  */
+      text-align: left;
+  }
+</style>
 <body style="padding:5px">
 
   <blockquote class="layui-elem-quote layui-quote-nm">商品管理 / 商品列表
@@ -16,9 +33,9 @@
       <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
       <div class="layui-form-item">
         <div class="layui-input-inline">
-          <input type="text" name="keywords" placeholder="Enter Title or ASIN" autocomplete="off" class="layui-input">
+          <input type="text" name="keywords" placeholder="Title | ASIN | Seller" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline search">
           <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
         </div>
       </div>
@@ -41,7 +58,7 @@
           layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
           curr: 1, //设定初始在第 5 页
           limit: 10, //一页显示多少条
-          limits: [10, 20, 50], //每页条数的选择项
+          limits: [10, 50, 500,], //每页条数的选择项
           groups: 3 //只显示 2 个连续页码
         },
         cols: [
@@ -52,7 +69,7 @@
             }, {
               field: 'product_id',
               title: 'ID',
-              width: 80,
+              width: 70,
               sort: true,
               fixed: 'left'
             }, {
@@ -62,20 +79,31 @@
               field: 'price',
               title: 'Price',
               width: 80,
+              align: 'right',
+              sort: true
+            }, {
+              field: 'quantity',
+              title: 'Quantity',
+              width: 100,
+              align: 'center',
               sort: true
             }, {
               field: 'ASIN',
               title: 'ASIN',
               width: 120
             }, {
-              field: 'seller_id',
-              title: 'Seller ID',
-              width: 200
+              field: 'seller_name',
+              title: 'Seller',
+              width: 120
+            }, {
+              field: 'create_time',
+              title: 'Create time',
+              width: 160
             }, {
               fixed: 'right',
               title: 'Operation',
               toolbar: '#barDemo',
-              width: 150
+              width: 120
             }
           ]
         ],
@@ -94,7 +122,7 @@
           console.log('delList :', delList);
           if (delList != '') {
             layer.confirm('确定删除所选项吗？', function (index) {
-              $.ajax({
+              $.ajax({ 
                 url: '{:url("admin/products/delProduct")}',
                 type: 'post',
                 dataType: 'json',
@@ -156,7 +184,6 @@
           });
         // 编辑单条商品数据
         } else if (obj.event === 'edit') {
-          console.log('product_id :', data.product_id);
           layer.open({
             type: 2,
             title: 'Edit-product',

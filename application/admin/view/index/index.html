@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/layui/css/layui.css" media="all">
 	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/global.css" media="all">
 	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/adminstyle.css" media="all">
-
+ 
 	
 
 </head>
@@ -34,7 +34,7 @@
 				<!-- 顶级菜单区域 -->
 				<div class="layui-larry-menu">
 					<ul class="layui-nav clearfix">
-						<li class="layui-nav-item">
+						<!-- <li class="layui-nav-item">
 							<a href="{:url('admin/index/main')}" target="main">
 									<i class="iconfont icon-jiaoseguanli4" data-icon='icon-jiaoseguanli4'></i>
 									<span>控制台</span>
@@ -45,10 +45,10 @@
 									<i class="iconfont icon-jiaoseguanli4" data-icon='icon-jiaoseguanli4'></i>
 									<span>商品列表</span>
 								</a>
-						</li>
-						<li class="layui-nav-item">
+						</li> -->
+						<!-- <li class="layui-nav-item">
 							<a href="{:url('admin/orders/ordersForReview')}" target="main"><i class="iconfont icon-ht_expand"></i>订单审核</a>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 				<!-- 右侧导航 -->
@@ -178,21 +178,27 @@
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="{:url('admin/orders/ordersForReview')}" target="main">
-									<i class="iconfont icon-caidan1" data-icon='icon-caidan1'></i>
-									<span>订单审核</span>
-								</a>
-							</dd>
-							<dd>
-								<a href="{:url('admin/orders/ordersReviewed')}" target="main">
+								<a href="{:url('admin/orders/ordersAll')}" target="main">
 									<i class="iconfont icon-neirong" data-icon='icon-neirong'></i>
-									<span>已审核订单</span>
+									<span>所有订单</span>
 								</a>
 							</dd>
 							<dd>
-								<a href="{:url('admin/orders/ordersReviewed')}" target="main">
-									<i class="iconfont icon-neirong1" data-icon='icon-neirong1'></i>
-									<span>已审核订单</span>
+								<a href="{:url('admin/orders/ordersPending')}" target="main">
+									<i class="iconfont icon-caidan1" data-icon='icon-caidan1'></i>
+									<span>Pending</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="{:url('admin/orders/ordersshipped')}" target="main">
+									<i class="iconfont icon-dengji5" data-icon='icon-dengji5'></i>
+									<span>Shipped</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="{:url('admin/orders/ordersReceived')}" target="main">
+									<i class="iconfont icon-huanyuan" data-icon='icon-huanyuan'></i>
+									<span>Received</span>
 								</a>
 							</dd>
 						</dl>

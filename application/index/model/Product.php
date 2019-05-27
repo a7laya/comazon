@@ -19,6 +19,7 @@ class Product extends Model
     use SoftDelete;
     protected $deleteTime = 'delete_time';
 
+
     /**
      * 添加商品
      * @param array $data

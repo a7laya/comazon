@@ -26,20 +26,22 @@
     line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+.info {
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+}
 .user,
 .date,
-.price {
+.price,
+.seller,
+.asin,
+.order-num {
     margin-top: 10px;
     color: #999;
     position: relative;
     width: 100%;
 }
-.asin{
-    position: absolute;
-    margin-left: 20px;
-    bottom: 5px;
-}
-
 #preview {
     border: #666 solid 2px
 }

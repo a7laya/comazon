@@ -12,13 +12,20 @@
 
     <style>
         .layui-input {
-            width: 180%;
+            width: 95%;
         }
         .layui-form-label{
-            width: 90px;
+            width: 60px;
         }
         .layui-input-inline.checkbox {
             width: 50px;
+        }
+        .layui-form-item .layui-input-inline{
+            margin-left: 90px;
+        }
+        .layui-form-item .layui-input-inline+.layui-form-mid {
+            margin-left: 150px;
+            top: -41px;
         }
     </style>
 </head>
@@ -51,7 +58,7 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">Save Default</label>
+            <label class="layui-form-label">Save</label>
             <div class="layui-input-inline checkbox">
                 <input type="checkbox" checked="" name="save_default" lay-skin="switch" lay-filter="switchTest"
                     lay-text="Yes|NO">
@@ -109,17 +116,13 @@
 					dataType: 'JSON',
 					success: function (res) {
 						console.log('res :', res);
-						if(res.code){
-							// return layer.msg('Successful add a item!',{icon:1,time:2000});
-							layer.confirm(res.msg, {icon: 1, title:'信息提示'}, function(index){  
-								// submitForm();  
-                                layer.close(index);
+						if(res.code){ 
+                                parent.layer.msg(res.msg);
                                 // 关闭弹出层
                                 var frame_index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(frame_index);
                                 // 刷新页面
 								window.parent.location.reload();
-							});  
 						} else {
 							return layer.msg(res.msg,{icon:3,time:2000});
 						}

@@ -14,7 +14,7 @@ var myChart = echarts.init(document.getElementById('larry-seo-stats'));
 option = {
     title : {
         text: '表状态统计',
-        subtext: '纯属虚构',
+        subtext: '虚拟数据',
         x:'center'
     },
     tooltip : {

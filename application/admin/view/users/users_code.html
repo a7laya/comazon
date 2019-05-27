@@ -9,10 +9,12 @@
 <style>
     .layui-form-item .layui-input-inline {
         float: left;
-        width: 208px;
+        width: 250px;
         margin-right: 4px;
     }
-
+    .layui-input-inline.search {
+        width: 90px;
+    }
     input::-webkit-input-placeholder {
         /* placeholder颜色  */
         color: #caced4;
@@ -36,7 +38,7 @@
                 <div class="layui-input-inline">
                     <input type="text" name="keywords" placeholder="" autocomplete="off" class="layui-input">
                 </div>
-                <div class="layui-input-inline">
+                <div class="layui-input-inline search">
                     <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
                 </div>
             </div>

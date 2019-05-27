@@ -1,119 +1,246 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
-	<title>编辑商品</title>
-	<meta name="renderer" content="webkit">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/layui/css/layui.css" media="all">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/bootstrap/css/bootstrap.css" media="all">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/common/global.css" media="all">
-	<link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/personal.css" media="all">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="__STATIC__\layui\css\layui.css">
+	<link rel="stylesheet" href="__CSS__\product-add.css">
+	<title>product add</title>
 </head>
 
-<body class="childrenBody" style="padding:10px;background-color:#fff">
-	<form class="layui-form">
+<body style="padding:20px 20px 10px 10px">
+	<form class="layui-form" lay-filter='test' action="">
+		<!-- 隐藏的ID -->
+		<input type="text" style="display:none" name="product_id" id="product_id" value="{$data.product_id}">
+
 		<div class="layui-form-item">
 			<label class="layui-form-label">Title</label>
 			<div class="layui-input-block">
-				<input class="layui-input newsName" lay-verify="required" name="title"
-					placeholder="Please enter the title of the item." type="text" value="{$data.title}">
+				<input type="text" name="title" lay-verify="required" placeholder="" autocomplete="off" class="layui-input"  value="{$data.title}">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-inline">
+				<label class="layui-form-label">Seller</label>
+				<div class="layui-input-inline">
+					<select name="seller_id" lay-verify="required">
+							<option>Please chose</option>//加上这一行，先占个坑
+							{volist name="sellers" id="seller"}
+							<option value="{$seller['seller_id']}">{$seller['seller_id']}：{$seller['seller_name']}</option>
+							{/volist}
+					</select>
+				</div>
+
+				<div class="layui-form-mid layui-word-aux">
+					No desired option?
+					<a class="laya-btn layui-btn layui-btn-sm layui-btn-warm" data-title="Add a Seller"
+						data-url="{:url('admin/sellers/sellersAdd')}" data-width="350px" data-height="250px">
+						Click here to add one
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+
+			<div class="layui-inline">
 				<label class="layui-form-label">Price</label>
 				<div class="layui-input-inline">
-					<input class="layui-input newsAuthor" lay-verify="required|number" placeholder="" type="text" name="price"
-						value="{$data.price}">
+					<input class="layui-input newsAuthor" lay-verify="required|number" placeholder="$" type="text" name="price"  autocomplete="off" value="{$data.price}">
 				</div>
 			</div>
 			<div class="layui-inline">
 				<label class="layui-form-label">ASIN</label>
 				<div class="layui-input-inline">
-					<input class="layui-input newsAuthor" lay-verify="required" placeholder="" type="text" name="ASIN"
-						value="{$data.ASIN}">
+					<input class="layui-input newsAuthor" lay-verify="required" placeholder="" type="text" name="ASIN" autocomplete="off" value="{$data.ASIN}">
 				</div>
 			</div>
-			<!-- <div class="layui-inline">		
-				<label class="layui-form-label">CreateDate</label>
+			<div class="layui-inline">
+				<label class="layui-form-label">Quantity</label>
 				<div class="layui-input-inline">
-					<input class="layui-input newsTime" lay-verify="required|date" onClick="layui.laydate({elem:this})" type="text">
+					<input class="layui-input newsAuthor" lay-verify="required|number" placeholder="" type="text"
+						name="quantity" autocomplete="off" value="{$data.quantity}">
 				</div>
-			</div> -->
+			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">Image</label>
-			<div class="layui-input-block">
-				<!-- 点击上传图片 -->
-				<div class="layui-input-inline" style="cursor:pointer;" id="cover">
-					<img id="preview" style="max-height: 180px; border: #666 solid 2px" src="__STATIC__/{$data.img_url}">
+			<!-- 点击上传图片 -->
+			<div class="layui-input-block laya-img">
+				
+				<div class="layui-input-inline" id="cover1">
+					<div class="op"><i class="layui-icon layui-icon-close-fill"></i></div>
+					<input type="text" name="img_url"  value="{$data.img_url}">
+					{empty name="data['img_url']"}
+						<img src="__STATIC__/imgs/blank.jpg">
+					{else /}
+						<img src="__STATIC__/{$data.img_url}">
+					{/empty}
 				</div>
-				<input type="text" style="display:none" name="img_url" id="img_url" value="{$data.img_url}">
-				<input type="text" style="display:none" name="product_id" id="product_id" value="{$data.product_id}">
+				<div class="layui-input-inline" id="cover2">
+					<div class="op"><i class="layui-icon layui-icon-close-fill"></i></div>
+					<input type="text" name="img_url2"  value="{$data.img_url2}">
+					{empty name="data['img_url2']"}
+						<img src="__STATIC__/imgs/blank.jpg">
+					{else /}
+						<img src="__STATIC__/{$data.img_url2}">
+					{/empty}
+				</div>
+				<div class="layui-input-inline" id="cover3">
+					<div class="op"><i class="layui-icon layui-icon-close-fill"></i></div>
+					<input type="text" name="img_url3"  value="{$data.img_url3}">
+					{empty name="data['img_url3']"}
+						<img src="__STATIC__/imgs/blank.jpg">
+					{else /}
+						<img src="__STATIC__/{$data.img_url3}">
+					{/empty}
+				</div>
+				<div class="layui-input-inline" id="cover4">
+					<div class="op"><i class="layui-icon layui-icon-close-fill"></i></div>
+					<input type="text" name="img_url4"  value="{$data.img_url4}">
+					{empty name="data['img_url4']"}
+						<img src="__STATIC__/imgs/blank.jpg">
+					{else /}
+						<img src="__STATIC__/{$data.img_url4}">
+					{/empty}
+				</div>
+				<div class="layui-input-inline" id="cover5">
+					<div class="op"><i class="layui-icon layui-icon-close-fill"></i></div>
+					<input type="text" name="img_url5"  value="{$data.img_url5}">
+					{empty name="data['img_url5']"}
+						<img src="__STATIC__/imgs/blank.jpg">
+					{else /}
+						<img src="__STATIC__/{$data.img_url5}">
+					{/empty}
+				</div>
+				<div class="layui-input-inline" id="cover6">
+					<div class="op"><i class="layui-icon layui-icon-close-fill"></i></div>
+					<input type="text" name="img_url6"  value="{$data.img_url6}">
+					{empty name="data['img_url6']"}
+						<img src="__STATIC__/imgs/blank.jpg">
+					{else /}
+						<img src="__STATIC__/{$data.img_url6}">
+					{/empty}
+				</div>
+				<div class="layui-input-inline" id="cover7">
+					<div class="op"><i class="layui-icon layui-icon-close-fill"></i></div>
+					<input type="text" name="img_url7"  value="{$data.img_url7}">
+					{empty name="data['img_url7']"}
+						<img src="__STATIC__/imgs/blank.jpg">
+					{else /}
+						<img src="__STATIC__/{$data.img_url7}">
+					{/empty}
+				</div>
 			</div>
+
+
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">Description</label>
 			<div class="layui-input-block">
-				<textarea rows="3" class="layui-textarea" name="description">{$data.description}</textarea>
+				<textarea placeholder="" class="layui-textarea" id='description' name="description" style="display: none">{$data.description}</textarea>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="submit" id="submit">Submit</button>
-				<button type="reset" class="layui-btn layui-btn-primary">Reset</button>
+				<button type="button" lay-filter="reset" id="reset" class="layui-btn layui-btn-primary">Reset</button>
 			</div>
 		</div>
 	</form>
-	<!-- <script type="text/javascript" src="__STATIC__/admin/common/layui/layui.js"></script> -->
-	<script src="__STATIC__/layui/layui.js"></script>
-	<!-- <script type="text/javascript" src="__STATIC__/admin/js/newsadd.js"></script> -->
-	<script>
-		layui.use(['upload', 'form'], function () {
-			var form = layui.form;
-			//各种基于事件的操作，下面会有进一步介绍
-			var loading;
-			var upload = layui.upload;
-			var $ = layui.jquery;
-			var uploadInst = upload.render({
-				elem: '#cover',
+</body>
+
+</html>
+
+
+
+<script src="__STATIC__/layui/layui.js"></script>
+<script>
+	layui.use(['upload', 'form', 'layer', 'element', 'layedit'], function () {
+		var form = layui.form;
+		window.layer = layui.layer;
+		//各种基于事件的操作，下面会有进一步介绍
+		var loading;
+		var upload = layui.upload;
+		var $ = layui.jquery;
+        var layedit = layui.layedit;
+
+        //构建一个默认的编辑器
+        var index = layedit.build('description', {
+                tool: ['face', 'link', 'unlink', '|', 'left', 'center', 'right']
+                ,height: 100
+            });
+		// 点击删除图片
+		$('.op').click(function(e){
+			// 阻止冒泡
+			window.event? window.event.cancelBubble = true : e.stopPropagation();
+			// 获取该元素相邻input的内容（上传图片时填进去的图片地址）
+			var item = $(this).parent();
+			var path = item.find('input').val();
+			// 请求接口删除图片
+			$.ajax({
+				url:'./delImg',
+				data:{
+					path:path,
+				},
+				success:function(res){
+					if(res.code){
+						// 删除成功后执行...
+						// 清除图片预览和隐藏的input值
+						item.find('img').attr('src','__STATIC__/imgs/blank.jpg');
+						item.find('input').val('');
+						return layer.msg(res.msg);
+					}
+					return layer.msg(res.msg);
+				}
+			})
+		})
+
+
+		// 连续设置多张图片的上传功能
+		for(i=1;i<=7;i++){
+			uploadImg('#cover'+i)
+		}
+
+		// 上传图片方法
+		function uploadImg(el) {
+			upload.render({
+				elem: el,
 				url: '{:url("admin/products/uploadImg")}',
 				accept: 'file' // 允许上传的文件类型
 					,
 				auto: true // 自动上传
 					,
 				before: function (obj) {
-						console.log(obj);
 						// 上传等待loading动画
 						loading = layer.load(2);
 						// 在上传图片的过程中不能点提交按钮
 						$('#submit').addClass('layui-btn-disabled');
 						// 预览
 						obj.preview(function (index, file, result) {
-							// console.log(file.name);    //图片名字
-							// console.log(file.type);    //图片格式
-							// console.log(file.size);    //图片大小
-							// console.log(result);       //图片地址
-							$('#preview').attr('src', result); //图片链接 base64
+							$(el+' img').attr('src', result); //图片链接 base64
 						});
 						// layer.load();
 					}
 					// 上传成功回调
 					,
 				done: function (res) {
-						// console.log(upload);
-						// console.log(res);
-
 						// 关闭loading动画
 						layer.close(loading);
+						// 如果先前已有上传的图片，则先删除，节省空间
+						var path = $(el+' input').val();
+						if(path){
+							// 请求接口删除图片
+							$.ajax({
+								url:'./delImg',
+								data:{
+									path:path,
+								}
+							})
+						}
 						// 在隐藏的input里面填写上传的图片地址
-						$('#img_url').val(res.savename);
+						$(el+' input').val(res.savename);
 						// 获取到图片地址后可以继续提交
 						$('#submit').removeClass('layui-btn-disabled');
 						if (res.code == 0) {
@@ -123,50 +250,96 @@
 					}
 					// 上传失败回调
 					,
-				error: function (index, upload) {
+				error: function (res) {
 					return layer.msg(res.msg);
 				}
 
 			});
+		}
 
-			// 表单提交
-			form.on('submit(submit)', function (data) {
-				$.ajax({
-					url: './editItem',
-					method: 'post',
-					data: data.field,
-					dataType: 'JSON',
-					success: function (res) {
-						console.log('res :', res);
-						if (res) {
-							// return layer.msg('Successful add a item!',{icon:1,time:2000});
-							var message = 'Successful edit the item!';
-							layer.confirm(message, {
-								icon: 1,
-								title: '信息提示'
-							}, function (index) {
-								//submitForm();  
-								layer.close(index);
+
+		// 点击出现layer
+		$('.laya-btn').on('click', function () {
+			var othis = $(this),
+				width = othis.data('width'),
+				height = othis.data('height'),
+				title = othis.data('title'),
+				url = othis.data('url');
+			layer.open({
+				type: 2,
+				shadeClose: true,
+				title: title,
+				area: [width, height],
+				//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				content: url,
+				end: function (d) {
+					console.log('333 :', d);
+
+					// 页面重载并传递一个get参数，用于判断是转跳还是当前刷新
+					window.location.href = "{:url('admin/products/productsAdd')}?reload=true";
+					if (window.localStorage) {
+						window.localStorage.setItem('addProduct', '{"title":"' + $(
+							"[name=title]").val() + '"}')
+					}
+				}
+			});
+		});
+
+		// =======表单信息读取（刷新页面后保留表单内容）=========
+		function getQueryString(name) { // 获取get参数
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]);
+			return null;
+		}
+		if (window.localStorage && getQueryString('reload')) {
+			var data = JSON.parse(window.localStorage.getItem('addProduct'));
+			$('[name=title]').val(data.title);
+		}
+
+
+		// ========表单提交==========================================
+		form.on('submit(submit)', function (data) {
+			// 注layui自带的富文本编辑器的内容并不会自动加到data.field里面
+			data.field.description = layedit.getContent(index);
+			$.ajax({
+				url: './editItem',
+				method: 'post',
+				data: data.field,
+				dataType: 'JSON',
+				success: function (d) {
+                    if (d.code == 1) {
+                        layer.open({
+                            title:'Congratulations',
+                            content: d.msg,
+                            yes: function (index, layero) {
+                                //do something
+								layer.close(index); //如果设定了yes回调，需进行手工关闭
+								// 关闭弹出层并刷新表格
 								var frame_index = parent.layer.getFrameIndex(window.name);
 								parent.layer.close(frame_index);
 								parent.layui.table.reload('idTest', {})
-							});
-						} else {
-							return layer.msg('Add failed.', {
-								icon: 2,
-								time: 2000
-							});
-						}
-					},
-					error: function (data) {
+                            }
+                        });
+                        // layer.msg('Registration succeed');
+                    } else {
+                        layer.msg('Update Failed.');
+                    }
+				},
+				error: function (data) {
 
-					}
-				});
-				return false;
+				}
 			});
-	});
-	
-	</script>
-</body>
+			return false;
+		});
+		// 表单重置
+		$('#reset').click(function(){
+			window.location.reload();
+		})
 
-</html>
+		form.val('test',{
+			seller_id:"{$data.seller_id}",
+		});
+
+	});
+</script>

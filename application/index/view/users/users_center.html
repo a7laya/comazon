@@ -42,6 +42,7 @@
 				<!-- 右侧导航 -->
 				<ul class="layui-nav larry-header-item">
 					<li class="layui-nav-item">
+						<i class="iconfont icon-yonghu"></i>
 						{$shop_user['username']}
 					</li>
 					<li class="layui-nav-item">
@@ -111,25 +112,25 @@
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="{:url('admin/orders/ordersForReview')}" target="main">
+								<a href="{:url('index/orders/ordersAll')}" target="main">
 									<i class="iconfont icon-neirong" data-icon='icon-neirong'></i>
 									<span>All Orders</span>
 								</a>
 							</dd>
 							<dd>
-								<a href="{:url('admin/orders/ordersForReview')}" target="main">
+								<a href="{:url('index/orders/ordersPending')}" target="main">
 									<i class="iconfont icon-caidan1" data-icon='icon-caidan1'></i>
 									<span>Pending</span>
 								</a>
 							</dd>
 							<dd>
-								<a href="{:url('admin/orders/ordersReviewed')}" target="main">
+								<a href="{:url('index/orders/ordersShipped')}" target="main">
 									<i class="iconfont icon-dengji5" data-icon='icon-dengji5'></i>
 									<span>Shipped</span>
 								</a>
 							</dd>
 							<dd>
-								<a href="{:url('admin/orders/ordersReviewed')}" target="main">
+								<a href="{:url('index/orders/ordersReceived')}" target="main">
 									<i class="iconfont icon-huanyuan" data-icon='icon-huanyuan'></i>
 									<span>Received</span>
 								</a>

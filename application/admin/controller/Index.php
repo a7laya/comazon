@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 use app\index\model\User;
+use app\admin\model\Seller;
 use app\index\model\Product;
 use app\index\model\Purchased;
 use app\index\model\Vpurchased;
@@ -39,6 +40,10 @@ class Index extends Base
         // 注册用户数
         $user_count = User::count();
         $this->assign('user_count', $user_count);
+
+        // 店铺数
+        $seller_count = Seller::count();
+        $this->assign('seller_count', $seller_count);
 
         // 商品数
         $product_count = Product::count();

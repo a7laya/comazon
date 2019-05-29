@@ -178,6 +178,7 @@
 			// 获取该元素相邻input的内容（上传图片时填进去的图片地址）
 			var item = $(this).parent();
 			var path = item.find('input').val();
+            if(!path) return 'dump'; // path为空时不跳出不发送请求
 			// 请求接口删除图片
 			$.ajax({
 				url:'./delImg',
@@ -190,7 +191,7 @@
 						// 清除图片预览和隐藏的input值
 						item.find('img').attr('src','__STATIC__/imgs/blank.jpg');
 						item.find('input').val('');
-						return layer.msg(res.msg);
+						return 'ok';
 					}
 					return layer.msg(res.msg);
 				}
@@ -246,7 +247,7 @@
 						if (res.code == 0) {
 							return layer.msg(res.msg);
 						}
-						return layer.msg(res.msg);
+						return 'layer.msg(res.msg)';
 					}
 					// 上传失败回调
 					,

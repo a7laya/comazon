@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+.navbar-nav>li>.dropdown-menu {
+    background-color: #333;
+    margin-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.dropdown-menu>li>a:hover{
+    background-color: #666 !important;
+    color: #fff !important;
+}
+.dropdown-menu>li>a {
+    color: #999 !important;
+}
 
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +28,14 @@
     <title>COMAZON</title>
 </head>
 <body>
-    <div class="navbar navbar-default navbar-light">
+    <!-- <div class="navbar navbar-default navbar-light">
         <div class="container">
             <div class="navbar-brand">{$setting.site_name}</div>
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav layui-nav">
                 <li><a href="{:url('index/index/index')}">Home</a></li>
-                <li><a href="{:url('index/products/productsList')}">Products</a></li>
+                <li><a href="{:url('index/products/productsList')}">Products</a>
+                    <span class="layui-nav-more"></span>
+                </li>
                 <li><a href="{:url('index/index/contactUs')}">Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -28,7 +45,10 @@
                 <li><a href="{:url('index/passport/signIn')}">Sign in</a></li>
                 <li><a href="{:url('index/passport/signUp')}">Sign up</a></li>
                 {else /} 
-                <li id="username"><a href="{:url('index/users/usersCenter')}">{$shop_user.username}</a></li>
+                <li id="username"><a href="{:url('index/users/usersCenter')}" target="_blank">
+                    <i class="layui-icon layui-icon-user"></i>
+                    {$shop_user.username}
+                </a></li>
                 <li><a href="{:url('index/passport/logout')}">Logout</a></li>
                 {/if}
             </ul>
@@ -44,4 +64,67 @@
             </form>
 
         </div>
-    </div>
+    </div> -->
+    <nav class="nav navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <!--在移动端的时候导航条折叠起来，三横的样式出现，点击该样式可以显示或隐藏导航条上的内容-->
+                <button class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">{$setting.site_name}</a>
+            </div>
+            <div id="menu" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{:url('index/index/index')}">Home</a></li>
+                    <!--下拉菜单功能的实现-->
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Products<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <!-- 店铺下拉菜单 -->
+                            <li><a href="{:url('index/products/productsList')}">All Sellers</a></li>
+                            {volist name="sellers" id="seller"}
+                            <li><a href="{:url('index/products/productsListSeller')}?seller_name={$seller.seller_name}">{$seller.seller_name}</a></li>
+                            {/volist}
+                        </ul>
+                    </li>
+                    <li><a href="{:url('index/index/contactUs')}">Contact Us</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                        
+                        
+                        {if condition="($shop_user == null)"} 
+                        <li><a href="{:url('index/passport/signIn')}">Sign in</a></li>
+                        <li><a href="{:url('index/passport/signUp')}">Sign up</a></li>
+                        {else /} 
+                        <!--下拉菜单功能的实现-->
+                        <li class="dropdown" id="username"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="layui-icon layui-icon-user"></i>
+                            {$shop_user.username}
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <!-- 买家下拉菜单 -->
+                                <li><a href="{:url('index/users/usersCenter')}">Personal Center</a></li>
+                                <li><a href="{:url('index/passport/logout')}">Logout</a></li>
+                            </ul>
+                        </li>
+                        {/if}
+                        <li>
+                                <form action="{:url('index/products/productsResult')}" class="navbar-form navbar-right">
+                                    <div class="form-group">
+                                        {notempty name="keywords"} 
+                                        <input type="text" class="form-control" placeholder="product name or ASIN" name="keywords" id="keywords" value='{$keywords}'> 
+                                        {else /}
+                                        <input type="text" class="form-control" placeholder="product name or ASIN" name="keywords" id="keywords"> 
+                                        {/notempty}
+                                    </div>
+                                    <button type="submit" class="btn btn-default">search</button>
+                                </form>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div style="height: 60px"></div>

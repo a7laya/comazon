@@ -85,19 +85,26 @@ class Purchased extends Model
     {
         // 开启事务
         Db::startTrans();
-        $session_username = Session::get('shop_user')['username'];    
-        // 当该产品id已被购买，且传过来的用户名和当前session一致时从purchased表删除    
-        if ($session_username == $data['username']) {
-            try {
-                // 移除购买
-                Purchased::destroy($data['purchased_id']);
-                Db::commit();
-                return true;
-            } catch (\Exception $e) {
-                Db::rollback();
-            }
+
+        // 检查session
+        $session_username = Session::get('shop_user')['username']; 
+        if($session_username != $data['username']) return false;
+
+        // 获取当前订单状态，如果status = 0 就可以执行remove操作
+        $status =  Purchased::get($data['purchased_id'])['status'];
+        if($status != 0) return false;
+
+        // 移除订单
+        try {
+            // 移除购买
+            Purchased::destroy($data['purchased_id']);
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            return false;
         }
-        return false;
+    
     }
 
 }

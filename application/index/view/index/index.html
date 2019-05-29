@@ -48,27 +48,27 @@
             <div class="layui-card-body">
                 <div class="item">
                     <label>Username: </label>
-                    <content>{$data.username}</content>
+                    <content>{$buyer.username}</content>
                 </div>
                 <div class="item">
                     <label>Email: </label>
-                    <content>{$data.email}</content>
+                    <content>{$buyer.email}</content>
                 </div>
                 <div class="item">
                     <label>Tel: </label>
-                    <content>{$data.tel|default="You haven't filled in yet."}</content>
+                    <content>{$buyer.tel|default="You haven't filled in yet."}</content>
                 </div>
                 <div class="item">
                     <label>Default PayPal: </label>
-                    <content>{$data.paypal|default="You haven't filled in yet."}</content>
+                    <content>{$buyer.paypal|default="You haven't filled in yet."}</content>
                 </div>
                 <div class="item">
                     <label>Default Address: </label>
-                    <content>{$data.address|default="You haven't filled in yet."}</content>
+                    <content>{$buyer.address|default="You haven't filled in yet."}</content>
                 </div>
                 <div class="item">
                     <label>Registration Time: </label>
-                    <content>{$data.create_time}</content>
+                    <content>{$buyer.create_time}</content>
                 </div>
             </div>
         </div>
@@ -82,15 +82,15 @@
             <div class="layui-card-body" style="height:194px">
                 <div class="item">
                     <label>Last Login Time: </label>
-                    <content>{$data.last_login_time|default='This is your first login.'}</content>
+                    <content>{$buyer.last_login_time|default='This is your first login.'}</content>
                 </div>
                 <div class="item">
                     <label>Last Login IP: </label>
-                    <content>{$data.last_login_ip|default='This is your first login.'}</content>
+                    <content>{$buyer.last_login_ip|default='This is your first login.'}</content>
                 </div>
                 <div class="item">
                     <label>Account Update Time: </label>
-                    <content>{$data.update_time|default='This is your first login.'}</content>
+                    <content>{$buyer.update_time|default='This is your first login.'}</content>
                 </div>
                 <hr style="margin:6px 0">
                 <div class="item">

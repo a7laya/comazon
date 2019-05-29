@@ -1,0 +1,86 @@
+{include file='inc/header'/}
+<link rel="stylesheet" href="__CSS__/products-list.css">
+<div class="container">
+    <div class="seller">{$seller_name}</div>
+    <ul id="demo">
+        
+    </ul>
+</div>
+</body>
+<script src="__STATIC__/layui/layui.js"></script>
+<script>
+    layui.use('flow', function () {
+        var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+        var flow = layui.flow;
+        flow.load({
+            elem: '#demo' //指定列表容器
+                ,
+            isAuto: true //自动加载  为true的时候是自动加载
+                ,
+            isLazyimg: true //图片懒加载
+                ,
+            mb: 200 //与底部的临界距离，默认50。即当滚动条与底部产生该距离时，触发加载。注意：只有在isAuto为true时有效。
+                ,
+            end: 'No more',
+            done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+                var lis = [];
+                console.log('page :', page);
+                //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+                $.get(
+                    'getListSeller', {
+                        seller:'{$seller_name}',
+                        page: page,
+                        page_size: 18 // 设置一次加载的条数
+                    },
+                    function (res) {
+                        console.log('res :', res);
+                        //假设你的列表返回在data集合中
+                        layui.each(res.data, function (index, item) {
+                            lis.push(
+                                `<a href="{:url('index/products/productsDetail')}?product_id=`+item.product_id+`" target="_blank"><li title="`+item.title+`"><div class="img-wrapper"><img lay-src="__STATIC__/` +
+                                item.img_url +
+                                `"></div><div class="info"><div class="price"><span class="dollar">$</span>` +
+                                item.price + `</div><div class="title">` + item.title +
+                                `</div></div></li></a>`
+                            );
+                        });
+                        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                        //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                        next(lis.join(''), page < res.total_page);
+                    }
+                );
+            }
+        });
+        // 点击★按钮收藏
+        $('#demo li .op i').click(function () {
+            // 获取隐藏的product_id
+            var product_id = $(this).next('.product_id').text();
+            // 获取当前登陆的用户名，如果没有登陆，那么username为空
+            var username = '{$shop_user.username}';
+            var mark = $(this);
+            console.log('mark :', mark);
+            var url = "{:url('index/products/removeMark')}";
+            if (mark.hasClass('layui-icon-rate')) {
+                url = "{:url('index/products/addMark')}";
+                mark.removeClass('layui-icon-rate').addClass('layui-icon-rate-solid');
+            } else {
+                mark.addClass('layui-icon-rate').removeClass('layui-icon-rate-solid');
+            };
+            if (username) {
+                $.ajax({
+                    url: url,
+                    data: {
+                        product_id: product_id,
+                        username: username
+                    },
+                    success: function (d) {
+                        console.log('d :', d);
+                    }
+                })
+            }
+
+        })
+    });
+</script>
+
+</html>

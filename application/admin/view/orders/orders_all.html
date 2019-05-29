@@ -72,7 +72,7 @@ input::-webkit-input-placeholder {
             }, {
               field: 'status',
               title: 'Status',
-              width: 85,
+              width: 90,
               templet:'#status',
             }, {
               field: 'seller_name',
@@ -107,7 +107,6 @@ input::-webkit-input-placeholder {
               fixed: 'right',
               title: 'Operation',
               toolbar: '#barDemo',
-              align: 'center',
               width: 160
             }
           ]
@@ -179,6 +178,8 @@ input::-webkit-input-placeholder {
             //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
             content: '{:url("admin/orders/orderDetail")}?purchased_id=' + data.purchased_id
           });
+        } else if (obj.event === 'watch') {
+          layer.msg('该功能待完善')
         }
       });
 
@@ -204,11 +205,11 @@ input::-webkit-input-placeholder {
         return {0:'Set Shipped',1:'Set Unship',2:'Watch'}[status]
       };
       var event = function (status) {
-        return {0:'setShipped',1:'setUnship',2:' watch '}[status]
+        return {0:'setShipped',1:'setUnship',2:'watch'}[status]
       };
 
       var bgc = function (status) {
-        return {0:'',1:'layui-btn-warm',2:'layui-btn-normal'}[status]
+        return {0:'layui-btn-normal',1:'layui-btn-warm',2:'layui-btn-normal'}[status]
       };
     }}
     <a class="layui-btn layui-btn-xs " lay-event="detail">Detail</a>
@@ -224,7 +225,7 @@ input::-webkit-input-placeholder {
         };
         
         var color = function (status) {
-          return {0:'#ffb800',1:'green',2:'#666'}[status]
+          return {0:'#ffb800',1:'#1E9FFF',2:'#666'}[status]
         }
     }}
     

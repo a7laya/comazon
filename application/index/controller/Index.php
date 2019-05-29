@@ -32,9 +32,9 @@ class Index extends Base
 
     public function index(){
         $username = $this->shop_user['username'];
-        $res = $this->user->where(['username'=>$username])->find();
+        $buyer = $this->user->where(['username'=>$username])->find();
         $this->assign([
-            'data'=>$res,
+            'buyer'=>$buyer,
             'day_limit'=>$this->day_limit,
             'week_limit'=>$this->week_limit,
             'day_count'=>$this->day_count,

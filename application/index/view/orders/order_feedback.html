@@ -48,6 +48,7 @@
             <div class="layui-col-xs12">
                 <hr>
                 <form class="layui-form">
+                    <input type="text"  style="display: none" name="purchased_id" value="{$order['purchased_id']}">
                     <div class="layui-form-item">
                         <label class="layui-form-label">OrderID</label>
                         <div class="layui-input-block">
@@ -56,28 +57,32 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">
-                            Upload</label>
-                        <div class="layui-input-block">
-                            <!-- 点击上传图片 -->
-                            <div class="layui-input-inline" style="cursor:pointer;" id="cover">
+                        <label class="layui-form-label">Upload</label>
+                        <!-- 点击上传图片 -->
+			            <div class="layui-input-block laya-img">
+                            <div class="layui-input-inline" id="cover">
+                                <div class="op"><i class="layui-icon layui-icon-close-fill"></i></div>
+                                <input type="text" name="review_img" value="{$order['review_img']}">
                                 {eq name="order['review_img']" value=""}
-                                <img id="preview" style="max-height: 220px;" src='__STATIC__/imgs/blank_review.jpg'>
+                                <img src="__STATIC__/imgs/blank_review.jpg">
                                 {else/}
-                                <img id="preview" style="max-height: 220px;" src='__STATIC__/{$order["review_img"]}'>
+                                <img src="__STATIC__/{$order['review_img']}">
                                 {/eq}
+                                </div>
                             </div>
-                            <input type="text" style="display:none" name="review_img" id="review_img"
-                                value="{$order['review_img']}">
-                            <input type="text" style="display:none" name="purchased_id" id="purchased_id"
-                                value="{$order['purchased_id']}">
                         </div>
                     </div>
                     <hr>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit lay-filter="submit" id="submit">Complete</button>
-                            <button id="close" class="layui-btn layui-btn-primary">Close</button>
+                            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="submit" id="submit">
+                                <i class="layui-icon layui-icon-ok"></i>
+                                Feedback
+                            </button>
+                            <button id="close" class="layui-btn layui-btn-primary">
+                                <i class="layui-icon layui-icon-close"></i>
+                                Close
+                            </button>
                         </div>
                     </div>
                     <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
@@ -96,65 +101,107 @@
         var loading;
         var upload = layui.upload;
         var $ = layui.jquery;
-        var uploadInst = upload.render({
-            elem: '#cover',
-            url: '{:url("index/orders/uploadReview")}',
-            accept: 'file' // 允许上传的文件类型
-                ,
-            auto: true // 自动上传
-                ,
-            before: function (obj) {
-                    console.log(obj);
-                    // 上传等待loading动画
-                    loading = layer.load(2);
-                    // 在上传图片的过程中不能点提交按钮
-                    $('#submit').addClass('layui-btn-disabled');
-                    // 预览
-                    obj.preview(function (index, file, result) {
-                        // console.log(file.name);    //图片名字
-                        // console.log(file.type);    //图片格式
-                        // console.log(file.size);    //图片大小
-                        // console.log(result);       //图片地址
-                        $('#preview').attr('src', result); //图片链接 base64
-                    });
-                    // layer.load();
-                }
-                // 上传成功回调
-                ,
-            done: function (res) {
-                    // console.log(upload);
-                    // console.log(res);
 
-                    // 关闭loading动画
-                    layer.close(loading);
-                    // 在隐藏的input里面填写上传的图片地址
-                    $('#review_img').val(res.savename);
-                    // 获取到图片地址后可以继续提交
-                    $('#submit').removeClass('layui-btn-disabled');
-                    if (res.code == 0) {
-                        return layer.msg(res.msg);
-                    }
-                    return layer.msg(res.msg);
-                }
-                // 上传失败回调
-                ,
-            error: function (index, upload) {
-                return layer.msg(res.msg);
-            }
+        uploadImg('#cover');
+		// 上传图片方法
+		function uploadImg(el) {
+			upload.render({
+				elem: el,
+				url: '{:url("index/orders/uploadReview")}',
+				accept: 'file' // 允许上传的文件类型
+					,
+				auto: true // 自动上传
+					,
+				before: function (obj) {
+						// 上传等待loading动画
+						loading = layer.load(2);
+						// 在上传图片的过程中不能点提交按钮
+						$('#submit').addClass('layui-btn-disabled');
+						// 预览
+						obj.preview(function (index, file, result) {
+							$(el+' img').attr('src', result); //图片链接 base64
+						});
+						// layer.load();
+					}
+					// 上传成功回调
+					,
+				done: function (res) {
+						// 关闭loading动画
+						layer.close(loading);
+						// 如果先前已有上传的图片，则先删除，节省空间
+						var path = $(el+' input').val();
+						if(path){
+							// 请求接口删除图片
+							$.ajax({
+								url:'./delImg',
+								data:{
+									path:path,
+								}
+							})
+						}
+						// 在隐藏的input里面填写上传的图片地址
+						$(el+' input').val(res.savename);
+						// 获取到图片地址后可以继续提交
+						$('#submit').removeClass('layui-btn-disabled');
+						if (res.code == 0) {
+							return layer.msg(res.msg);
+						}
+						return 'ok';
+					}
+					// 上传失败回调
+					,
+				error: function (res) {
+					return layer.msg(res.msg);
+				}
 
-        });
+			});
+		}
+
+		// 点击删除图片
+		$('.op').click(function(e){
+			// 阻止冒泡
+			window.event? window.event.cancelBubble = true : e.stopPropagation();
+			// 获取该元素相邻input的内容（上传图片时填进去的图片地址）
+			var item = $(this).parent();
+            var path = item.find('input').val();
+            if(!path) return 'dump'; // path为空时不跳出不发送请求
+			// 请求接口删除图片
+			$.ajax({
+				url:'./delImg',
+				data:{
+					path:path,
+				},
+				success:function(res){
+					if(res.code){
+						// 删除成功后执行...
+						// 清除图片预览和隐藏的input值
+						item.find('img').attr('src','__STATIC__/imgs/blank_review.jpg');
+						item.find('input').val('');
+						return 'ok';
+					}
+					return layer.msg(res.msg);
+				}
+			})
+		})
 
         // 表单提交
         form.on('submit(submit)', function (data) {
+            console.log('data.field :', data);
             $.ajax({
-                url: '{:url("index/orders/orderCompleteSubmit")}',
+                url: '{:url("index/orders/orderFeedbackSubmit")}',
                 method: 'post',
-                data: data.field,
+                data: {
+                    purchased_id:$('[name=purchased_id]').val(),
+                    order_id:$('[name=order_id]').val(),
+                    review_img:$('[name=review_img]').val(),
+                },
                 dataType: 'JSON',
                 success: function (res) {
                     console.log('res :', res);
                     if (res) {
-                        return layer.msg('Successful order updating!',{icon:1,time:2000});
+                        var frame_index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(frame_index);
+                        window.parent.location.reload();
                     } else {
                         return layer.msg('Nothing changes.',{icon:6,time:2000});
                     }

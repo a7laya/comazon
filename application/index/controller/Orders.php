@@ -116,7 +116,7 @@ class Orders extends Base
 
 
     // 订单完善页面
-    public function orderComplete(){
+    public function orderFeedback(){
         $data = input();
         $purchased_id = $data['purchased_id'];
         $res = Vpurchased::get(['purchased_id' => $purchased_id]);
@@ -128,9 +128,13 @@ class Orders extends Base
     }
 
     // 订单完善后的提交
-    public function orderCompleteSubmit()
-    {
+    public function orderFeedbackSubmit()
+    {   
+        $data = $_POST;
+        // 提交订单反馈后，订单状态变为2-received
+        $_POST['status'] = 2;
         $res = $this->purchased->allowField(true)->save($_POST,['id' => $_POST['purchased_id']]);
+        
         return $res;
     }
 
@@ -153,7 +157,81 @@ class Orders extends Base
         }
         return $res;
     }
+
+    // 接口 - 删除指定图片
+    public function delImg()
+    {   
+        $path = input()['path'];
+        $filename = ROOT_PATH . 'public' . DS . 'static' . DS . $path;
+        if(file_exists($filename)){
+            unlink($filename);
+            return ['code'=>1,'msg'=>'Successful deletion of picture.'];
+        }else{
+            return ['code'=>0,'msg'=>'Delete picture failed.'];
+        }
+    }
     
+        
+    // 页面 - 所有订单
+    public function ordersAll(){
+        return  view();
+    }
+    // 页面 - pending订单
+    public function ordersPending(){
+        return  view();
+    }
+    // 页面 - shipped订单
+    public function ordersShipped(){
+        return  view();
+    }
+    // 页面 - Received订单
+    public function ordersReceived(){
+        return  view();
+    }
+    // 页面 - 订单详情页
+    public function orderDetail(){
+        $purchased_id = $_GET['purchased_id'];
+        $res = $this->vpurchased->where('purchased_id',$purchased_id)->find();
+        $this->assign('order', $res);
+        return  view();
+    }
+
+    // 接口 - 所有订单列表数据表格
+    public function tableData()
+    {   
+        // $data: ['limit'=>10, 'page'=>1]
+        $arr = input();
+        // $data['search_str'] = $search_str;
+        return $this->vpurchased->tableDataUser($arr);
+    }
+
+    // 接口 - Pending订单列表数据表格
+    public function tableDataPending()
+    {   
+        // $data: ['limit'=>10, 'page'=>1]
+        $arr = input();
+        // $data['search_str'] = $search_str;
+        return $this->vpurchased->tableDataPendingUser($arr);
+    }
+
+    // 接口 - Shipped订单列表数据表格
+    public function tableDataShipped()
+    {   
+        // $data: ['limit'=>10, 'page'=>1]
+        $arr = input();
+        // $data['search_str'] = $search_str;
+        return $this->vpurchased->tableDataShippedUser($arr);
+    }
+
+    // 接口 - Received订单列表数据表格
+    public function tableDataReceived()
+    {   
+        // $data: ['limit'=>10, 'page'=>1]
+        $arr = input();
+        // $data['search_str'] = $search_str;
+        return $this->vpurchased->tableDataReceivedUser($arr);
+    }
+
 
 
 }

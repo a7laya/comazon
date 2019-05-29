@@ -1,4 +1,11 @@
-
+.container .seller{
+    display: flex;
+    justify-content: center;
+    font-size: 44px;
+    font-weight: border;
+    color: #666;
+    margin-bottom: 10px;
+}
 #demo li {
     margin: 5px;
     display: inline-block;

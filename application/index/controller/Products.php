@@ -50,7 +50,28 @@ class Products extends Base
         return json($res);  //返回json
     }
 
-    // 商品搜索结果
+    // 接口 - 商品懒加载方法(按卖家)
+    public function getListSeller(Request $request){
+        $data = input();
+        $keywords = isset($data['keywords']) ? $data['keywords'] : '';
+        $page_size = intval($request->param('page_size'));  //每页显示条数
+        $count = $this->product
+                ->where('title|ASIN','like',"%{$keywords}%")
+                ->where('seller_name', $data['seller'])
+                ->count();  //总记录数
+        $res['total_page'] = ceil($count/$page_size);  //总页数
+        $cur_page = intval($request->param('page'))-1;  //默认前端page传过来为1 
+        $res['data'] = $this->product
+                        ->order('product_id desc') // 后面加入的数据显示在前面
+                        ->where('title|ASIN','like',"%{$keywords}%")
+                        ->where('seller_name', $data['seller'])
+                        ->limit(($cur_page*$page_size),$page_size)  //limit默认要从零开始
+                        ->select();
+        // dump($this->product->getLastSql());die;
+        return json($res);  //返回json
+    }
+
+    // 页面 - 商品搜索结果
     public function productsResult()
     {   
         $this->assign('keywords', $_GET['keywords']);
@@ -58,8 +79,16 @@ class Products extends Base
         return  view();
     }
 
+    // 页面 - 商品列表页（按卖家）
+    public function productsListSeller()
+    {   
+        $this->assign('seller_name', $_GET['seller_name']);
+        // 模板输出
+        return  view();
+    }
 
-    // 商品列表页
+
+    // 页面 - 商品列表页
     public function productsList(){
         if ($this->request->isAjax()) {
             $page = input();

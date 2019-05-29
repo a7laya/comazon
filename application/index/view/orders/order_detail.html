@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/css/review-order.css">
+    <title>Document</title>
+</head>
+<style>
+.close {
+    text-align: right
+}
+</style>
+<body>
+    <div class="layui-container">
+        <div class="layui-row grid-demo">
+            <div class="layui-col-xs3">
+                <div class="img-wrapper">
+                    <img src="__STATIC__/{$order['img_url']}" alt="">
+                </div>
+            </div>
+            <div class="layui-col-xs9">
+                <div class="title">
+                {switch name="order.status"}
+                    {case value='0'}<span class="layui-badge layui-bg-orange">Pending</span>{/case}
+                    {case value='1'}<span class="layui-badge layui-bg-blue">Shipped</span>{/case}
+                    {case value='2'}<span class="layui-badge layui-bg-cyan">Received</span>{/case}
+                    {default /}<span class="layui-badge-dot layui-bg-gray"></span>
+                {/switch}
+                    {$order['title']}
+                </div>
+                <div class="info">
+                    <span class="seller">Seller: {$order['seller_name']}</span>
+                    <span class="price" >Price: ${$order['price']}</span></span>
+                    <span class="asin"  >ASIN: {$order['ASIN']}</span>
+                </div>
+                <div class="info">
+                    <div class="user">Buyer: {$order['username']}</div>
+                    <div class="user">Mail: {$order['email']}</div>
+                    <div class="date">Date: {$order['ts']|substr=0,10}</div>
+                </div>
+                <div class="order-num">PayPal: <span>{$order['paypal']}</span></div>
+                <div class="order-num">Address: <span>{$order['address']}</span></div>
+                <div class="order-num">Order Number on Amazon:
+                    {empty name="order.order_id"}
+                    <span style="color:#999; font-size:12px">The order has not been delivered yet.</span>
+                    {else /}
+                    <span>{$order['order_id']}</span>
+                    {/empty}
+                </div>
+            </div>
+
+
+            <div class="layui-col-xs12">
+                <hr>
+                <form class="layui-form" lay-filter="form1">
+                    
+                    <input type="text" style="display:none" name="purchased_id" id="purchased_id" value="{$order['purchased_id']}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            Review Screenshots</label>
+                        <div class="layui-input-block">
+                            {empty name="order.review_img"}
+                            <br>
+                            <span style="color:#999; font-size:12px;">The order has not been delivered yet.</span>
+                            {else/}
+                            <div class="layui-input-inline">
+                                <img id="preview" style="max-width: 620px;" src='__STATIC__/{$order["review_img"]}'>
+                            </div>
+                            {/empty}
+                        </div>
+                    </div>
+                    
+                    
+    
+                    <hr>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block close">
+                            <button id="close" class="layui-btn layui-btn-primary">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script src="__STATIC__/layui/layui.js"></script>
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+        //各种基于事件的操作，下面会有进一步介绍
+        var loading;
+        var $ = layui.jquery;
+        // 表单提交
+
+        form.on('submit(submit)', function (data) {
+            if(!data.field.ship) {
+                // 关闭当前弹出层
+                var frame_index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(frame_index);
+                return false
+            };
+            $.ajax({
+                url: '{:url("admin/orders/setUnship")}',
+                data: data.field,
+                success: function (res) {
+                    //先得到当前iframe层的索引
+                    var index = parent.layer.getFrameIndex(window.name); 
+                    console.log('res :', res);
+                    if (res) {
+                        //再执行关闭 
+                        parent.layer.close(index);  
+                        //关闭父级页面的表格
+                        parent.layui.table.reload('idTest', {});
+                        return layer.msg('Successful order updating!', {
+                            icon: 1,
+                            time: 2000
+                        });
+                    } else {
+                        return layer.msg('Nothing changes.', {
+                            icon: 3,
+                            time: 2000
+                        });
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+            return false;
+        });
+            //表单初始赋值
+        form.val('form1', {
+            // "admin_review": "{$order['admin_review']}" 
+        })
+        $('#close').click(function(){
+            var frame_index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(frame_index);
+        })
+    });
+</script>
+</html>

@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="seller">
-                            <span class="name">{$detail['seller_name']}</span>
+                            <a href="{:url('index/products/productsListSeller')}?seller_name={$detail['seller_name']}" class="name" target="_blank">{$detail['seller_name']}</a>
                         </div>
                         <div class="title">
                             {$detail['title']}
@@ -90,16 +90,20 @@
                             {eq name="data['admin_review']" value="on"}
                             
                             <div class="op">
-                                <button data-method="complete" data-arg="{$data.purchased_id}"
+                                <button data-method="feedback" data-arg="{$data.purchased_id}"
                                     class="layui-btn layui-btn-sm layui-btn-normal">Order Pass Audit</button>
                             </div>
                             {else/}
                             
                             <div class="op">
                                 {switch name="data.status"}
+                                {case value='2'}
+                                <button data-method="feedback" data-arg="{$data.purchased_id}"
+                                    class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i>Edit</button>
+                                {/case}
                                 {case value='1'}
-                                <button data-method="complete" data-arg="{$data.purchased_id}"
-                                    class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-upload-drag"></i>Complete</button>
+                                <button data-method="feedback" data-arg="{$data.purchased_id}"
+                                    class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-upload-drag"></i>Feedback</button>
                                 {/case}
                                 {case value='0'}
                                 <button data-method="cancel" data-arg="{$data.purchased_id}"
@@ -139,15 +143,19 @@
                             
                             {eq name="data['admin_review']" value="on"}
                             <div class="op">
-                                <button data-method="complete" data-arg="{$data.purchased_id}"
+                                <button data-method="feedback" data-arg="{$data.purchased_id}"
                                     class="layui-btn layui-btn-sm layui-btn-normal">Order Pass Audit</button>
                             </div>
                             {else/}
                             <div class="op">
                                 {switch name="data.status"}
+                                {case value='2'}
+                                <button data-method="feedback" data-arg="{$data.purchased_id}"
+                                    class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i>Edit</button>
+                                {/case}
                                 {case value='1'}
-                                <button data-method="complete" data-arg="{$data.purchased_id}"
-                                    class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-upload-drag"></i>Complete</button>
+                                <button data-method="feedback" data-arg="{$data.purchased_id}"
+                                    class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-upload-drag"></i>Feedback</button>
                                 {/case}
                                 {case value='0'}
                                 <button data-method="cancel" data-arg="{$data.purchased_id}"
@@ -182,14 +190,14 @@
 
         //触发事件
         var active = {
-            complete: function (purchased_id) {
+            feedback: function (purchased_id) {
                 console.log('comp->purchased_id :', purchased_id);
                 layer.open({
                     type: 2,
-                    title: 'Order-complete',
+                    title: 'Order-feedback',
                     area: ['550px', '580px'],
                     shadeClose: true,
-                    content: '{:url("index/orders/orderComplete")}?purchased_id=' +
+                    content: '{:url("index/orders/orderFeedback")}?purchased_id=' +
                         purchased_id
                 });
             },

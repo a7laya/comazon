@@ -167,7 +167,7 @@ layui.define(function(exports){
         ,'<i class="layui-icon layui-icon-refresh"></i>'
       ,'</a>'].join('')
 
-      //跳页区域
+      //跳页区域 
       ,skip: function(){
         return ['<span class="layui-laypage-skip">Go to page'
           ,'<input type="text" min="1" value="'+ config.curr +'" class="layui-input">'

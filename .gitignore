@@ -3,3 +3,6 @@ composer.lock
 *.log
 thinkphp
 runtime/* 
+application/admin/view/Administrator/*
+application/admin/view/Orders/*
+application/admin/view/Users/*

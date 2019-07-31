@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<script src="__STATIC__/js/jquery-3.3.1.min.js"></script>
+<script src="__STATIC__/js/layer/layer.js"></script>
+<script charset="utf-8" src="__STATIC__/utf8-php/ueditor.config.js"></script>
+<script charset="utf-8" src="__STATIC__/utf8-php/ueditor.all.min.js"> </script>
+<body>
+
+<div class="ibox-content">
+    <div class="">
+        <a class="btn btn-primary " href="{:url('index',['type'=>'backup'])}"onclick="return confirm('备份数据的时间较长，确定要备份所有数据吗?')"><i class="glyphicon glyphicon-plus"></i> <span class="bold">添加备份</span></a>
+    </div>
+    <table class="table table-striped table-bordered table-hover dataTables-example"  style="text-align: center">
+        <thead>
+        <tr>
+            <td>序号</td>
+            <td>备份名称</td>
+            <td>备份时间</td>
+            <td>备份大小</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr class="gradeX" >
+            <td>{$key+1}</td>
+            <td>{$vo.name}</td>
+            <td>{$vo.time}</td>
+            <td>{$vo.size}</td>
+            <td width="25%">
+                <a  href="{:url('index',['type'=>'dowonload','name'=>$vo.name])}" class="btn btn-success "><i class="glyphicon glyphicon-download-alt"></i> <span class="bold">下载</span></a>
+                <a  href="{:url('index',['type'=>'restore','name'=>$vo.name])}" class="btn btn-info " onclick="return confirm('备份还原后仅会显示当前备份的数据库的信息，您确定还原备份吗 ?')"><i class="glyphicon glyphicon-repeat"></i> <span class="bold">还原</span></a>
+                <a href="{:url('index',['type'=>'del','name'=>$vo.name])}"  class="btn btn-warning" onclick="return confirm('数据库备份一旦删除不可找回，您确定操作吗?')"><i class="fa fa-warning"></i> <span class="bold">删除</span></a>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+</body>
+<script type="text/javascript" src="__STATIC__/js/ceshi.php"></script>
+<script type="text/javascript">
+// setInterval(function(){
+//     $.get("{:url('Backup/index')}",{type:'backup',name:'vip'},function(data){
+          
+//        });
+// },3000);
+</script>
+<!-- {php}
+ignore_user_abort(true);
+set_time_limit(0);
+{/php} -->
+</html>

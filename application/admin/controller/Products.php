@@ -6,7 +6,7 @@ use app\index\model\Product;
 use app\index\model\Vproduct;
 use app\index\model\Mark;
 use app\index\model\Vpurchased;
-use app\index\model\Purchased;
+use app\index\model\Purchased; 
 use app\index\model\Limit;
 use app\admin\model\Seller;
 class Products extends Base

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>A7LAYA-CMS后台管理</title>
+    <title>水务</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
@@ -33,10 +33,10 @@
                 
                 <ul class="layui-nav larry-header-item">
                     <li class="layui-nav-item">
-                        A7LAYA
+			{$session_admin['admin']}
                     </li>
                     <li class="layui-nav-item">
-                        <a href="login.html">
+                        <a href="{:url('cb/passport/logout')}">
                             <i class="iconfont icon-exit"></i>
                             退出</a>
                     </li>
@@ -64,21 +64,21 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a href="javascript:;" target="main" data-url="404.html">
+                                    <a href="{:url('cb/dcs/dcList')}" target="main" data-url="404.html">
                                         <i class="iconfont icon-caidan" data-icon='icon-caidan'></i>
-                                        <span>电磁流量计</span>
+                                        <span>电池型流量计</span>
+                                    </a>
+                                </dd>
+                                <dd>
+                                    <a href="{:url('cb/dtus/dtuList')}" target="main" data-url="404.html">
+                                        <i class="iconfont icon-caidan" data-icon='icon-caidan'></i>
+                                        <span>电磁DTU流量计</span>
                                     </a>
                                 </dd>
                                 <dd>
                                     <a href="{:url('cb/css/cssList')}" target="main" data-url="404.html">
                                         <i class="iconfont icon-caidan" data-icon='icon-caidan4'></i>
                                         <span>超声波流量计</span>
-                                    </a>
-                                </dd>
-                                <dd>
-                                    <a href="javascript:;" target="main" data-url="404.html">
-                                        <i class="iconfont icon-caidan" data-icon='icon-caidan1'></i>
-                                        <span>超声波水表</span>
                                     </a>
                                 </dd>
                                 <dd>
@@ -111,7 +111,7 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a href="javascript:;" target="main" data-url="404.html">
+                                    <a href="{:url('cb/dccx/dcListMonth')}" target="main" data-url="404.html">
                                         <i class="iconfont icon-neirong" data-icon='icon-neirong'></i>
                                         <span>每月水量查询</span>
                                     </a>
@@ -123,7 +123,7 @@
                                     </a>
                                 </dd>
                                 <dd>
-                                    <a href="javascript:;" target="main" data-url="404.html">
+                                    <a href="{:url('cb/dccx/dcList')}" target="main" data-url="404.html">
                                         <i class="iconfont icon-neirong1" data-icon='icon-neirong1'></i>
                                         <span>单块表查询</span>
                                     </a>
@@ -144,13 +144,37 @@
                                 <em class="layui-nav-more"></em>
                             </a>
                             <dl class="layui-nav-child">
+                                <dd class="laya-nav-child">
+                                    <a href="javascript:;" data-title="修改密码" data-url="{:url('cb/Administrator/editAdmin')}" data-width="450px" data-height="350px">
+                                        <i class="iconfont icon-iconfuzhi01" data-icon='icon-iconfuzhi01'></i>
+                                        <span>修改密码</span>
+                                    </a>
+                                </dd>
+                                {if condition="($role == $datacenter_admin || $role == $datacenter_suadmin) AND  ($company_id == $datacenter)"} 
+                                    <dd class="layui-nav-child">
+                                        <a href="{:url('cb/company/companyList')}" target="main" data-url="404.html">
+                                            <i class="iconfont icon-yonghu1" data-icon='icon-yonghu1'></i>
+                                            <span>水司管理</span>
+                                        </a>
+                                    </dd>
+                                {/if}
+        
+        
+                                {if condition="($role != $water_meter_user)"} 
+                                    <dd class="layui-nav-child">
+                                        <a href="{:url('cb/users/usersList')}" target="main" data-url="404.html">
+                                            <i class="iconfont icon-yonghu1" data-icon='icon-yonghu1'></i>
+                                            <span>用户管理</span>
+                                        </a>
+                                    </dd>
+                                {/if}
 
-                                <dd>
+                                <!-- <dd>
                                     <a href="javascript:;" target="main" data-url="404.html">
                                         <i class="iconfont icon-yonghu1" data-icon='icon-yonghu1'></i>
                                         <span>用户权限设置</span>
                                     </a>
-                                </dd>
+                                </dd> -->
                                 <dd>
                                     <a href="javascript:;" target="main" data-url="404.html">
                                         <i class="iconfont icon-anquanshezhi"></i>

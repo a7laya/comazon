@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>水表列表</title>
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
+</head>
+
+<body style="padding:5px">
+
+    <blockquote class="layui-elem-quote layui-quote-nm">数据查询 / 电池型流量计每月累计
+
+   
+        <!-- <button class="laya-btn layui-btn layui-btn-xs" id="batchDel" data-method="batchDel" data-arg="">
+        <i class="layui-icon layui-icon-delete"></i> Delete
+    </button> -->
+
+        <form class="layui-form" style="position:absolute; right: 0px; top: 16px">
+
+            <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+            <div class="layui-form-item">
+                    
+                <div class="layui-input-inline">
+                    <input type="text" name="keywords" id="keywords" placeholder="设备标识" autocomplete="off"
+                        class="layui-input" >
+                </div>
+
+                <div class="layui-input-inline">
+                    <button class="layui-btn" lay-submit lay-filter="search_submit">Search</button>
+                </div>
+            </div>
+        </form>
+
+    </blockquote>
+    <table id="demo" lay-filter="test" style="margin-top:-15px"></table>
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <script src="__STATIC__/layui/layui.js"></script>
+    <script>
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#date1' //指定元素
+            });
+            laydate.render({
+                elem: '#date2' //指定元素
+            });
+        });
+        layui.use(['table', 'form', ], function () {
+            var table = layui.table;
+            var form = layui.form;
+            //第一个实例
+            table.render({
+                elem: '#demo', // ,height: 312
+                url: '{:url("cb/dccx/tableDataMonth")}', //数据接口
+                height: 'full-80', // 高度最大化减去差值
+                page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
+                    curr: 1, //设定初始在第 5 页
+                    limit: 10, //一页显示多少条
+                    limits: [10, 20, 50], //每页条数的选择项
+                    groups: 3 //只显示 2 个连续页码
+                },
+                cols: [
+                    [ //表头
+                        {
+                            type: 'checkbox',
+                            fixed: 'left'
+                        }
+                        , {
+                            field: 'index',
+                            title: 'Index',
+                            type:'numbers'
+                        }, {
+                            field: 'year',
+                            title: 'YEAR',
+                        }, {
+                            field: 'month',
+                            title: 'MONTH',
+                        }, {
+                            field: 'name',
+                            title: 'NAME',
+                        }, {
+                            field: 'ftotal_month',
+                            title: 'FTOTAL (m³)',
+                            templet: '#ftotal_month'
+                        }, {
+                            field: 'rtotal_month',
+                            title: 'RTOTAL (m³)',
+                            templet: '#rtotal_month'
+                        }
+                    ]
+                ],
+                id: 'idTest'
+            });
+
+            
+
+
+
+            // 监听搜索提交
+            form.on('submit(search_submit)', function (data) {
+                // console.log('data :', data);
+                // layer.msg(JSON.stringify(data.field));
+                var keywords = data.field.keywords;
+                var date1 = data.field.date1;
+                var date2 =  data.field.date2;
+                table.reload('idTest', {
+                    where: {
+                        keywords: keywords,
+                        date1: date1,
+                        date2: date2
+                    }
+                });
+
+                return false;
+            });
+
+            function reload(){
+                var keywords = $('#keywords').val();
+
+                table.reload('idTest', {
+                    where: {
+                        keywords: keywords,
+                    }
+                });
+            }
+            // reload();
+            // setInterval(reload,30000);
+
+        });
+    </script>
+    
+
+    <script type="text/html" id="ftotal_month">
+        <span  style='color:blue'>{{d.ftotal_month}}</span>
+    </script>
+    <script type="text/html" id="rtotal_month">
+        <span  style='color:green'>{{d.rtotal_month}}</span>
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">Edit</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Delete</a>
+    </script>
+</body>
+
+</html>

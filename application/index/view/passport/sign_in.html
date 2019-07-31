@@ -46,6 +46,11 @@
             })
             return false;
         })
+        
+        if (window != top) {
+            layer.msg('登录超时')
+            setTimeout("top.location.href = location.href;",1500)
+        }
 
     });
 </script>

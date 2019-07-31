@@ -113,14 +113,10 @@
                 </div>
                 <div class="layui-card-body">
                     <div class="item">
-                    {gt name="week_limit" value="$week_count"}
-                        {gt name="day_limit" value="$day_count"}
+                        {gt name="week_surplus" value="0"}
+                        {gt name="day_surplus" value="0"}
                         <notice style="color:green">
-                            {gt name="day_surplus" value="$week_surplus"}
-                                You can buy {$week_surplus} item(s) today.
-                            {else /}
-                                You can buy {$day_surplus} item(s) today.
-                            {/gt}
+                            You can buy {$week_surplus < $day_surplus ? $week_surplus : $day_surplus} item(s) today.
                         </notice>
                         {else/}
                         <notice style="color:red">
@@ -128,9 +124,9 @@
                         </notice>
                         {/gt}
                     {else /}
-                        <notice style="color:red">
-                            Sorry,You can't buy anymore this week.
-                        </notice>
+                    <notice style="color:red">
+                        Sorry,You can't buy anymore this week.
+                    </notice>
                     {/gt}
                     </div>
                     <hr style="margin:6px 0">

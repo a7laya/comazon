@@ -40,39 +40,42 @@
 	<script type="text/javascript" src="__STATIC__/layui/layui.js"></script>
 	<script type="text/javascript" src="__STATIC__/admin/js/login.js"></script>
 	<script type="text/javascript">
-		
-			//登录链接测试，使用时可删除
-			// $(".submit_btn").click(function(){
-			//   location.href="index.html";
-			// });
+		//登录链接测试，使用时可删除
+		// $(".submit_btn").click(function(){
+		//   location.href="index.html";
+		// });
 
-			layui.use(['form', 'layer', 'jquery'], function () {
+		layui.use(['form', 'layer', 'jquery'], function () {
 
-				// 操作对象
-				var form = layui.form;
-				var $ = layui.jquery;
-				form.on('submit(login)', function (data) {
-					console.log('data.field: ', data.field);
-					$.ajax({
-						url: '{:url("admin/passport/login")}',
-						data: data.field,
-						dataType: 'text',
-						type: 'post',
-						success: function (data) {
-							console.log('data :', data);
-							if (data == 1) {
-								layer.msg('Verification passed!');
-								location.href = "{:url('admin/index/index')}";
-							} else {
-								layer.msg('Account or password error!');
-							}
+			// 操作对象
+			var form = layui.form;
+			var $ = layui.jquery;
+			form.on('submit(login)', function (data) {
+				console.log('data.field: ', data.field);
+				$.ajax({
+					url: '{:url("admin/passport/login")}',
+					data: data.field,
+					dataType: 'text',
+					type: 'post',
+					success: function (data) {
+						console.log('data :', data);
+						if (data == 1) {
+							layer.msg('Verification passed!');
+							location.href = "{:url('admin/index/index')}";
+						} else {
+							layer.msg('Account or password error!');
 						}
-					})
-					return false;
+					}
 				})
+				return false;
+			})
 
-			});
-		
+			if (window != top) {
+				layer.msg('登录超时')
+				setTimeout("top.location.href = location.href;",1500)
+			}
+
+		});
 	</script>
 </body>
 

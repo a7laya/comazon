@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<script>
+ var phoneWidth = parseInt(window.screen.width);
+ var phoneHeight = parseInt(window.screen.height);
+ var phoneScale = phoneWidth/750 * 1.5;//除以的值按手机的物理分辨率
+ var ua = navigator.userAgent;
+ if (/Android (\d+\.\d+)/.test(ua)) {
+ var version = parseFloat(RegExp.$1);
+ // andriod 2.3
+ if (version > 2.3) {
+ document.write('<meta name="viewport" content="width=device-width,initial-scale='+phoneScale+',minimum-scale='+phoneScale+',maximum-scale='+phoneScale+',user-scalable=no">');
+ // andriod 2.3以上
+ } else {
+ document.write('<meta name="viewport" content="width=device-width,user-scalable=no">');
+ }
+ // 其他系统
+ } else {
+ document.write('<meta name="viewport" content="width=device-width, initial-scale='+phoneScale+',minimum-scale='+phoneScale+',maximum-scale ='+phoneScale +',user-scalable=no,">');
+ }
+</script>
+	<title>华邦智慧水务用户登录界面</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/cb_login/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="__STATIC__/cb_login/css/default.css">
+	<script src='__STATIC__/cb_login/js/prefixfree.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/cb_login/css/styles.css">
+</head>
+<body>
+<div id="logo"> 
+  <h1 class="hogo"><i> 华 邦 智 慧 水 务</i></h1>
+</div> 
+<section class="stark-login">
+  <form action="" method=""  class="layui-form">	
+    <div id="fade-box">
+      <input type="text" name="username" id="用户名" placeholder="用户名" required>
+        <input type="password" name="password" placeholder="密码" required>
+          
+          <button lay-submit lay-filter="login">登录</button> 
+        </div>
+      </form>
+      <div class="hexagons">
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <span>&#x2B22;</span>
+        <br>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <span>&#x2B22;</span>
+          <br>
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span> 
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span>
+            <span>&#x2B22;</span>
+            
+            <br>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <span>&#x2B22;</span>
+              <br>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+                <span>&#x2B22;</span>
+              </div>      
+        </section> 
+    
+        <div id="circle1">
+          <div id="inner-cirlce1">
+            <h2> </h2>
+          </div>
+        </div>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+
+	<script type="text/javascript" src="__STATIC__/layui/layui.js"></script>
+	<script type="text/javascript">
+			layui.use(['form', 'layer', 'jquery'], function () {
+
+				// 操作对象
+				var form = layui.form;
+				var $ = layui.jquery;
+				form.on('submit(login)', function (data) {
+					console.log('data.field: ', data.field);
+					$.ajax({
+						url: '{:url("cb/passport/login")}',
+						data: data.field,
+						dataType: 'text',
+						type: 'post',
+						success: function (data) {
+							console.log('data :', data);
+							if (data == 1) {
+								layer.msg('Verification passed!');
+								location.href = "{:url('cb/index/index')}";
+							} else {
+								layer.msg('Account or password error!');
+							}
+						}
+					})
+					return false;
+				})
+
+			});
+		
+	</script>
+</body>
+<script type="text/JavaScript">
+	if(window!=top){
+	 top.location.href=location.href;
+	}
+</script>
+</html>

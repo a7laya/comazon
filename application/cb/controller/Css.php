@@ -4,7 +4,8 @@ use think\Controller;
 use think\Request;
 use think\Db;
 use app\cb\model\Cs;
-class Css extends Controller
+
+class Css extends Base
 {
     public function _initialize()
     {
@@ -24,6 +25,7 @@ class Css extends Controller
         return  $this->fetch();
     }
 
+
     // 页面 - 编辑水表
     public function cssEdit(){
         $id = $_GET['id'];
@@ -37,7 +39,7 @@ class Css extends Controller
         // 模板输出
         return  $this->fetch();
     }
-    // 页面 - 水表回收站
+    // 水表回收站
     public function cssRestore(){
         // 模板输出
         return  $this->fetch();

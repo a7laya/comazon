@@ -25,6 +25,7 @@ class Index extends Base
         $this->day_count = count($this->vpurchased->dayPurchase());
         $this->week_count = count($this->vpurchased->weekPurchase());
 
+
         // 判断是否登录，没有登录则进不了控制器下的页面
         if(!$this->shop_user){return $this->redirect('index/passport/signIn');}
         
